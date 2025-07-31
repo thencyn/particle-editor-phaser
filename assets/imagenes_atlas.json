@@ -1,0 +1,41 @@
+{
+	"textures": [
+		{
+			"image": "imagenes_atlas.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 309,
+				"h": 344
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "logo",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 450,
+						"h": 450
+					},
+					"spriteSourceSize": {
+						"x": 72,
+						"y": 15,
+						"w": 307,
+						"h": 342
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 307,
+						"h": 342
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:d324921da590375d37af06bd9a7acb16:bb876fc4b51cb6fe7ce1cb5ed914de5e:2db50c4a79ebc1bcbd9597afe4e693ea$"
+	}
+}

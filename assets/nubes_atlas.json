@@ -1,0 +1,83 @@
+{
+	"textures": [
+		{
+			"image": "nubes_atlas.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 1705,
+				"h": 1503
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "nube-03",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 1703,
+						"h": 655
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 1703,
+						"h": 655
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 1703,
+						"h": 655
+					}
+				},
+				{
+					"filename": "nube-02",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 1185,
+						"h": 451
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 1185,
+						"h": 451
+					},
+					"frame": {
+						"x": 1,
+						"y": 658,
+						"w": 1185,
+						"h": 451
+					}
+				},
+				{
+					"filename": "nube-01",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 1027,
+						"h": 391
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 1027,
+						"h": 391
+					},
+					"frame": {
+						"x": 1,
+						"y": 1111,
+						"w": 1027,
+						"h": 391
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:97001c21e8f5ba0d0d9ab3b66f13bcfd:414d3ff4f5ceb0252901d4c0ebe17805:abda162b7824968ae4bdeda9698ff1ac$"
+	}
+}

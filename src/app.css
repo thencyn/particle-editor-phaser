@@ -1,0 +1,26 @@
+html, body, #phaser-game {
+    height: 100%;
+}
+body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    color: #eee;
+    font: caption;
+}
+
+#rotar-dispositivo {
+    margin: 0 auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #707773;
+    z-index: 999;
+    display: none;
+    background-size: 60%;
+    background-image: url("assets/rotar-dispositivo.png");
+}

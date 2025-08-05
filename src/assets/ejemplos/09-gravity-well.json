@@ -2,6 +2,7 @@
   {
     "configAdicional": {
       "tipoSpeedSeleccionada": "No",
+      "tipoScaleSeleccionada": "Scale",
       "velocidadAngleActivado": true,
       "alphaActivado": false,
       "rotateActivado": true,
@@ -16,6 +17,8 @@
       "accelerationXSeleccionada": "Transition",
       "accelerationYSeleccionada": "Transition",
       "scaleSeleccionada": "Unica",
+      "scaleXSeleccionada": "Transition",
+      "scaleYSeleccionada": "Transition",
       "alphaSeleccionada": "Transition",
       "rotateSeleccionada": "Transition",
       "posicionXSeleccionada": "Random",
@@ -54,6 +57,7 @@
       "gravityX": 0,
       "gravityY": -50,
       "tipoSpeedSeleccionada": "No",
+      "tipoScaleSeleccionada": "Scale",
       "blendMode": "ADD",
       "maxVelocityX": 200,
       "maxVelocityY": 200,
@@ -164,6 +168,26 @@
         "scale_min": 0,
         "scale_max": 0
       },
+      "scaleX": {
+				"scaleX_unica": 0,
+				"scaleX_start": 0.5,
+				"scaleX_end": 1,
+				"scaleX_steps": 0,
+				"scaleX_transitionEaseAuxInt": 0,
+				"scaleX_transitionEase": "--Sin Ease--",
+				"scaleX_min": 0,
+				"scaleX_max": 0
+			},
+			"scaleY": {
+				"scaleY_unica": 0,
+				"scaleY_start": 0.5,
+				"scaleY_end": 1,
+				"scaleY_steps": 0,
+				"scaleY_transitionEaseAuxInt": 0,
+				"scaleY_transitionEase": "--Sin Ease--",
+				"scaleY_min": 0,
+				"scaleY_max": 0
+			},
       "alpha": {
         "alpha_activado": false,
         "alpha_unica": 0,
@@ -236,6 +260,7 @@
   {
     "configAdicional": {
       "tipoSpeedSeleccionada": "No",
+      "tipoScaleSeleccionada": "Scale",
       "velocidadAngleActivado": true,
       "alphaActivado": false,
       "rotateActivado": true,
@@ -250,6 +275,8 @@
       "accelerationXSeleccionada": "Transition",
       "accelerationYSeleccionada": "Transition",
       "scaleSeleccionada": "Unica",
+      "scaleXSeleccionada": "Transition",
+      "scaleYSeleccionada": "Transition",
       "alphaSeleccionada": "Transition",
       "rotateSeleccionada": "Transition",
       "posicionXSeleccionada": "Random",
@@ -288,6 +315,7 @@
       "gravityX": 50,
       "gravityY": 50,
       "tipoSpeedSeleccionada": "No",
+      "tipoScaleSeleccionada": "Scale",
       "blendMode": "ADD",
       "maxVelocityX": 200,
       "maxVelocityY": 200,
@@ -398,6 +426,26 @@
         "scale_min": 0,
         "scale_max": 0
       },
+      "scaleX": {
+				"scaleX_unica": 0,
+				"scaleX_start": 0.5,
+				"scaleX_end": 1,
+				"scaleX_steps": 0,
+				"scaleX_transitionEaseAuxInt": 0,
+				"scaleX_transitionEase": "--Sin Ease--",
+				"scaleX_min": 0,
+				"scaleX_max": 0
+			},
+			"scaleY": {
+				"scaleY_unica": 0,
+				"scaleY_start": 0.5,
+				"scaleY_end": 1,
+				"scaleY_steps": 0,
+				"scaleY_transitionEaseAuxInt": 0,
+				"scaleY_transitionEase": "--Sin Ease--",
+				"scaleY_min": 0,
+				"scaleY_max": 0
+			},
       "alpha": {
         "alpha_activado": false,
         "alpha_unica": 0,
@@ -470,6 +518,7 @@
   {
     "configAdicional": {
       "tipoSpeedSeleccionada": "No",
+      "tipoScaleSeleccionada": "Scale",
       "velocidadAngleActivado": true,
       "alphaActivado": false,
       "rotateActivado": true,
@@ -484,6 +533,8 @@
       "accelerationXSeleccionada": "Transition",
       "accelerationYSeleccionada": "Transition",
       "scaleSeleccionada": "Unica",
+      "scaleXSeleccionada": "Transition",
+      "scaleYSeleccionada": "Transition",
       "alphaSeleccionada": "Transition",
       "rotateSeleccionada": "Transition",
       "posicionXSeleccionada": "Random",
@@ -512,6 +563,7 @@
       "gravityX": 0,
       "gravityY": 50,
       "tipoSpeedSeleccionada": "No",
+      "tipoScaleSeleccionada": "Scale",
       "blendMode": "ADD",
       "maxVelocityX": 200,
       "maxVelocityY": 200,
@@ -622,6 +674,26 @@
         "scale_min": 0,
         "scale_max": 0
       },
+      "scaleX": {
+				"scaleX_unica": 0,
+				"scaleX_start": 0.5,
+				"scaleX_end": 1,
+				"scaleX_steps": 0,
+				"scaleX_transitionEaseAuxInt": 0,
+				"scaleX_transitionEase": "--Sin Ease--",
+				"scaleX_min": 0,
+				"scaleX_max": 0
+			},
+			"scaleY": {
+				"scaleY_unica": 0,
+				"scaleY_start": 0.5,
+				"scaleY_end": 1,
+				"scaleY_steps": 0,
+				"scaleY_transitionEaseAuxInt": 0,
+				"scaleY_transitionEase": "--Sin Ease--",
+				"scaleY_min": 0,
+				"scaleY_max": 0
+			},
       "alpha": {
         "alpha_activado": false,
         "alpha_unica": 0,
@@ -694,6 +766,7 @@
   {
     "configAdicional": {
       "tipoSpeedSeleccionada": "No",
+      "tipoScaleSeleccionada": "Scale",
       "velocidadAngleActivado": true,
       "alphaActivado": false,
       "rotateActivado": true,
@@ -708,6 +781,8 @@
       "accelerationXSeleccionada": "Transition",
       "accelerationYSeleccionada": "Transition",
       "scaleSeleccionada": "Unica",
+      "scaleXSeleccionada": "Transition",
+      "scaleYSeleccionada": "Transition",
       "alphaSeleccionada": "Transition",
       "rotateSeleccionada": "Transition",
       "posicionXSeleccionada": "Random",
@@ -736,6 +811,7 @@
       "gravityX": 0,
       "gravityY": 0,
       "tipoSpeedSeleccionada": "No",
+      "tipoScaleSeleccionada": "Scale",
       "blendMode": "ADD",
       "maxVelocityX": 200,
       "maxVelocityY": 200,
@@ -846,6 +922,26 @@
         "scale_min": 0,
         "scale_max": 0
       },
+      "scaleX": {
+				"scaleX_unica": 0,
+				"scaleX_start": 0.5,
+				"scaleX_end": 1,
+				"scaleX_steps": 0,
+				"scaleX_transitionEaseAuxInt": 0,
+				"scaleX_transitionEase": "--Sin Ease--",
+				"scaleX_min": 0,
+				"scaleX_max": 0
+			},
+			"scaleY": {
+				"scaleY_unica": 0,
+				"scaleY_start": 0.5,
+				"scaleY_end": 1,
+				"scaleY_steps": 0,
+				"scaleY_transitionEaseAuxInt": 0,
+				"scaleY_transitionEase": "--Sin Ease--",
+				"scaleY_min": 0,
+				"scaleY_max": 0
+			},
       "alpha": {
         "alpha_activado": false,
         "alpha_unica": 0,

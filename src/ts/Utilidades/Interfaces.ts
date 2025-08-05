@@ -1,5 +1,6 @@
 export interface IConfiguracionAdicional {
 	tipoSpeedSeleccionada: 'No' | 'SpeedAngle' | 'SpeedXY';
+	tipoScaleSeleccionada: 'No' | 'Scale' | 'ScaleXY';
 	velocidadAngleActivado: boolean;
 	alphaActivado: boolean;
 	rotateActivado: boolean;
@@ -12,6 +13,8 @@ export interface IConfiguracionAdicional {
 	speedSeleccionada: 'Unica' | 'Transition' | 'Random';
 	angleSeleccionada: 'Transition' | 'Random';
 	scaleSeleccionada: 'Unica' | 'Transition' | 'Random';
+	scaleXSeleccionada: 'Unica' | 'Transition' | 'Random';
+	scaleYSeleccionada: 'Unica' | 'Transition' | 'Random';
 	alphaSeleccionada: 'Unica' | 'Transition' | 'Random';
 	rotateSeleccionada: 'Unica' | 'Transition' | 'Random';
 	accelerationXSeleccionada: 'Unica' | 'Transition' | 'Random';
@@ -102,6 +105,7 @@ export interface IMemoria {
 	gravityX: number
 	gravityY: number
 	tipoSpeedSeleccionada: 'No' | 'SpeedAngle' | 'SpeedXY'
+	tipoScaleSeleccionada: 'No' | 'Scale' | 'ScaleXY'
 	blendMode: string
 	maxVelocityX: number
 	maxVelocityY: number
@@ -120,6 +124,8 @@ export interface IMemoria {
 	posicionX: PosicionX
 	posicionY: PosicionY
 	scale: Scale
+	scaleX: ScaleX
+	scaleY: ScaleY
 	colorTint: ColorTint
 	alpha: Alpha
 	rotate: Rotate
@@ -233,6 +239,28 @@ export interface Scale {
 	scale_transitionEase: string
 	scale_min: number
 	scale_max: number
+}
+
+export interface ScaleX {
+	scaleX_unica: number
+	scaleX_start: number
+	scaleX_end: number
+	scaleX_steps: number
+	scaleX_transitionEaseAuxInt: number
+	scaleX_transitionEase: string
+	scaleX_min: number
+	scaleX_max: number
+}
+
+export interface ScaleY {
+	scaleY_unica: number
+	scaleY_start: number
+	scaleY_end: number
+	scaleY_steps: number
+	scaleY_transitionEaseAuxInt: number
+	scaleY_transitionEase: string
+	scaleY_min: number
+	scaleY_max: number
 }
 
 export interface ColorTint {

@@ -22,6 +22,12 @@ export class BarraVisualizacionEjemplosComponent {
 		this.botonCerrar.setVisible(true);
 	}
 
+	public hide() {
+		this.scrollablePanel.setVisible(false);
+		this.titulo.setVisible(false);
+		this.botonCerrar.setVisible(false);
+	}
+
 	private crearBarraVisualizacionEjemplos() {
 		this.titulo = this.escena.add.text(1000, this.escena.cameras.main.displayHeight - 250, 'Lista Ejemplos', { fontFamily: 'monospace', fontSize: '32px', align: 'center', color: '#ffffff', fontStyle: 'bold' })
 			.setVisible(false)
@@ -34,9 +40,7 @@ export class BarraVisualizacionEjemplosComponent {
 							.on(Phaser.Input.Events.POINTER_UP, () => {
 								this.botonCerrar.clearTint();
 								UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
-								this.scrollablePanel.setVisible(false);
-								this.titulo.setVisible(false);
-								this.botonCerrar.setVisible(false);
+								this.hide();
 							})
 							.on(Phaser.Input.Events.POINTER_MOVE, function () {
 								this.setTint(0xb4caaf);

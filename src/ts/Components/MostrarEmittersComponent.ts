@@ -143,7 +143,7 @@ export class MostrarEmittersComponent implements IDestroyable {
 					.on(Phaser.Input.Events.POINTER_OUT, function () {
 						this.clearTint();
 					});
-			const texto = this.escena.add.text(55, 15, `Emitter ${index + 1}`, { fontFamily: 'monospace', fontSize: '28px' })
+			const texto = this.escena.add.text(55, 15, `Emitter ${index + 1}`, { fontFamily: 'monospace', fontSize: '22px' })
 				.setOrigin(0, 0)
 				.setDepth(ManejarDepthMainGame.profundidad3)
 				.setInteractive({ useHandCursor: true })
@@ -162,9 +162,9 @@ export class MostrarEmittersComponent implements IDestroyable {
 					});
 			// Phaser.Display.Align.To.RightCenter(texto, imagen, 0, 15);
 
-			const imagenBorrar = this.escena.add.image(texto.x + texto.displayWidth + 10, 10, AtlasImagenes.Botones, AtlasBotonesImagenes.SeleccionCircularMenos)
+			const imagenBorrar = this.escena.add.image(texto.x + texto.displayWidth + 5, 10, AtlasImagenes.Botones, AtlasBotonesImagenes.SeleccionCircularMenos)
 					.setOrigin(0)
-					.setScale(0.60)
+					.setScale(0.55)
 					.setVisible(listaEmitters.length > 1)
 					// .setDisplaySize(60, 60)
 					.setDepth(ManejarDepthMainGame.profundidad3)
@@ -183,9 +183,9 @@ export class MostrarEmittersComponent implements IDestroyable {
 						this.clearTint();
 					});
 
-			const imagenClonar = this.escena.add.image(texto.x + texto.displayWidth + 57, 10, AtlasImagenes.Botones, AtlasBotonesImagenes.Clonar)
+			const imagenClonar = this.escena.add.image(texto.x + texto.displayWidth + 50, 10, AtlasImagenes.Botones, AtlasBotonesImagenes.Clonar)
 					.setOrigin(0)
-					.setScale(0.60)
+					.setScale(0.55)
 					.setVisible(listaEmitters.length < 10)
 					// .setDisplaySize(60, 60)
 					.setDepth(ManejarDepthMainGame.profundidad3)
@@ -202,6 +202,24 @@ export class MostrarEmittersComponent implements IDestroyable {
 						this.clearTint();
 					});
 
+			const imagenExportar = this.escena.add.image(texto.x + texto.displayWidth + 95, 10, AtlasImagenes.Botones, AtlasBotonesImagenes.Exportar)
+					.setOrigin(0)
+					.setScale(0.55)
+					.setVisible(listaEmitters.length < 10)
+					// .setDisplaySize(60, 60)
+					.setDepth(ManejarDepthMainGame.profundidad3)
+					.setInteractive({ useHandCursor: true })
+					.on(Phaser.Input.Events.POINTER_UP, () => {
+						imagenExportar.clearTint();
+						this.escena.registry.events.emit(Eventos.Exportar, 'emitter', index);
+						UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
+					})
+					.on(Phaser.Input.Events.POINTER_MOVE, function () {
+						this.setTint(0xb4caaf);
+					})
+					.on(Phaser.Input.Events.POINTER_OUT, function () {
+						this.clearTint();
+					});
 
 			const graphics = this.escena.add.graphics().setDepth(-1);
 			graphics.lineStyle(4, 0x000000, 1);
@@ -215,7 +233,7 @@ export class MostrarEmittersComponent implements IDestroyable {
 				// graphics.strokeRectShape(new Phaser.Geom.Rectangle(texto.x, texto.y, texto.x + texto.displayWidth, texto.y));
 			}
 
-			const container = this.escena.add.container(posX, posY, [imagen, texto, imagenBorrar, imagenClonar, graphics])
+			const container = this.escena.add.container(posX, posY, [imagen, texto, imagenBorrar, imagenClonar, imagenExportar, graphics])
 				.setDepth(ManejarDepthMainGame.profundidad3);
 			this.listaEmitterContainer.push(container);
 

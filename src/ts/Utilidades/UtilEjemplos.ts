@@ -254,6 +254,16 @@ export class UtilEjemplos {
 				aliasImagenPreview: '25-multiple-emit-death-zone',
 				urlEjemploOriginal: ''
 			},
+			{
+				nombreEjemplo: 'Scale vs ScaleXY',
+				idEjemplo: 26,
+				tagPropiedadesUtilizadas: ['hold', 'scale', 'scaleXY'],
+				url: './assets/ejemplos/26-scale-vs-scalexy.json',
+				descripcion: '',
+				urlImagenPreview: 'ejemplos/26-scale-vs-scalexy.png',
+				aliasImagenPreview: '26-scale-vs-scalexy',
+				urlEjemploOriginal: ''
+			},
 		];
 	}
 

@@ -274,7 +274,7 @@ export class EmitZoneComponent implements IDestroyable {
 				this.escena.registry.events.emit(Eventos.EmitterEmitZoneCrear, false, indexActual, tipoEmitZone.value ? 'edge' : 'random', UtilFiguras.obtenerInstanciaFiguraPorPropiedades(figuraSeleccionada, nuevoValor), containerControlesEmitZone.getValor().quantity, containerControlesEmitZone.getValor().total, containerControlesEmitZone.getValor().yoyo);
 			});
 		// containerControlesFigura.container.setVisible(false);
-		let containerControlesEmitZone = new ControlesEmitZoneComponent(this.escena, quantity, total)
+		let containerControlesEmitZone = new ControlesEmitZoneComponent(this.escena, quantity, total, yoyo)
 			.on("valorCambiado", (nuevoValor) => {
 				this.escena.registry.events.emit(Eventos.EmitterEmitZoneCrear, false, indexActual, tipoEmitZone.value ? 'edge' : 'random', UtilFiguras.obtenerInstanciaFiguraPorPropiedades(figuraSeleccionada, containerControlesFigura.getValor()), nuevoValor.quantity, nuevoValor.total, nuevoValor.yoyo);
 			});

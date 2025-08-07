@@ -114,6 +114,9 @@ export interface IMemoria {
 	particleBringToTop?: boolean
 	sortProperty: string
 	sortOrderAsc: boolean
+	moveToActivar: boolean
+	moveToX: number
+	moveToY: number
 	bounce: number
 	speed: Speed
 	angle: Angle

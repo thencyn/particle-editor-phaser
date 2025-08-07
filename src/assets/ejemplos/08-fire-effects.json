@@ -52,6 +52,9 @@
       "particleBringToTop": null,
       "sortProperty": "",
       "sortOrderAsc": false,
+      "moveToActivar": false,
+      "moveToX": 0,
+      "moveToY": 0,
       "colorTint": {
         "colorTint_seleccionado": "color",
         "colorTint_color": "0xfacc22, 0xf89800, 0xf83600, 0x9f0404",
@@ -296,6 +299,9 @@
       "particleBringToTop": null,
       "sortProperty": "",
       "sortOrderAsc": false,
+      "moveToActivar": false,
+      "moveToX": 0,
+      "moveToY": 0,
       "colorTint": {
         "colorTint_seleccionado": "color",
         "colorTint_color": "0x96e0da, 0x937ef3",
@@ -540,6 +546,9 @@
       "particleBringToTop": null,
       "sortProperty": "",
       "sortOrderAsc": false,
+      "moveToActivar": false,
+      "moveToX": 0,
+      "moveToY": 0,
       "colorTint": {
         "colorTint_seleccionado": "color",
         "colorTint_color": " 0x040d61, 0xfacc22, 0xf89800, 0xf83600, 0x9f0404, 0x4b4a4f, 0x353438, 0x040404",
@@ -784,6 +793,9 @@
       "particleBringToTop": null,
       "sortProperty": "",
       "sortOrderAsc": false,
+      "moveToActivar": false,
+      "moveToX": 0,
+      "moveToY": 0,
       "colorTint": {
         "colorTint_seleccionado": "color",
         "colorTint_color": "0xfacc22, 0xf89800, 0xf83600, 0x9f0404",

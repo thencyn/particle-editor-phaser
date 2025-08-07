@@ -66,6 +66,9 @@
       "particleBringToTop": null,
       "sortProperty": "",
       "sortOrderAsc": false,
+      "moveToActivar": false,
+      "moveToX": 0,
+      "moveToY": 0,
       "colorTint": {
         "colorTint_seleccionado": "color",
         "colorTint_color": "0xffffff, 0xcccccc, 0xf2f2f2, 0xbfbfbf",
@@ -324,6 +327,9 @@
       "particleBringToTop": null,
       "sortProperty": "",
       "sortOrderAsc": false,
+      "moveToActivar": false,
+      "moveToX": 0,
+      "moveToY": 0,
       "colorTint": {
         "colorTint_seleccionado": "color",
         "colorTint_color": "0xf63838, 0xff473a, 0xa62626, 0xcc4d2d",
@@ -582,6 +588,9 @@
       "particleBringToTop": null,
       "sortProperty": "",
       "sortOrderAsc": false,
+      "moveToActivar": false,
+      "moveToX": 0,
+      "moveToY": 0,
       "colorTint": {
         "colorTint_seleccionado": "color",
         "colorTint_color": "0x3f3157, 0x644e8b, 0x8164b2",
@@ -840,6 +849,9 @@
       "particleBringToTop": null,
       "sortProperty": "",
       "sortOrderAsc": false,
+      "moveToActivar": false,
+      "moveToX": 0,
+      "moveToY": 0,
       "colorTint": {
         "colorTint_seleccionado": "color",
         "colorTint_color": "0x62f600, 0x54ff00, 0x43cc00, 0x329900",
@@ -1100,6 +1112,9 @@
       "particleBringToTop": null,
       "sortProperty": "",
       "sortOrderAsc": false,
+      "moveToActivar": false,
+      "moveToX": 0,
+      "moveToY": 0,
       "colorTint": {
         "colorTint_seleccionado": "color",
         "colorTint_color": "0xa8a22e, 0xc1b934, 0x757020",

@@ -161,9 +161,15 @@ export class ExportarMenuComponent implements IDestroyable {
 		}
 
 	private hide() {
+		this.botonToggleGuardar.removeInteractive();
+		const listaDestinos = [this.botonToggleGuardar.x + 320, this.botonAtras.x + 300, this.background.x + 300, this.titulo.x + 300, this.containerOpciones.x + 300];
 		this.escena.add.tween({
 			targets: [this.botonToggleGuardar, this.botonAtras, this.background, this.titulo, this.containerOpciones],
-			x: this.escena.cameras.main.displayWidth + 200,
+			x: {
+				getEnd: (target, key, value, indexTweens) => {
+					return listaDestinos[indexTweens];
+				}
+			},
 			ease: 'Cubic',
 			onComplete: () => {
 				this.botonToggleGuardar.destroy();
@@ -171,7 +177,7 @@ export class ExportarMenuComponent implements IDestroyable {
 				this.background.destroy();
 				this.titulo.destroy();
 				this.containerOpciones.destroy();
-				this.escena.registry.events.emit(Eventos.MenuMostrar, false);
+				this.escena.registry.events.emit(Eventos.MenuMostrar, true);
 			}
 		});
 	}

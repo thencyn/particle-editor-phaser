@@ -44,6 +44,7 @@ export class MenuComponent {
 
 	private containerMenu: Phaser.GameObjects.Container;
 	private mostrandoMenu: boolean = false;
+	private efectoMostrarMenuEnEjecucion: boolean = false;
 	constructor(private escena: Phaser.Scene) {
 		this.crearBotonToggleMenu();
 		this.crearBotones();
@@ -83,9 +84,11 @@ export class MenuComponent {
 					.setOrigin(0)
 					.setInteractive({ useHandCursor: true })
 					.on(Phaser.Input.Events.POINTER_UP, () => {
-						this.botonVerEmitters.clearTint();
-						UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
-						this.escena.registry.events.emit(Eventos.EmittersVerMenu);
+						if (!this.efectoMostrarMenuEnEjecucion) {
+							this.botonVerEmitters.clearTint();
+							UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
+							this.escena.registry.events.emit(Eventos.EmittersVerMenu);
+						}
 					})
 					.on(Phaser.Input.Events.POINTER_MOVE, () => {
 
@@ -127,9 +130,11 @@ export class MenuComponent {
 					.setOrigin(0)
 					.setInteractive({ useHandCursor: true })
 					.on(Phaser.Input.Events.POINTER_UP, () => {
-						this.botonNuevo.clearTint();
-						UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
-						this.escena.registry.events.emit(Eventos.MenuProyectoNuevo);
+						if (!this.efectoMostrarMenuEnEjecucion) {
+							this.botonNuevo.clearTint();
+							UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
+							this.escena.registry.events.emit(Eventos.MenuProyectoNuevo);
+						}
 					})
 					.on(Phaser.Input.Events.POINTER_MOVE, () => {
 
@@ -148,9 +153,11 @@ export class MenuComponent {
 					.setOrigin(0)
 					.setInteractive({ useHandCursor: true })
 					.on(Phaser.Input.Events.POINTER_UP, () => {
-						this.botonGuardar.clearTint();
-						UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
-						this.escena.registry.events.emit(Eventos.MenuProyectoGuardar);
+						if (!this.efectoMostrarMenuEnEjecucion) {
+							this.botonGuardar.clearTint();
+							UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
+							this.escena.registry.events.emit(Eventos.MenuProyectoGuardar);
+						}
 					})
 					.on(Phaser.Input.Events.POINTER_MOVE, () => {
 
@@ -169,8 +176,10 @@ export class MenuComponent {
 					.setOrigin(0)
 					.setInteractive({ useHandCursor: true })
 					.on(Phaser.Input.Events.POINTER_UP, () => {
-						this.botonExportar.clearTint();
-						this.escena.registry.events.emit(Eventos.MenuExportar);
+						if (!this.efectoMostrarMenuEnEjecucion) {
+							this.botonExportar.clearTint();
+							this.escena.registry.events.emit(Eventos.MenuExportar);
+						}
 					})
 					.on(Phaser.Input.Events.POINTER_MOVE, () => {
 
@@ -189,15 +198,17 @@ export class MenuComponent {
 					.setOrigin(0)
 					.setInteractive({ useHandCursor: true })
 					.on(Phaser.Input.Events.POINTER_UP, () => {
-						this.botonEjemplos.clearTint();
-						// this.escena.registry.events.emit(Eventos.MenuAbrirEjemplos);
-						UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
-						//FIXME: ARREGLAR EL PUNTERO DEL MOUSE
-						// this.botonEjemplosArea.input.cursor = 'default';
-						this.escena.scene.pause(PrincipalScene.Name);
-						this.escena.registry.set(Variables.EscenaActual, EjemplosScene.Name); //NO se si sera necesario
+						if (!this.efectoMostrarMenuEnEjecucion) {
+							this.botonEjemplos.clearTint();
+							// this.escena.registry.events.emit(Eventos.MenuAbrirEjemplos);
+							UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
+							//FIXME: ARREGLAR EL PUNTERO DEL MOUSE
+							// this.botonEjemplosArea.input.cursor = 'default';
+							this.escena.scene.pause(PrincipalScene.Name);
+							this.escena.registry.set(Variables.EscenaActual, EjemplosScene.Name); //NO se si sera necesario
 
-						this.escena.scene.launch(EjemplosScene.Name);
+							this.escena.scene.launch(EjemplosScene.Name);
+						}
 					})
 					.on(Phaser.Input.Events.POINTER_MOVE, () => {
 
@@ -216,9 +227,11 @@ export class MenuComponent {
 					.setOrigin(0)
 					.setInteractive({ useHandCursor: true })
 					.on(Phaser.Input.Events.POINTER_UP, () => {
-						this.botonAbrir.clearTint();
-						UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
-						this.escena.registry.events.emit(Eventos.MenuProyectoAbrir);
+						if (!this.efectoMostrarMenuEnEjecucion) {
+							this.botonAbrir.clearTint();
+							UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
+							this.escena.registry.events.emit(Eventos.MenuProyectoAbrir);
+						}
 					})
 					.on(Phaser.Input.Events.POINTER_MOVE, () => {
 
@@ -317,6 +330,7 @@ export class MenuComponent {
 
 	private mostrarMenu() {
 		this.mostrandoMenu = true;
+		this.efectoMostrarMenuEnEjecucion = true;
 		this.escena.add.tween({
 			targets: this.botonToggleMenu,
 			// y: 150,
@@ -332,11 +346,15 @@ export class MenuComponent {
 			// y: 150,
 			x: this.escena.cameras.main.displayWidth - 300,
 			ease: 'Cubic', //'Cubic', 'Elastic', 'Bounce', 'Back'
+			onComplete: () => {
+				this.efectoMostrarMenuEnEjecucion = false;
+			}
 		});
 	}
 
 	private ocultarMenu() {
 		this.mostrandoMenu = false;
+		this.botonToggleMenu.removeInteractive();
 		this.escena.add.tween({
 			targets: this.botonToggleMenu,
 			// y: 150,
@@ -344,6 +362,7 @@ export class MenuComponent {
 			ease: 'Cubic', //'Cubic', 'Elastic', 'Bounce', 'Back'
 			onComplete: () => {
 				this.botonToggleMenu.setTexture(AtlasImagenes.Botones, AtlasBotonesImagenes.Anterior);
+				this.botonToggleMenu.setInteractive({ useHandCursor: true });
 			}
 		});
 
@@ -364,13 +383,19 @@ export class MenuComponent {
 				targets: this.botonToggleMenu,
 				x: this.escena.cameras.main.displayWidth - this.botonToggleMenu.displayWidth,
 				ease: 'Cubic',
-				duration: 500
+				duration: 500,
+				onComplete: () => {
+					this.botonToggleMenu.setInteractive({ useHandCursor: true });
+				}
 			});
+		} else {
+			this.botonToggleMenu.setInteractive({ useHandCursor: true });
 		}
 	}
 
 	public hideFullMenu() {
 		this.botonToggleMenu.setVisible(false);
+		this.botonToggleMenu.removeInteractive();
 		if (this.mostrandoMenu) {
 			this.mostrandoMenu = false;
 			this.containerMenu.setPosition(this.escena.cameras.main.displayWidth + 300, this.containerMenu.y);
@@ -384,6 +409,7 @@ export class MenuComponent {
 		this.botonToggleMenu.setVisible(true);
 		this.containerMenu.setPosition(this.escena.cameras.main.displayWidth - 300, this.containerMenu.y);
 		this.botonToggleMenu.setPosition(this.botonToggleMenu.x - 320, this.botonToggleMenu.y);
+		this.botonToggleMenu.setInteractive({ useHandCursor: true });
 	}
 
 }

@@ -5,10 +5,10 @@
       "tipoScaleSeleccionada": "Scale",
       "velocidadAngleActivado": true,
       "alphaActivado": false,
-      "rotateActivado": false,
+      "rotateActivado": true,
       "accelerationXActivada": false,
       "accelerationYActivada": false,
-      "posicionXActivada": false,
+      "posicionXActivada": true,
       "posicionYActivada": false,
       "speedXSeleccionada": "Random",
       "speedYSeleccionada": "Random",
@@ -30,31 +30,31 @@
     },
     "texture": "AtlasParticulas",
     "frame": [
-      "bomb"
+      "burbuja-02"
     ],
     "frameCycle": false,
     "memoria": {
       "expandirPaginasUtilizadas": false,
-      "x": 650,
-      "y": 0,
-      "lifespan": 3500,
-      "frequency": 1250,
+      "x": 910,
+      "y": -50,
+      "lifespan": 2000,
+      "frequency": 10,
       "quantity": 1,
       "gravityX": 0,
-      "gravityY": 100,
+      "gravityY": 0,
       "tipoSpeedSeleccionada": "No",
       "tipoScaleSeleccionada": "Scale",
       "blendMode": "NORMAL",
       "maxVelocityX": 0,
       "maxVelocityY": 0,
       "advance": 0,
-      "hold": 1000,
+      "hold": 0,
       "particleBringToTop": null,
-      "sortProperty": "",
-      "sortOrderAsc": false,
-      "moveToActivar": false,
+      "sortProperty": "lifeT",
+      "sortOrderAsc": true,
+      "moveToActivar": true,
       "moveToX": 0,
-      "moveToY": 0,
+      "moveToY": 500,
       "colorTint": {
         "colorTint_seleccionado": "ninguno",
         "colorTint_color": "0xff0000, 0x00ff00, 0x0000ff",
@@ -68,8 +68,8 @@
         "speed_start": 0,
         "speed_end": 0,
         "speed_steps": 1,
-        "speed_min": 300,
-        "speed_max": 400
+        "speed_min": 1491,
+        "speed_max": 2000
       },
       "angle": {
         "angle_activado": true,
@@ -84,16 +84,277 @@
         "speedX_start": 0,
         "speedX_end": 0,
         "speedX_steps": 1,
-        "speedX_min": -500,
-        "speedX_max": 500
+        "speedX_min": -25,
+        "speedX_max": 25
       },
       "speedY": {
         "speedY_unica": 0,
         "speedY_start": 0,
         "speedY_end": 0,
         "speedY_steps": 1,
-        "speedY_min": -500,
-        "speedY_max": 500
+        "speedY_min": 2000,
+        "speedY_max": 2000
+      },
+      "accelerationX": {
+        "accelerationX_activado": false,
+        "accelerationX_unica": 0,
+        "accelerationX_start": 100,
+        "accelerationX_end": 500,
+        "accelerationX_steps": 0,
+        "accelerationX_transitionEaseAuxInt": 0,
+        "accelerationX_transitionEase": "--Sin Ease--",
+        "accelerationX_min": -100,
+        "accelerationX_max": 100
+      },
+      "accelerationY": {
+        "accelerationY_activado": false,
+        "accelerationY_unica": 0,
+        "accelerationY_start": 100,
+        "accelerationY_end": 500,
+        "accelerationY_steps": 0,
+        "accelerationY_transitionEaseAuxInt": 0,
+        "accelerationY_transitionEase": "--Sin Ease--",
+        "accelerationY_min": -100,
+        "accelerationY_max": 100
+      },
+      "posicionX": {
+        "posicionX_activada": true,
+        "posicionX_unica": 0,
+        "posicionX_start": 0,
+        "posicionX_end": 100,
+        "posicionX_steps": 10,
+        "posicionX_transitionEaseAuxInt": 0,
+        "posicionX_transitionEase": "--Sin Ease--",
+        "posicionX_transitionRandom": false,
+        "posicionX_min": -200,
+        "posicionX_max": 200,
+        "posicionX_puntos": "",
+        "posicionX_interpolacionPuntos": "",
+        "posicionX_interpolacionTipo": "linear"
+      },
+      "posicionY": {
+        "posicionY_activada": false,
+        "posicionY_unica": 0,
+        "posicionY_start": 0,
+        "posicionY_end": 100,
+        "posicionY_steps": 10,
+        "posicionY_transitionEaseAuxInt": 0,
+        "posicionY_transitionEase": "--Sin Ease--",
+        "posicionY_transitionRandom": false,
+        "posicionY_min": -500,
+        "posicionY_max": 500,
+        "posicionY_puntos": "",
+        "posicionY_interpolacionPuntos": "",
+        "posicionY_interpolacionTipo": "linear"
+      },
+      "scale": {
+        "scale_unica": 0,
+        "scale_start": 0.5,
+        "scale_end": 1,
+        "scale_steps": 0,
+        "scale_transitionEaseAuxInt": 0,
+        "scale_transitionEase": "--Sin Ease--",
+        "scale_min": 0,
+        "scale_max": 0
+      },
+      "scaleX": {
+        "scaleX_unica": 0,
+        "scaleX_start": 0.5,
+        "scaleX_end": 1,
+        "scaleX_steps": 0,
+        "scaleX_transitionEaseAuxInt": 0,
+        "scaleX_transitionEase": "--Sin Ease--",
+        "scaleX_min": 0,
+        "scaleX_max": 0
+      },
+      "scaleY": {
+        "scaleY_unica": 0,
+        "scaleY_start": 0.5,
+        "scaleY_end": 1,
+        "scaleY_steps": 0,
+        "scaleY_transitionEaseAuxInt": 0,
+        "scaleY_transitionEase": "--Sin Ease--",
+        "scaleY_min": 0,
+        "scaleY_max": 0
+      },
+      "alpha": {
+        "alpha_activado": false,
+        "alpha_unica": 0,
+        "alpha_start": 0,
+        "alpha_end": 1,
+        "alpha_steps": 0,
+        "alpha_transitionEaseAuxInt": 0,
+        "alpha_transitionEase": "--Sin Ease--",
+        "alpha_min": 0.25,
+        "alpha_max": 0.5
+      },
+      "rotate": {
+        "rotate_activado": true,
+        "rotate_unica": 0,
+        "rotate_start": 0,
+        "rotate_end": 360,
+        "rotate_steps": 0,
+        "rotate_transitionEaseAuxInt": 0,
+        "rotate_transitionEase": "--Sin Ease--",
+        "rotate_min": 0,
+        "rotate_max": 360
+      },
+      "bounds": {
+        "bounds_activado": false,
+        "bounds_mostrar": false,
+        "bounds_color": 65280,
+        "bounds_x": 624,
+        "bounds_y": 276,
+        "bounds_width": 800,
+        "bounds_height": 600
+      },
+      "bokeh": {
+        "bokeh_activado": false,
+        "bokeh_radius": 0.5,
+        "bokeh_amount": 1,
+        "bokeh_contrast": 0.2
+      },
+      "gravityWell": {
+        "gravityWell_activado": false,
+        "gravityWell_mostrarPunto": false,
+        "gravityWell_x": 0,
+        "gravityWell_y": 0,
+        "gravityWell_power": 4.2,
+        "gravityWell_epsilon": 250,
+        "gravityWell_gravity": 100
+      },
+      "stopAfterDuration": {
+        "stopAfterDuration_tipo": "none",
+        "stopAfterDuration_stopAfter": 5000,
+        "stopAfterDuration_duration": 5000,
+        "stopAfterDuration_reset": true
+      },
+      "deathZone": {
+        "deathZone_activado": true,
+        "deathZone_mostrar": true,
+        "deathZone_color": 65280
+      },
+      "emitZone": {
+        "emitZone_activado": true,
+        "emitZone_mostrar": true,
+        "emitZone_color": 255
+      },
+      "follow": {
+        "follow_imagen": null,
+        "follow_offsetX": 0,
+        "follow_offsetY": 0
+      }
+    }
+  },
+  {
+    "configAdicional": {
+      "tipoSpeedSeleccionada": "No",
+      "tipoScaleSeleccionada": "Scale",
+      "velocidadAngleActivado": true,
+      "alphaActivado": false,
+      "rotateActivado": false,
+      "accelerationXActivada": false,
+      "accelerationYActivada": false,
+      "posicionXActivada": false,
+      "posicionYActivada": false,
+      "speedXSeleccionada": "Random",
+      "speedYSeleccionada": "Random",
+      "speedSeleccionada": "Random",
+      "angleSeleccionada": "Random",
+      "accelerationXSeleccionada": "Transition",
+      "accelerationYSeleccionada": "Transition",
+      "scaleSeleccionada": "Unica",
+      "scaleXSeleccionada": "Transition",
+      "scaleYSeleccionada": "Transition",
+      "alphaSeleccionada": "Transition",
+      "rotateSeleccionada": "Transition",
+      "posicionXSeleccionada": "Random",
+      "posicionYSeleccionada": "Random",
+      "listaDeathZones": [],
+      "listaEmitZones": [
+        {
+          "tipo": "edge",
+          "figura": {
+            "type": 5,
+            "x": 1150,
+            "y": 110,
+            "width": 400,
+            "height": 400
+          },
+          "quantity": 16,
+          "total": 1,
+          "yoyo": false
+        }
+      ],
+      "emitZoneAbsolutoX": 1356,
+      "emitZoneAbsolutoY": -50
+    },
+    "texture": "AtlasParticulas",
+    "frame": [
+      "fuego-amarillo"
+    ],
+    "frameCycle": false,
+    "memoria": {
+      "expandirPaginasUtilizadas": false,
+      "x": 1356,
+      "y": -50,
+      "lifespan": 2000,
+      "frequency": 10,
+      "quantity": 1,
+      "gravityX": 0,
+      "gravityY": 0,
+      "tipoSpeedSeleccionada": "No",
+      "tipoScaleSeleccionada": "Scale",
+      "blendMode": "ADD",
+      "maxVelocityX": 0,
+      "maxVelocityY": 0,
+      "advance": 0,
+      "hold": 0,
+      "particleBringToTop": null,
+      "sortProperty": "",
+      "sortOrderAsc": false,
+      "moveToActivar": true,
+      "moveToX": 0,
+      "moveToY": 333,
+      "colorTint": {
+        "colorTint_seleccionado": "ninguno",
+        "colorTint_color": "0xff0000, 0x00ff00, 0x0000ff",
+        "colorTint_colorEaseAuxInt": 0,
+        "colorTint_colorEase": "--Sin Ease--",
+        "colorTint_tint": "0xff0000, 0x00ff00, 0x0000ff"
+      },
+      "bounce": 0,
+      "speed": {
+        "speed_unica": 0,
+        "speed_start": 0,
+        "speed_end": 0,
+        "speed_steps": 1,
+        "speed_min": 1491,
+        "speed_max": 2000
+      },
+      "angle": {
+        "angle_activado": true,
+        "angle_start": 0,
+        "angle_end": 360,
+        "angle_steps": 36,
+        "angle_min": 225,
+        "angle_max": 315
+      },
+      "speedX": {
+        "speedX_unica": 0,
+        "speedX_start": 0,
+        "speedX_end": 0,
+        "speedX_steps": 1,
+        "speedX_min": -25,
+        "speedX_max": 25
+      },
+      "speedY": {
+        "speedY_unica": 0,
+        "speedY_start": 0,
+        "speedY_end": 0,
+        "speedY_steps": 1,
+        "speedY_min": 2000,
+        "speedY_max": 2000
       },
       "accelerationX": {
         "accelerationX_activado": false,
@@ -126,8 +387,8 @@
         "posicionX_transitionEaseAuxInt": 0,
         "posicionX_transitionEase": "--Sin Ease--",
         "posicionX_transitionRandom": false,
-        "posicionX_min": -500,
-        "posicionX_max": 500,
+        "posicionX_min": -200,
+        "posicionX_max": 200,
         "posicionX_puntos": "",
         "posicionX_interpolacionPuntos": "",
         "posicionX_interpolacionTipo": "linear"
@@ -148,9 +409,9 @@
         "posicionY_interpolacionTipo": "linear"
       },
       "scale": {
-        "scale_unica": 0,
-        "scale_start": -2,
-        "scale_end": 2,
+        "scale_unica": 0.25,
+        "scale_start": 0.5,
+        "scale_end": 1,
         "scale_steps": 0,
         "scale_transitionEaseAuxInt": 0,
         "scale_transitionEase": "--Sin Ease--",
@@ -249,7 +510,7 @@
   {
     "configAdicional": {
       "tipoSpeedSeleccionada": "No",
-      "tipoScaleSeleccionada": "ScaleXY",
+      "tipoScaleSeleccionada": "Scale",
       "velocidadAngleActivado": true,
       "alphaActivado": false,
       "rotateActivado": false,
@@ -263,45 +524,59 @@
       "angleSeleccionada": "Random",
       "accelerationXSeleccionada": "Transition",
       "accelerationYSeleccionada": "Transition",
-      "scaleSeleccionada": "Transition",
-      "scaleXSeleccionada": "Unica",
-      "scaleYSeleccionada": "Transition",
+      "scaleSeleccionada": "Unica",
+      "scaleXSeleccionada": "Transition",
+      "scaleYSeleccionada": "Unica",
       "alphaSeleccionada": "Transition",
       "rotateSeleccionada": "Transition",
       "posicionXSeleccionada": "Random",
       "posicionYSeleccionada": "Random",
       "listaDeathZones": [],
-      "listaEmitZones": [],
-      "emitZoneAbsolutoX": 1024,
-      "emitZoneAbsolutoY": 576
+      "listaEmitZones": [
+        {
+          "tipo": "edge",
+          "figura": {
+            "type": 5,
+            "x": 700,
+            "y": 570,
+            "width": 400,
+            "height": 400
+          },
+          "quantity": 48,
+          "total": 1,
+          "yoyo": false
+        }
+      ],
+      "emitZoneAbsolutoX": 909,
+      "emitZoneAbsolutoY": 412
     },
     "texture": "AtlasParticulas",
     "frame": [
-      "monster-red"
+      "fuego-rojo"
     ],
     "frameCycle": false,
     "memoria": {
       "expandirPaginasUtilizadas": false,
-      "x": 950,
-      "y": 0,
-      "lifespan": 3500,
-      "frequency": 1250,
+      "x": 909,
+      "y": 412,
+      "lifespan": 2000,
+      "frequency": 10,
       "quantity": 1,
       "gravityX": 0,
-      "gravityY": 100,
+      "gravityY": 0,
       "tipoSpeedSeleccionada": "No",
-      "tipoScaleSeleccionada": "ScaleXY",
-      "blendMode": "NORMAL",
+      "tipoScaleSeleccionada": "Scale",
+      "blendMode": "ADD",
       "maxVelocityX": 0,
       "maxVelocityY": 0,
       "advance": 0,
-      "hold": 1000,
+      "hold": 0,
       "particleBringToTop": null,
       "sortProperty": "",
       "sortOrderAsc": false,
-      "moveToActivar": false,
+      "moveToActivar": true,
       "moveToX": 0,
-      "moveToY": 0,
+      "moveToY": 333,
       "colorTint": {
         "colorTint_seleccionado": "ninguno",
         "colorTint_color": "0xff0000, 0x00ff00, 0x0000ff",
@@ -315,8 +590,8 @@
         "speed_start": 0,
         "speed_end": 0,
         "speed_steps": 1,
-        "speed_min": 300,
-        "speed_max": 400
+        "speed_min": 1491,
+        "speed_max": 2000
       },
       "angle": {
         "angle_activado": true,
@@ -331,16 +606,16 @@
         "speedX_start": 0,
         "speedX_end": 0,
         "speedX_steps": 1,
-        "speedX_min": -500,
-        "speedX_max": 500
+        "speedX_min": -25,
+        "speedX_max": 25
       },
       "speedY": {
         "speedY_unica": 0,
         "speedY_start": 0,
         "speedY_end": 0,
         "speedY_steps": 1,
-        "speedY_min": -500,
-        "speedY_max": 500
+        "speedY_min": 2000,
+        "speedY_max": 2000
       },
       "accelerationX": {
         "accelerationX_activado": false,
@@ -373,8 +648,8 @@
         "posicionX_transitionEaseAuxInt": 0,
         "posicionX_transitionEase": "--Sin Ease--",
         "posicionX_transitionRandom": false,
-        "posicionX_min": -500,
-        "posicionX_max": 500,
+        "posicionX_min": -200,
+        "posicionX_max": 200,
         "posicionX_puntos": "",
         "posicionX_interpolacionPuntos": "",
         "posicionX_interpolacionTipo": "linear"
@@ -395,8 +670,8 @@
         "posicionY_interpolacionTipo": "linear"
       },
       "scale": {
-        "scale_unica": 0,
-        "scale_start": -1,
+        "scale_unica": 0.25,
+        "scale_start": 0.5,
         "scale_end": 1,
         "scale_steps": 0,
         "scale_transitionEaseAuxInt": 0,
@@ -405,7 +680,7 @@
         "scale_max": 0
       },
       "scaleX": {
-        "scaleX_unica": 1,
+        "scaleX_unica": 0,
         "scaleX_start": 0.5,
         "scaleX_end": 1,
         "scaleX_steps": 0,
@@ -415,9 +690,9 @@
         "scaleX_max": 0
       },
       "scaleY": {
-        "scaleY_unica": 0,
-        "scaleY_start": -2,
-        "scaleY_end": 2,
+        "scaleY_unica": 0.2,
+        "scaleY_start": 0.5,
+        "scaleY_end": 1,
         "scaleY_steps": 0,
         "scaleY_transitionEaseAuxInt": 0,
         "scaleY_transitionEase": "--Sin Ease--",
@@ -496,7 +771,7 @@
   {
     "configAdicional": {
       "tipoSpeedSeleccionada": "No",
-      "tipoScaleSeleccionada": "ScaleXY",
+      "tipoScaleSeleccionada": "Scale",
       "velocidadAngleActivado": true,
       "alphaActivado": false,
       "rotateActivado": false,
@@ -510,45 +785,63 @@
       "angleSeleccionada": "Random",
       "accelerationXSeleccionada": "Transition",
       "accelerationYSeleccionada": "Transition",
-      "scaleSeleccionada": "Transition",
+      "scaleSeleccionada": "Unica",
       "scaleXSeleccionada": "Transition",
-      "scaleYSeleccionada": "Unica",
+      "scaleYSeleccionada": "Transition",
       "alphaSeleccionada": "Transition",
       "rotateSeleccionada": "Transition",
       "posicionXSeleccionada": "Random",
       "posicionYSeleccionada": "Random",
       "listaDeathZones": [],
-      "listaEmitZones": [],
-      "emitZoneAbsolutoX": 1024,
-      "emitZoneAbsolutoY": 576
+      "listaEmitZones": [
+        {
+          "tipo": "random",
+          "figura": {
+            "type": 0,
+            "x": 1390,
+            "y": 800,
+            "_radius": 240,
+            "_diameter": 480
+          },
+          "quantity": 1,
+          "total": 1,
+          "yoyo": false
+        }
+      ],
+      "emitZoneAbsolutoX": 1356,
+      "emitZoneAbsolutoY": 412
     },
     "texture": "AtlasParticulas",
     "frame": [
-      "monster-yellow"
+      "fuego-amarillo",
+      "fuego-azul",
+      "fuego-blanco",
+      "fuego-rojo",
+      "fuego-verde"
     ],
-    "frameCycle": false,
+    "frameCycle": true,
     "memoria": {
       "expandirPaginasUtilizadas": false,
-      "x": 1250,
-      "y": 0,
-      "lifespan": 3500,
-      "frequency": 1250,
-      "quantity": 1,
+      "x": 1356,
+      "y": 412,
+      "lifespan": 2000,
+      "frequency": 10,
+      "quantity": 2,
       "gravityX": 0,
-      "gravityY": 100,
+      "gravityY": 0,
       "tipoSpeedSeleccionada": "No",
-      "tipoScaleSeleccionada": "ScaleXY",
-      "blendMode": "NORMAL",
+      "tipoScaleSeleccionada": "Scale",
+      "blendMode": "ADD",
       "maxVelocityX": 0,
       "maxVelocityY": 0,
       "advance": 0,
-      "hold": 1000,
+      "hold": 0,
       "particleBringToTop": null,
       "sortProperty": "",
       "sortOrderAsc": false,
-      "moveToActivar": false,
-      "moveToX": 0,
-      "moveToY": 0,
+      "moveToActivar": true,
+      "moveToX": 38,
+      "moveToY": 371,
       "colorTint": {
         "colorTint_seleccionado": "ninguno",
         "colorTint_color": "0xff0000, 0x00ff00, 0x0000ff",
@@ -562,8 +855,8 @@
         "speed_start": 0,
         "speed_end": 0,
         "speed_steps": 1,
-        "speed_min": 300,
-        "speed_max": 400
+        "speed_min": 1491,
+        "speed_max": 2000
       },
       "angle": {
         "angle_activado": true,
@@ -578,16 +871,16 @@
         "speedX_start": 0,
         "speedX_end": 0,
         "speedX_steps": 1,
-        "speedX_min": -500,
-        "speedX_max": 500
+        "speedX_min": -25,
+        "speedX_max": 25
       },
       "speedY": {
         "speedY_unica": 0,
         "speedY_start": 0,
         "speedY_end": 0,
         "speedY_steps": 1,
-        "speedY_min": -500,
-        "speedY_max": 500
+        "speedY_min": 2000,
+        "speedY_max": 2000
       },
       "accelerationX": {
         "accelerationX_activado": false,
@@ -620,8 +913,8 @@
         "posicionX_transitionEaseAuxInt": 0,
         "posicionX_transitionEase": "--Sin Ease--",
         "posicionX_transitionRandom": false,
-        "posicionX_min": -500,
-        "posicionX_max": 500,
+        "posicionX_min": -200,
+        "posicionX_max": 200,
         "posicionX_puntos": "",
         "posicionX_interpolacionPuntos": "",
         "posicionX_interpolacionTipo": "linear"
@@ -642,9 +935,9 @@
         "posicionY_interpolacionTipo": "linear"
       },
       "scale": {
-        "scale_unica": 0,
-        "scale_start": -1,
-        "scale_end": 1,
+        "scale_unica": 0.2,
+        "scale_start": 1,
+        "scale_end": 0,
         "scale_steps": 0,
         "scale_transitionEaseAuxInt": 0,
         "scale_transitionEase": "--Sin Ease--",
@@ -653,8 +946,8 @@
       },
       "scaleX": {
         "scaleX_unica": 0,
-        "scaleX_start": -2,
-        "scaleX_end": 2,
+        "scaleX_start": 0.5,
+        "scaleX_end": 1,
         "scaleX_steps": 0,
         "scaleX_transitionEaseAuxInt": 0,
         "scaleX_transitionEase": "--Sin Ease--",
@@ -662,9 +955,9 @@
         "scaleX_max": 0
       },
       "scaleY": {
-        "scaleY_unica": 1,
-        "scaleY_start": -2,
-        "scaleY_end": 2,
+        "scaleY_unica": 0.2,
+        "scaleY_start": 0.5,
+        "scaleY_end": 1,
         "scaleY_steps": 0,
         "scaleY_transitionEaseAuxInt": 0,
         "scaleY_transitionEase": "--Sin Ease--",
@@ -674,8 +967,8 @@
       "alpha": {
         "alpha_activado": false,
         "alpha_unica": 0,
-        "alpha_start": 0,
-        "alpha_end": 1,
+        "alpha_start": 1,
+        "alpha_end": 0,
         "alpha_steps": 0,
         "alpha_transitionEaseAuxInt": 0,
         "alpha_transitionEase": "--Sin Ease--",

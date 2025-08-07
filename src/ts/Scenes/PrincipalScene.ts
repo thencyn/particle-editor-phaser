@@ -422,6 +422,7 @@ export default class PrincipalScene extends Phaser.Scene {
 
 		this.registry.events.on(Eventos.ProyectoAbrir, (id?: number) => {
 			this.menuComponent.showButtonMenu();
+			this.menuAbierto = null;
 			if (id) {
 				this.proyectoAbrirGuardados(id);
 			}
@@ -450,7 +451,7 @@ export default class PrincipalScene extends Phaser.Scene {
 					const memoria = item.memoria;
 					const configParticulas = this.obtenerConfigParticleDesdeMemoria(item.configAdicional, memoria);
 					const configAdicional = item.configAdicional;
-					this.eliminarPropiedadesEmitter(configParticulas, configAdicional)
+					this.eliminarPropiedadesEmitter(configParticulas, configAdicional, memoria)
 					configParticulas.frame = !item.frameCycle ? item.frame : { frames: item.frame, cycle: true };
 					return {
 						x: item.emitter.x,
@@ -471,7 +472,7 @@ export default class PrincipalScene extends Phaser.Scene {
 				const configAdicional = this.listaEmitters[indexExportar].configAdicional;
 				const memoria = this.listaEmitters[indexExportar].memoria;
 				const configParticulas = this.obtenerConfigParticleDesdeMemoria(configAdicional, memoria);
-				this.eliminarPropiedadesEmitter(configParticulas, configAdicional)
+				this.eliminarPropiedadesEmitter(configParticulas, configAdicional, memoria)
 				configParticulas.frame = !this.listaEmitters[indexExportar].frameCycle ? this.listaEmitters[indexExportar].frame : { frames: this.listaEmitters[indexExportar].frame, cycle: true };
 				const emitter = {
 					x: this.listaEmitters[indexExportar].emitter.x,
@@ -491,7 +492,7 @@ export default class PrincipalScene extends Phaser.Scene {
 					const memoria = item.memoria;
 					const configParticulas = this.obtenerConfigParticleDesdeMemoria(item.configAdicional, memoria);
 					const configAdicional = item.configAdicional;
-					this.eliminarPropiedadesEmitter(configParticulas, configAdicional)
+					this.eliminarPropiedadesEmitter(configParticulas, configAdicional, memoria);
 					configParticulas.frame = !item.frameCycle ? item.frame : { frames: item.frame, cycle: true };
 					return {
 						x: item.emitter.x,
@@ -513,6 +514,7 @@ export default class PrincipalScene extends Phaser.Scene {
 
 		this.registry.events.on(Eventos.AbrirNuevoEjemplo, (listaEmitters: IGuardarConfiguracionEmitter[]) => {
 			this.abrirProyecto(listaEmitters);
+			this.proyectoDatos = null;
 			this.menuAbierto?.destroy();
 			this.menuAbierto = null;
 			this.barraVisualizacionEjemplosComponent.show();
@@ -549,6 +551,7 @@ export default class PrincipalScene extends Phaser.Scene {
 			let resetGravityWell = false;
 			let resetPropiedadBasica = false;
 			let resetStopAfterDuration = false;
+			let resetDetenerMoveTo = false;
 			const particulaEmitter = this.listaEmitters[this.indexEmitterSeleccionado].emitter;
 			const configAdicional = this.listaEmitters[this.indexEmitterSeleccionado].configAdicional;
 			const configParticle = this.listaEmitters[this.indexEmitterSeleccionado].configParticle;
@@ -564,7 +567,7 @@ export default class PrincipalScene extends Phaser.Scene {
 					this.recalcularEmitZone(particulaEmitter.x, newValue);
 				}
 				// resetEmitZoneCambioXY = configAdicional.listaEmitZones.length > 0;
-			} else if (['lifespan', 'frequency', 'quantity', 'gravityX', 'gravityY', 'blendMode', 'maxVelocityX', 'maxVelocityY', 'advance', 'hold', 'particleBringToTop', 'sortProperty', 'sortOrderAsc'].includes(bindingKey)) {
+			} else if (['lifespan', 'frequency', 'quantity', 'gravityX', 'gravityY', 'blendMode', 'maxVelocityX', 'maxVelocityY', 'advance', 'hold', 'particleBringToTop', 'sortProperty', 'sortOrderAsc', 'moveToX', 'moveToY'].includes(bindingKey)) {
 				this.cambiarPropiedadesEmitter(bindingKey, newValue);
 				// resetSort = ['sortProperty', 'sortOrderAsc'].includes(bindingKey);
 				// resetPropiedadBasica = 'sortProperty' === bindingKey;
@@ -673,6 +676,13 @@ export default class PrincipalScene extends Phaser.Scene {
 												(memoria.stopAfterDuration.stopAfterDuration_tipo === 'stopAfter' && bindingKey === 'stopAfterDuration_stopAfter')
 												|| (memoria.stopAfterDuration.stopAfterDuration_tipo === 'duration' && bindingKey === 'stopAfterDuration_duration')
 											));
+			} else if (bindingKey.startsWith('moveToActivar')) {
+				if (newValue) {
+					configParticle.moveToX = memoria.moveToX;
+					configParticle.moveToY = memoria.moveToY;
+				} else {
+					resetDetenerMoveTo = true;
+				}
 			}
 
 			if (['gravityWell_mostrarPunto', 'gravityWell_x', 'gravityWell_y', 'x', 'y'].includes(bindingKey)) {
@@ -683,7 +693,7 @@ export default class PrincipalScene extends Phaser.Scene {
 			if (configParticle.bounce === 0) {
 				delete configParticle.bounce;
 			}
-			this.resetEmitter(this.indexEmitterSeleccionado, ['tipoSpeedSeleccionada', 'tipoScaleSeleccionada'].includes(bindingKey) || resetColor || resetBounds || resetGravityWell || resetPropiedadBasica || resetEmitZoneCambioXY || resetStopAfterDuration || configParticle.hasOwnProperty('bounce'));
+			this.resetEmitter(this.indexEmitterSeleccionado, ['tipoSpeedSeleccionada', 'tipoScaleSeleccionada'].includes(bindingKey) || resetColor || resetBounds || resetGravityWell || resetPropiedadBasica || resetEmitZoneCambioXY || resetStopAfterDuration || resetDetenerMoveTo || configParticle.hasOwnProperty('bounce'));
 		});
 	}
 
@@ -761,6 +771,9 @@ export default class PrincipalScene extends Phaser.Scene {
 			particleBringToTop: null,
 			sortProperty: '',
 			sortOrderAsc: false,
+			moveToActivar: false,
+			moveToX: 0,
+			moveToY: 0,
 			colorTint: {
 				colorTint_seleccionado: 'ninguno',
 				colorTint_color: '0xff0000, 0x00ff00, 0x0000ff',
@@ -1323,8 +1336,8 @@ export default class PrincipalScene extends Phaser.Scene {
 				{ $type: 'separator' },
 
 				{
-					$type: 'folder', title: `${(memoria.maxVelocityX > 0 || memoria.maxVelocityY > 0 || memoria.advance > 0 || memoria.hold > 0 || memoria.particleBringToTop !== null || memoria.sortProperty !== '') ? '✔️' : ''}Otras propiedades`,
-					expanded: memoria.expandirPaginasUtilizadas && (memoria.maxVelocityX > 0 || memoria.maxVelocityY > 0 || memoria.advance > 0 || memoria.hold > 0 || memoria.particleBringToTop !== null || memoria.sortProperty !== ''),
+					$type: 'folder', title: `${(memoria.maxVelocityX > 0 || memoria.maxVelocityY > 0 || memoria.advance > 0 || memoria.hold > 0 || memoria.particleBringToTop !== null || memoria.sortProperty !== '' || memoria.moveToActivar) ? '✔️' : ''}Otras propiedades`,
+					expanded: memoria.expandirPaginasUtilizadas && (memoria.maxVelocityX > 0 || memoria.maxVelocityY > 0 || memoria.advance > 0 || memoria.hold > 0 || memoria.particleBringToTop !== null || memoria.sortProperty !== '' || memoria.moveToActivar),
 					$properties: [
 						{ $key: 'maxVelocityX', title: 'maxVelocityX', min: 0, max: 1000, step: 1 },
 						{ $key: 'maxVelocityY', title: 'maxVelocityY', min: 0, max: 1000, step: 1 },
@@ -1347,13 +1360,16 @@ export default class PrincipalScene extends Phaser.Scene {
 								{ text: 'lifeT', value: 'lifeT' },
 						] },
 						{ $key: 'sortOrderAsc', title: 'sortOrderAsc', view: 'toggleSwitch' },
+						{ $key: 'moveToActivar', title: 'Activar MoveTo', view: 'toggleSwitch' },
+						{ $key: 'moveToX', title: 'MoveTo X', min: -2000, max: 2000, step: 1 },
+						{ $key: 'moveToY', title: 'MoveTo Y', min: -2000, max: 2000, step: 1 },
 					]
 				},
 				{ $type: 'separator' },
 
 				{
-					$type: 'folder', title: `${memoria.tipoSpeedSeleccionada === 'SpeedAngle' ? '✔️' : ''}Speed & Angle`,
-					expanded: memoria.expandirPaginasUtilizadas &&  memoria.tipoSpeedSeleccionada === 'SpeedAngle',
+					$type: 'folder', title: `${memoria.tipoSpeedSeleccionada === 'SpeedAngle' && !memoria.moveToActivar ? '✔️' : ''}Speed & Angle`,
+					expanded: memoria.expandirPaginasUtilizadas &&  memoria.tipoSpeedSeleccionada === 'SpeedAngle' && !memoria.moveToActivar,
 					$properties: [
 						{
 							$type: 'tab',
@@ -1417,8 +1433,8 @@ export default class PrincipalScene extends Phaser.Scene {
 				{ $type: 'separator' },
 
 				{
-					$type: 'folder', title: `${memoria.tipoSpeedSeleccionada === 'SpeedXY' ? '✔️' : ''}Speed X`,
-					expanded: memoria.expandirPaginasUtilizadas && memoria.tipoSpeedSeleccionada === 'SpeedXY',
+					$type: 'folder', title: `${memoria.tipoSpeedSeleccionada === 'SpeedXY' && !memoria.moveToActivar ? '✔️' : ''}Speed X`,
+					expanded: memoria.expandirPaginasUtilizadas && memoria.tipoSpeedSeleccionada === 'SpeedXY' && !memoria.moveToActivar,
 					$properties: [
 						{
 							$type: 'tab',
@@ -1456,8 +1472,8 @@ export default class PrincipalScene extends Phaser.Scene {
 				{ $type: 'separator' },
 
 				{
-					$type: 'folder', title: `${memoria.tipoSpeedSeleccionada === 'SpeedXY' ? '✔️' : ''}Speed Y`,
-					expanded: memoria.expandirPaginasUtilizadas && memoria.tipoSpeedSeleccionada === 'SpeedXY',
+					$type: 'folder', title: `${memoria.tipoSpeedSeleccionada === 'SpeedXY' && !memoria.moveToActivar ? '✔️' : ''}Speed Y`,
+					expanded: memoria.expandirPaginasUtilizadas && memoria.tipoSpeedSeleccionada === 'SpeedXY' && !memoria.moveToActivar,
 					$properties: [
 						{
 							$type: 'tab',
@@ -1494,8 +1510,8 @@ export default class PrincipalScene extends Phaser.Scene {
 				{ $type: 'separator' },
 
 				{
-					$type: 'folder', title: `${memoria.accelerationX.accelerationX_activado ? '✔️' : ''}Acceleration X`,
-					expanded: memoria.expandirPaginasUtilizadas && memoria.accelerationX.accelerationX_activado,
+					$type: 'folder', title: `${memoria.accelerationX.accelerationX_activado && !memoria.moveToActivar ? '✔️' : ''}Acceleration X`,
+					expanded: memoria.expandirPaginasUtilizadas && memoria.accelerationX.accelerationX_activado && !memoria.moveToActivar,
 					$properties: [
 						{ $key: 'accelerationX.accelerationX_activado', title: 'Acceleration X Activado', view: 'toggleSwitch' },
 						{
@@ -1534,8 +1550,8 @@ export default class PrincipalScene extends Phaser.Scene {
 				{ $type: 'separator' },
 
 				{
-					$type: 'folder', title: `${memoria.accelerationY.accelerationY_activado ? '✔️' : ''}Acceleration Y`,
-					expanded: memoria.expandirPaginasUtilizadas && memoria.accelerationY.accelerationY_activado,
+					$type: 'folder', title: `${memoria.accelerationY.accelerationY_activado && !memoria.moveToActivar ? '✔️' : ''}Acceleration Y`,
+					expanded: memoria.expandirPaginasUtilizadas && memoria.accelerationY.accelerationY_activado && !memoria.moveToActivar,
 					$properties: [
 						{ $key: 'accelerationY.accelerationY_activado', title: 'Acceleration Y Activado', view: 'toggleSwitch' },
 						{
@@ -2054,19 +2070,8 @@ export default class PrincipalScene extends Phaser.Scene {
 		const configParticle = this.listaEmitters[index].configParticle;
 		const configAdicional = this.listaEmitters[index].configAdicional;
 		const auxConfig =  structuredClone(configParticle);
-		this.eliminarPropiedadesEmitter(auxConfig, configAdicional);
-
-		// auxConfig.moveToX = {
-		// 						onEmit: () => {
-		// 							return 500;
-		// 						},
-		// 						onUpdate: () => {
-		// 							return 500;
-		// 						}
-		// 					};
-		// auxConfig.moveToY = -750;
-
-		// console.log({ auxConfig });
+		this.eliminarPropiedadesEmitter(auxConfig, configAdicional, this.listaEmitters[index].memoria);
+		console.log({ auxConfig });
 		const emitter = this.listaEmitters[index].emitter;
 		if (resetEmitter || emitter.listenerCount('complete') > 0) {
 			emitter.off('complete');
@@ -2110,7 +2115,7 @@ export default class PrincipalScene extends Phaser.Scene {
 		}
 	}
 
-	private eliminarPropiedadesEmitter(auxConfig: Phaser.Types.GameObjects.Particles.ParticleEmitterConfig, configAdicional: IConfiguracionAdicional) {
+	private eliminarPropiedadesEmitter(auxConfig: Phaser.Types.GameObjects.Particles.ParticleEmitterConfig, configAdicional: IConfiguracionAdicional, memoria: IMemoria) {
 		if (configAdicional.tipoSpeedSeleccionada === 'SpeedAngle') {
 			delete auxConfig.speedX;
 			delete auxConfig.speedY;
@@ -2195,6 +2200,19 @@ export default class PrincipalScene extends Phaser.Scene {
 		if (!auxConfig.sortProperty) {
 			delete auxConfig.sortProperty;
 			delete auxConfig.sortOrderAsc;
+		}
+		if (memoria.moveToActivar) {
+			delete auxConfig.speedX;
+			delete auxConfig.speedY;
+			delete auxConfig.angle;
+			delete auxConfig.speed;
+			delete auxConfig.accelerationX;
+			delete auxConfig.accelerationY;
+			delete auxConfig.gravityX;
+			delete auxConfig.gravityY;
+		} else {
+			delete auxConfig.moveToX;
+			delete auxConfig.moveToY;
 		}
 	}
 
@@ -2342,6 +2360,14 @@ export default class PrincipalScene extends Phaser.Scene {
 			nombreProyecto: proyecto.nombreProyecto,
 			fecha: proyecto.fecha,
 		};
+		for (const item of proyecto.listaEmitters) {
+			//FIXME: En el futuro sacarlo
+			if (!item.memoria.hasOwnProperty('moveToActivar')) {
+				item.memoria.moveToActivar = false;
+				item.memoria.moveToX = 0;
+				item.memoria.moveToY = 0;
+			}
+		}
 		this.abrirProyecto(proyecto.listaEmitters);
 	}
 
@@ -2367,6 +2393,7 @@ export default class PrincipalScene extends Phaser.Scene {
 				graphicsDeathZone,
 				graphicsEmitZone
 			}
+
 			if (item.memoria.bokeh.bokeh_activado) {
 				emitter.bokeh = emitter.emitter.postFX.addBokeh(
 					item.memoria.bokeh.bokeh_radius,
@@ -2549,6 +2576,10 @@ export default class PrincipalScene extends Phaser.Scene {
 		if (memoria.sortProperty) {
 			configParticle.sortProperty = memoria.sortProperty;
 			configParticle.sortOrderAsc = memoria.sortOrderAsc;
+		}
+		if (memoria.moveToActivar) {
+			configParticle.moveToX = memoria.moveToX;
+			configParticle.moveToY = memoria.moveToY;
 		}
 
 		if (memoria.stopAfterDuration.stopAfterDuration_tipo !== 'none') {

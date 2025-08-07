@@ -264,6 +264,16 @@ export class UtilEjemplos {
 				aliasImagenPreview: '26-scale-vs-scalexy',
 				urlEjemploOriginal: ''
 			},
+			{
+				nombreEjemplo: 'MoveTo',
+				idEjemplo: 27,
+				tagPropiedadesUtilizadas: ['moveToX', 'moveToY', 'scale', 'posicionX', 'rotate', 'sortProperty', 'emitZone'],
+				url: './assets/ejemplos/27-move-to.json',
+				descripcion: '',
+				urlImagenPreview: 'ejemplos/27-move-to.png',
+				aliasImagenPreview: '27-move-to',
+				urlEjemploOriginal: ''
+			},
 		];
 	}
 

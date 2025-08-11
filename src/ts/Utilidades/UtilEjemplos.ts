@@ -274,6 +274,36 @@ export class UtilEjemplos {
 				aliasImagenPreview: '27-move-to',
 				urlEjemploOriginal: ''
 			},
+			{
+				nombreEjemplo: 'Vortex Advanced\nBy Samme',
+				idEjemplo: 28,
+				tagPropiedadesUtilizadas: ['moveToX', 'moveToY', 'scaleX', 'scaleY', 'rotate', 'alpha', 'emitZone'],
+				url: './assets/ejemplos/28-vortex.json',
+				descripcion: '',
+				urlImagenPreview: 'ejemplos/28-vortex.png',
+				aliasImagenPreview: '28-vortex',
+				urlEjemploOriginal: 'https://codepen.io/samme/pen/eYygPXj'
+			},
+			{
+				nombreEjemplo: 'Confeti By Samme',
+				idEjemplo: 29,
+				tagPropiedadesUtilizadas: ['speed', 'posicionX', 'scaleX', 'scaleY', 'rotate'],
+				url: './assets/ejemplos/29-confeti.json',
+				descripcion: '',
+				urlImagenPreview: 'ejemplos/29-confeti.png',
+				aliasImagenPreview: '29-confeti',
+				urlEjemploOriginal: 'https://codepen.io/samme/pen/YzbLYXq'
+			},
+			{
+				nombreEjemplo: 'Carta retroceso\nOnEmit & OnUpdate',
+				idEjemplo: 29,
+				tagPropiedadesUtilizadas: ['accelerationX', 'posicionY', 'scale', 'alpha', 'rotate'],
+				url: './assets/ejemplos/30-carta-retroceso.json',
+				descripcion: '',
+				urlImagenPreview: 'ejemplos/30-carta-retroceso.png',
+				aliasImagenPreview: '30-carta-retroceso',
+				urlEjemploOriginal: ''
+			},
 		];
 	}
 

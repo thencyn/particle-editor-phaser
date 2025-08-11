@@ -32,7 +32,7 @@ export default class AyudaScene extends Phaser.Scene {
 		this.fondoImagen = this.add.image(this.cameras.main.centerX, this.cameras.main.centerY, Imagenes.BackgroundModal)
 			.setDisplaySize(1475, 880)
 			.setAlpha(1);
-		this.cerrar = this.add.image(this.fondoImagen.x + (this.fondoImagen.displayWidth / 2), this.fondoImagen.y - (this.fondoImagen.displayHeight / 2), AtlasImagenes.Botones, AtlasImagenesDetalles[AtlasImagenes.Botones].callbackObtenerFrame(AtlasBotonesImagenes.Cerrar))
+		this.cerrar = this.add.image(this.fondoImagen.x + (this.fondoImagen.displayWidth / 2), this.fondoImagen.y - (this.fondoImagen.displayHeight / 2), AtlasImagenes.Botones, AtlasBotonesImagenes.Cerrar)
 			// .setScale(0.5)
 			.setInteractive({ useHandCursor: true })
 			.on(Phaser.Input.Events.POINTER_MOVE, () => {
@@ -59,7 +59,7 @@ export default class AyudaScene extends Phaser.Scene {
 	}
 
 	crearBotonSiguiente() {
-		this.add.image(this.cameras.main.centerX + (this.fondoImagen.displayWidth / 2), this.cameras.main.centerY, AtlasImagenes.Botones, AtlasImagenesDetalles[AtlasImagenes.Botones].callbackObtenerFrame(AtlasBotonesImagenes.Siguiente))
+		this.add.image(this.cameras.main.centerX + (this.fondoImagen.displayWidth / 2), this.cameras.main.centerY, AtlasImagenes.Botones, AtlasBotonesImagenes.Siguiente)
 			.setInteractive({ useHandCursor: true })
 			.on(Phaser.Input.Events.POINTER_UP, () => {
 				// this.cambiarImagen(this.imagenIndexMostrando + 1);
@@ -67,7 +67,7 @@ export default class AyudaScene extends Phaser.Scene {
 	}
 
 	crearBotonAnterior() {
-		this.add.image(this.cameras.main.centerX - (this.fondoImagen.displayWidth / 2), this.cameras.main.centerY, AtlasImagenes.Botones, AtlasImagenesDetalles[AtlasImagenes.Botones].callbackObtenerFrame(AtlasBotonesImagenes.Anterior))
+		this.add.image(this.cameras.main.centerX - (this.fondoImagen.displayWidth / 2), this.cameras.main.centerY, AtlasImagenes.Botones, AtlasBotonesImagenes.Anterior)
 			.setInteractive({ useHandCursor: true })
 			.on(Phaser.Input.Events.POINTER_UP, () => {
 				// this.cambiarImagen(this.imagenIndexMostrando - 1);

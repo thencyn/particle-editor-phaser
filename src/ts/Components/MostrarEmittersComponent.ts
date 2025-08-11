@@ -259,6 +259,8 @@ export class MostrarEmittersComponent implements IDestroyable {
 				background.destroy();
 				botonAceptar.destroy();
 				botonAceptarTexto.destroy();
+				cycleSwitch.destroy();
+				cycleTexto.destroy();
 				botonCerrar.destroy();
 			})
 			.on(Phaser.Input.Events.POINTER_MOVE, function () {
@@ -311,11 +313,11 @@ export class MostrarEmittersComponent implements IDestroyable {
 		}
 
 		posy += 80;
-		const tipoDeathZoneTexto = this.escena.add.text(this.escena.cameras.main.centerX - 70, posy + 15, 'Cycle', {
+		const cycleTexto = this.escena.add.text(this.escena.cameras.main.centerX - 70, posy + 15, 'Cycle', {
 				fontFamily: "Inter-Black", fontSize: 48, fontStyle: 'bold', color: '#000000', align: 'center'
 			})
 			.setDepth(ManejarDepthMainGame.profundidad3);
-		const tipoDeathZone = this.escena.rexUI.add.toggleSwitch(this.escena.cameras.main.centerX - 150, posy, 80, 80, 0x039be5)
+		const cycleSwitch = this.escena.rexUI.add.toggleSwitch(this.escena.cameras.main.centerX - 150, posy, 80, 80, 0x039be5)
 					.setOrigin(0)
 					.setDepth(ManejarDepthMainGame.profundidad3)
 					.setValue(cycleActual)
@@ -338,9 +340,9 @@ export class MostrarEmittersComponent implements IDestroyable {
 						botonAceptar.destroy();
 						botonAceptarTexto.destroy();
 						botonCerrar.destroy();
-						this.escena.registry.events.emit(Eventos.EmitterCambiarImagen, index, listaFramesSeleccionados, tipoDeathZone.value);
-						tipoDeathZone.destroy();
-						tipoDeathZoneTexto.destroy();
+						this.escena.registry.events.emit(Eventos.EmitterCambiarImagen, index, listaFramesSeleccionados, cycleSwitch.value);
+						cycleSwitch.destroy();
+						cycleTexto.destroy();
 						this.bloquearCierre = false;
 					}
 				})

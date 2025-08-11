@@ -200,10 +200,8 @@ export class MenuComponent {
 					.on(Phaser.Input.Events.POINTER_UP, () => {
 						if (!this.efectoMostrarMenuEnEjecucion) {
 							this.botonEjemplos.clearTint();
-							// this.escena.registry.events.emit(Eventos.MenuAbrirEjemplos);
 							UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
-							//FIXME: ARREGLAR EL PUNTERO DEL MOUSE
-							// this.botonEjemplosArea.input.cursor = 'default';
+							this.escena.input.resetCursor();
 							this.escena.scene.pause(PrincipalScene.Name);
 							this.escena.registry.set(Variables.EscenaActual, EjemplosScene.Name); //NO se si sera necesario
 

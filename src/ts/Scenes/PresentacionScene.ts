@@ -11,6 +11,7 @@ export default class PresentacionScene extends Phaser.Scene {
 
 	public create(): void {
 		this.add.text(this.cameras.main.displayWidth - 300, this.cameras.main.displayHeight - 40, `Version: ${configuracion.version}`, { fontSize: '32px', color: '#ffffff', fontStyle: 'bold' });
+		this.add.text(25, this.cameras.main.displayHeight - 40, `Version Phaser: ${Phaser.VERSION}`, { fontSize: '32px', color: '#ffffff', fontStyle: 'bold' });
 		this.verEstrellas();
 		this.efectoLogo();
 	}

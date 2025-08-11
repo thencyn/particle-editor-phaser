@@ -6,6 +6,15 @@ Una de las ventajas de este programa es lo fácil que resulta comparar el efecto
 
 **[Demo](https://thencyn.github.io/particle-editor-phaser/)**
 
+### Parámetros de entrada
+
+| Parámetro | Descripción | Ejemplo | Valor mínimo |
+|-----------|-------------|---------|--------------|
+| `color`   | Cambia el color de fondo usando un código hexadecimal (sin `#`). | `color=000000` → fondo negro | — |
+| `width`   | Define el ancho de la ventana. | `width=2048` | **1600** |
+| `height`  | Define la altura de la ventana. | `height=1152` | **1024** |
+
+
 ## ✨ Características principales
 
 - 🔧 **Editor visual en tiempo real**: Modifica propiedades de las partículas y observa los cambios al instante, sin necesidad de recompilar tu aplicación.

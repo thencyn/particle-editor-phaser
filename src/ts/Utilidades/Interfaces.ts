@@ -12,13 +12,13 @@ export interface IConfiguracionAdicional {
 	speedYSeleccionada: 'Unica' | 'Transition' | 'Random';
 	speedSeleccionada: 'Unica' | 'Transition' | 'Random';
 	angleSeleccionada: 'Transition' | 'Random';
-	scaleSeleccionada: 'Unica' | 'Transition' | 'Random';
-	scaleXSeleccionada: 'Unica' | 'Transition' | 'Random';
-	scaleYSeleccionada: 'Unica' | 'Transition' | 'Random';
-	alphaSeleccionada: 'Unica' | 'Transition' | 'Random';
-	rotateSeleccionada: 'Unica' | 'Transition' | 'Random';
-	accelerationXSeleccionada: 'Unica' | 'Transition' | 'Random';
-	accelerationYSeleccionada: 'Unica' | 'Transition' | 'Random';
+	scaleSeleccionada: 'Unica' | 'Transition' | 'Random' | 'Avanzado';
+	scaleXSeleccionada: 'Unica' | 'Transition' | 'Random' | 'Avanzado';
+	scaleYSeleccionada: 'Unica' | 'Transition' | 'Random' | 'Avanzado';
+	alphaSeleccionada: 'Unica' | 'Transition' | 'Random' | 'Avanzado';
+	rotateSeleccionada: 'Unica' | 'Transition' | 'Random' | 'Avanzado';
+	accelerationXSeleccionada: 'Unica' | 'Transition' | 'Random' | 'Avanzado';
+	accelerationYSeleccionada: 'Unica' | 'Transition' | 'Random' | 'Avanzado';
 	posicionXSeleccionada: 'Unica' | 'Transition' | 'Random' | 'Puntos' | 'Interpolacion';
 	posicionYSeleccionada: 'Unica' | 'Transition' | 'Random' | 'Puntos' | 'Interpolacion';
 	listaDeathZones: IDeathZone[];
@@ -28,6 +28,7 @@ export interface IConfiguracionAdicional {
 	listaEmitZones: IEmitZone[];
 	emitZoneAbsolutoX: number;
 	emitZoneAbsolutoY: number;
+	listaPropiedadesFunction: IAdvancedFormula[];
 }
 
 export interface IConfiguracionEmitter {
@@ -93,6 +94,14 @@ export interface IEmitZone {
 	quantity: number
 	total: number
 	yoyo: boolean
+}
+
+export const propiedadesAdvancedFormulaArray = ['accelerationX', 'accelerationY', 'scale', 'scaleX', 'scaleY', 'rotate', 'alpha'];
+export type typePropiedadesAdvancedFormula = 'accelerationX' | 'accelerationY' | 'scale' | 'scaleX' | 'scaleY' | 'rotate' | 'alpha';
+export interface IAdvancedFormula {
+	propiedadFormula: typePropiedadesAdvancedFormula;
+	onEmitFormula: string;
+	onUpdateFormula: string;
 }
 
 export interface IMemoria {
@@ -187,6 +196,8 @@ export interface AccelerationX {
 	accelerationX_transitionEase: string
 	accelerationX_min: number
 	accelerationX_max: number
+	accelerationX_onEmitActivado: boolean
+	accelerationX_onUpdateActivado: boolean
 }
 
 export interface AccelerationY {
@@ -199,6 +210,8 @@ export interface AccelerationY {
 	accelerationY_transitionEase: string
 	accelerationY_min: number
 	accelerationY_max: number
+	accelerationY_onEmitActivado: boolean
+	accelerationY_onUpdateActivado: boolean
 }
 
 export interface PosicionX {
@@ -242,6 +255,8 @@ export interface Scale {
 	scale_transitionEase: string
 	scale_min: number
 	scale_max: number
+	scale_onEmitActivado: boolean
+	scale_onUpdateActivado: boolean
 }
 
 export interface ScaleX {
@@ -253,6 +268,8 @@ export interface ScaleX {
 	scaleX_transitionEase: string
 	scaleX_min: number
 	scaleX_max: number
+	scaleX_onEmitActivado: boolean
+	scaleX_onUpdateActivado: boolean
 }
 
 export interface ScaleY {
@@ -264,6 +281,8 @@ export interface ScaleY {
 	scaleY_transitionEase: string
 	scaleY_min: number
 	scaleY_max: number
+	scaleY_onEmitActivado: boolean
+	scaleY_onUpdateActivado: boolean
 }
 
 export interface ColorTint {
@@ -284,6 +303,8 @@ export interface Alpha {
 	alpha_transitionEase: string
 	alpha_min: number
 	alpha_max: number
+	alpha_onEmitActivado: boolean
+	alpha_onUpdateActivado: boolean
 }
 
 export interface Rotate {
@@ -296,6 +317,8 @@ export interface Rotate {
 	rotate_transitionEase: string
 	rotate_min: number
 	rotate_max: number
+	rotate_onEmitActivado: boolean
+	rotate_onUpdateActivado: boolean
 }
 
 export interface Bounds {

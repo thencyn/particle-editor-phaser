@@ -1,50 +1,65 @@
 [
   {
     "configAdicional": {
-      "tipoSpeedSeleccionada": "No",
-      "tipoScaleSeleccionada": "Scale",
-      "velocidadAngleActivado": true,
+      "tipoSpeedSeleccionada": "SpeedAngle",
+      "tipoScaleSeleccionada": "ScaleXY",
+      "velocidadAngleActivado": false,
       "alphaActivado": false,
-      "rotateActivado": false,
+      "rotateActivado": true,
       "accelerationXActivada": false,
       "accelerationYActivada": false,
       "posicionXActivada": true,
       "posicionYActivada": false,
       "speedXSeleccionada": "Random",
       "speedYSeleccionada": "Random",
-      "speedSeleccionada": "Random",
+      "speedSeleccionada": "Unica",
       "angleSeleccionada": "Random",
       "accelerationXSeleccionada": "Transition",
       "accelerationYSeleccionada": "Transition",
-      "scaleSeleccionada": "Random",
-      "scaleXSeleccionada": "Transition",
+      "scaleSeleccionada": "Transition",
+      "scaleXSeleccionada": "Avanzado",
       "scaleYSeleccionada": "Transition",
       "alphaSeleccionada": "Transition",
-      "rotateSeleccionada": "Transition",
-      "posicionXSeleccionada": "Puntos",
+      "rotateSeleccionada": "Avanzado",
+      "posicionXSeleccionada": "Random",
       "posicionYSeleccionada": "Random",
       "listaDeathZones": [],
       "listaEmitZones": [],
       "emitZoneAbsolutoX": 1024,
       "emitZoneAbsolutoY": 576,
-      "listaPropiedadesFunction": []
+      "listaPropiedadesFunction": [
+        {
+          "propiedadFormula": "scaleX",
+          "onEmitFormula": "return 1;",
+          "onUpdateFormula": "return Math.cos(2 * Math.PI * 4 * particle.lifeT);"
+        },
+        {
+          "propiedadFormula": "rotate",
+          "onEmitFormula": "return 0;",
+          "onUpdateFormula": "return 2 * 360 * Math.sign(particle.velocityX) * particle.lifeT;"
+        }
+      ]
     },
     "texture": "AtlasParticulas",
     "frame": [
-      "baba"
+      "cuadrado-azul",
+      "cuadrado-lila",
+      "cuadrado-resaltado",
+      "cuadrado-rojo",
+      "cuadrado-verde"
     ],
     "frameCycle": false,
     "memoria": {
       "expandirPaginasUtilizadas": false,
-      "x": 1024,
-      "y": -50,
-      "lifespan": 3500,
-      "frequency": 150,
-      "quantity": 1,
+      "x": 500,
+      "y": 0,
+      "lifespan": 5000,
+      "frequency": 15,
+      "quantity": 4,
       "gravityX": 0,
-      "gravityY": 225,
-      "tipoSpeedSeleccionada": "No",
-      "tipoScaleSeleccionada": "Scale",
+      "gravityY": 100,
+      "tipoSpeedSeleccionada": "SpeedAngle",
+      "tipoScaleSeleccionada": "ScaleXY",
       "blendMode": "NORMAL",
       "maxVelocityX": 0,
       "maxVelocityY": 0,
@@ -65,7 +80,7 @@
       },
       "bounce": 0,
       "speed": {
-        "speed_unica": 0,
+        "speed_unica": 100,
         "speed_start": 0,
         "speed_end": 0,
         "speed_steps": 1,
@@ -73,7 +88,7 @@
         "speed_max": 400
       },
       "angle": {
-        "angle_activado": true,
+        "angle_activado": false,
         "angle_start": 0,
         "angle_end": 360,
         "angle_steps": 36,
@@ -131,9 +146,9 @@
         "posicionX_transitionEaseAuxInt": 0,
         "posicionX_transitionEase": "--Sin Ease--",
         "posicionX_transitionRandom": false,
-        "posicionX_min": -500,
-        "posicionX_max": 500,
-        "posicionX_puntos": "-850, -650, -450,-250,-50,150,350,550,750,950",
+        "posicionX_min": 0,
+        "posicionX_max": 1500,
+        "posicionX_puntos": "",
         "posicionX_interpolacionPuntos": "",
         "posicionX_interpolacionTipo": "linear"
       },
@@ -159,35 +174,35 @@
         "scale_steps": 0,
         "scale_transitionEaseAuxInt": 0,
         "scale_transitionEase": "--Sin Ease--",
-        "scale_min": 0.25,
+        "scale_min": 0.1,
         "scale_max": 1,
         "scale_onEmitActivado": false,
         "scale_onUpdateActivado": false
       },
       "scaleX": {
-				"scaleX_unica": 0,
-				"scaleX_start": 0.5,
-				"scaleX_end": 1,
-				"scaleX_steps": 0,
-				"scaleX_transitionEaseAuxInt": 0,
-				"scaleX_transitionEase": "--Sin Ease--",
-				"scaleX_min": 0,
-				"scaleX_max": 0,
-        "scaleX_onEmitActivado": false,
-        "scaleX_onUpdateActivado": false
-			},
-			"scaleY": {
-				"scaleY_unica": 0,
-				"scaleY_start": 0.5,
-				"scaleY_end": 1,
-				"scaleY_steps": 0,
-				"scaleY_transitionEaseAuxInt": 0,
-				"scaleY_transitionEase": "--Sin Ease--",
-				"scaleY_min": 0,
-				"scaleY_max": 0,
+        "scaleX_unica": 0,
+        "scaleX_start": 0.5,
+        "scaleX_end": 1,
+        "scaleX_steps": 0,
+        "scaleX_transitionEaseAuxInt": 0,
+        "scaleX_transitionEase": "--Sin Ease--",
+        "scaleX_min": 0.1,
+        "scaleX_max": 1,
+        "scaleX_onEmitActivado": true,
+        "scaleX_onUpdateActivado": true
+      },
+      "scaleY": {
+        "scaleY_unica": 0,
+        "scaleY_start": 0.5,
+        "scaleY_end": 1,
+        "scaleY_steps": 0,
+        "scaleY_transitionEaseAuxInt": 0,
+        "scaleY_transitionEase": "--Sin Ease--",
+        "scaleY_min": 0.1,
+        "scaleY_max": 1,
         "scaleY_onEmitActivado": false,
         "scaleY_onUpdateActivado": false
-			},
+      },
       "alpha": {
         "alpha_activado": false,
         "alpha_unica": 0,
@@ -202,7 +217,7 @@
         "alpha_onUpdateActivado": false
       },
       "rotate": {
-        "rotate_activado": false,
+        "rotate_activado": true,
         "rotate_unica": 0,
         "rotate_start": 0,
         "rotate_end": 360,
@@ -212,7 +227,7 @@
         "rotate_min": 0,
         "rotate_max": 360,
         "rotate_onEmitActivado": true,
-        "rotate_onUpdateActivado": false
+        "rotate_onUpdateActivado": true
       },
       "bounds": {
         "bounds_activado": false,

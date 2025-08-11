@@ -1,5 +1,5 @@
 import JSZip from "jszip";
-import { IConfiguracionEmitter, IGuardarConfiguracionProyectos, IGuardarConfiguracionEmitter, IProyectosBasicosConfiguracion, IMemoria, IDeathZone, IEmitZone } from "./Interfaces";
+import { IConfiguracionEmitter, IGuardarConfiguracionProyectos, IGuardarConfiguracionEmitter, IProyectosBasicosConfiguracion, IMemoria, IDeathZone, IEmitZone, IAdvancedFormula } from "./Interfaces";
 import { UtilFiguras } from "./UtilFiguras";
 
 export class UtilProyectos {
@@ -57,6 +57,7 @@ export class UtilProyectos {
 					listaEmitZones: IEmitZone[],
 					emitZoneAbsolutoX: number,
 					emitZoneAbsolutoY: number,
+					listaPropiedadesFunction: IAdvancedFormula[]
 				})[]) {
 		const zip = new JSZip();
 		const imageResponse = await fetch('/assets/particulas.png');
@@ -156,6 +157,7 @@ const game = new Phaser.Game(config);
 					listaEmitZones: IEmitZone[],
 					emitZoneAbsolutoX: number,
 					emitZoneAbsolutoY: number,
+					listaPropiedadesFunction: IAdvancedFormula[]
 				})[]) {
 		try {
 			await navigator.clipboard.writeText(this.emitterToString(listaEmitters));
@@ -176,24 +178,24 @@ const game = new Phaser.Game(config);
 					listaEmitZones: IEmitZone[],
 					emitZoneAbsolutoX: number,
 					emitZoneAbsolutoY: number,
+					listaPropiedadesFunction: IAdvancedFormula[]
 				})[]) {
-		const objectToJSString = (obj, saltoLinea: boolean) => {
-			// const entries = Object.entries(obj).map(([key, value]) => {
-			// 	return `${key}: ${valueToJSString(value, ['color', 'tint'].includes(key))}`;
-			// });
+		const objectToJSString = (obj, saltoLinea: boolean, listaPropiedadesFunction: IAdvancedFormula[] = []) => {
 			const prioridad = ['frame', 'lifespan', 'frequency', 'quantity', 'blendMode', 'gravityX', 'gravityY', 'speedX', 'speedY', 'speed', 'angle', 'scale', 'rotate', 'tint', 'color'];
 			const entries = [
 				...prioridad
 					.filter(prop => prop in obj)
-					.map(prop => `${prop}: ${valueToJSString(obj[prop], ['color', 'tint'].includes(prop))}`),
+					.map(prop => `${prop}: ${valueToJSString(obj[prop], ['color', 'tint'].includes(prop), obj[prop]?.hasOwnProperty('onEmit') ? `${listaPropiedadesFunction.find(x => x.propiedadFormula === prop)?.onEmitFormula}` : '',  obj[prop]?.hasOwnProperty('onUpdate') ? `${listaPropiedadesFunction.find(x => x.propiedadFormula === prop)?.onUpdateFormula}` : '')} `
+					),
 				...Object.entries(obj)
 					.filter(([key]) => !prioridad.includes(key))
-					.map(([key, value]) => `${key}: ${valueToJSString(value, ['color', 'tint'].includes(key))}`)
+					.map(([key, value]) => `${key}: ${valueToJSString(value, ['color', 'tint'].includes(key), obj[key]?.hasOwnProperty('onEmit') ? `${listaPropiedadesFunction.find(x => x.propiedadFormula === key)?.onEmitFormula}` : '', obj[key]?.hasOwnProperty('onUpdate') ? `${listaPropiedadesFunction.find(x => x.propiedadFormula === key)?.onUpdateFormula}` : '')}`)
+					// .map(([key, value]) => `${key}: ${['onEmit', 'onUpdate'].includes(key) ? `--${obj[key]}--` : valueToJSString(value, ['color', 'tint'].includes(key))}`)
 			];
 			return `{${saltoLinea ? '\n' : ' '}${entries.join(`,${saltoLinea ? '\n' : ' '}`)}${saltoLinea ? '\n' : ' '}}`;
 		}
 
-		const valueToJSString = (value, hexa: boolean = false) => {
+		const valueToJSString = (value, hexa: boolean = false, onEmitFormula: string = '', onUpdateFormula: string = '') => {
 			if (typeof value === "string") {
 				return `"${value}"`;
 			}
@@ -204,6 +206,21 @@ const game = new Phaser.Game(config);
 			}
 
 			if (typeof value === "object" && value !== null) {
+				if (value.hasOwnProperty('onEmit') || value.hasOwnProperty('onUpdate')) {
+					console.log({value, onEmitFormula, onUpdateFormula});
+					let strOnEmit = '';
+					if (value.hasOwnProperty('onEmit')) {
+						const multilinea = onEmitFormula.includes('\n') ? '\n' : '';
+						strOnEmit = `onEmit: (particle, key, value) => {${multilinea} ${onEmitFormula} ${multilinea}}`;
+					}
+
+					let strOnUpdate = '';
+					if (value.hasOwnProperty('onUpdate')) {
+						const multilinea = onUpdateFormula.includes('\n') ? '\n' : '';
+						strOnUpdate = `onUpdate: (particle, key, t, value) => {${multilinea} ${onUpdateFormula} ${multilinea}}`;
+					}
+					return `{\n ${strOnEmit} ${strOnEmit ? ',\n' : ''} ${strOnUpdate} \n}`;
+				}
 				return objectToJSString(value, false);
 			}
 			return !hexa ? String(value) : `0x${value.toString(16).padStart(6, '0')}`;
@@ -230,7 +247,7 @@ const game = new Phaser.Game(config);
 				}));
 			}
 
-			let propiedadesTexto = objectToJSString(item.configParticle, true);
+			let propiedadesTexto = objectToJSString(item.configParticle, true, item.listaPropiedadesFunction);
 			if (item.listaDeathZones.length > 0 || item.listaEmitZones.length > 0) {
 				propiedadesTexto = this.transformaFigura(propiedadesTexto);
 			}

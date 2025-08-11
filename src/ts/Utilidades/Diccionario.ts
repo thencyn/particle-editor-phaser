@@ -38,6 +38,8 @@ export enum Eventos {
 
 	Exportar = "EventoExportar",
 	Importar = "EventoImportar",
+
+	FormulasAvanzadasGuardar = "EventoFormulasAvanzadasGuardar",
 }
 
 export enum TexturasManuales {

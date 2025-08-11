@@ -88,7 +88,6 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
 // export default new Game(config);
 export default class Game extends Phaser.Game {
 	constructor(config: Phaser.Types.Core.GameConfig) {
-
 		super(config);
 
 		this.scene.add(PreloaderScene.Name, PreloaderScene);
@@ -104,6 +103,16 @@ export default class Game extends Phaser.Game {
 
 
 window.onload = (): void => {
+	const url = new URL(document.URL);
+	const searchParams = new URLSearchParams(url.search);
+	const color = `#${searchParams.get('color') || '494a4a'}`;
+	const width = !Number(searchParams.get('width')) ? 2048 : Number(searchParams.get('width'));
+	const height = !Number(searchParams.get('height')) ? 1152 : Number(searchParams.get('height'));
+
+	// console.log({ a: Number(searchParams.get('width')), b: !Number('aa'), c: !Number(null), d: !Number(undefined), e: !Number(undefined), });
+	gameConfig.backgroundColor = color;
+	gameConfig.width = width < 1600 ? 1600 : width;
+	gameConfig.height = height < 1024 ? 1024 : height;
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	new Game(gameConfig);
 	// Uncomment the following two lines if you want the game to scale to fill the entire page, but keep the game ratio.

@@ -1,56 +1,73 @@
 [
   {
     "configAdicional": {
-      "tipoSpeedSeleccionada": "SpeedAngle",
+      "tipoSpeedSeleccionada": "No",
       "tipoScaleSeleccionada": "Scale",
       "velocidadAngleActivado": true,
-      "alphaActivado": false,
-      "rotateActivado": false,
-      "accelerationXActivada": false,
+      "alphaActivado": true,
+      "rotateActivado": true,
+      "accelerationXActivada": true,
       "accelerationYActivada": false,
       "posicionXActivada": false,
-      "posicionYActivada": false,
-      "speedXSeleccionada": "Random",
-      "speedYSeleccionada": "Random",
-      "speedSeleccionada": "Unica",
+      "posicionYActivada": true,
+      "speedXSeleccionada": "Unica",
+      "speedYSeleccionada": "Unica",
+      "speedSeleccionada": "Random",
       "angleSeleccionada": "Random",
-      "accelerationXSeleccionada": "Transition",
+      "accelerationXSeleccionada": "Avanzado",
       "accelerationYSeleccionada": "Transition",
-      "scaleSeleccionada": "Unica",
+      "scaleSeleccionada": "Avanzado",
       "scaleXSeleccionada": "Transition",
       "scaleYSeleccionada": "Transition",
-      "alphaSeleccionada": "Transition",
-      "rotateSeleccionada": "Transition",
+      "alphaSeleccionada": "Avanzado",
+      "rotateSeleccionada": "Unica",
       "posicionXSeleccionada": "Random",
       "posicionYSeleccionada": "Random",
       "listaDeathZones": [],
       "listaEmitZones": [],
       "emitZoneAbsolutoX": 1024,
       "emitZoneAbsolutoY": 576,
-      "listaPropiedadesFunction": []
+      "listaPropiedadesFunction": [
+        {
+          "propiedadFormula": "accelerationX",
+          "onEmitFormula": "return 0;",
+          "onUpdateFormula": "if (particle.lifeT <= 0.3) {\n   return 100\n} else if (particle.lifeT > 0.3 && particle.lifeT < 0.5) {\n   return 25\n}\nreturn -200;"
+        },
+        {
+          "propiedadFormula": "scale",
+          "onEmitFormula": "return 1.25 - particle.lifeT;",
+          "onUpdateFormula": "if (particle.worldPosition.y > 650) {\n   return 1.25 - particle.lifeT;\n}\nreturn 0.25 + particle.lifeT;"
+        },
+        {
+          "propiedadFormula": "alpha",
+          "onEmitFormula": "return 0;",
+          "onUpdateFormula": "return particle.lifeT;"
+        }
+      ]
     },
     "texture": "AtlasParticulas",
     "frame": [
-      "monster-red"
+      "carta-dorso",
+      "carta-frente"
     ],
     "frameCycle": false,
     "memoria": {
       "expandirPaginasUtilizadas": false,
-      "x": 600,
-      "y": 600,
-      "lifespan": 2500,
-      "frequency": 200,
+      "x": 573,
+      "y": 576,
+      "lifespan": 6000,
+      "frequency": 1500,
       "quantity": 1,
       "gravityX": 0,
       "gravityY": 0,
-      "tipoSpeedSeleccionada": "SpeedAngle",
+      "tipoSpeedSeleccionada": "No",
       "tipoScaleSeleccionada": "Scale",
       "blendMode": "NORMAL",
       "maxVelocityX": 0,
       "maxVelocityY": 0,
       "advance": 0,
       "hold": 0,
-      "particleBringToTop": true,
+      "particleBringToTop": null,
       "sortProperty": "",
       "sortOrderAsc": false,
       "moveToActivar": false,
@@ -65,7 +82,7 @@
       },
       "bounce": 0,
       "speed": {
-        "speed_unica": 150,
+        "speed_unica": 0,
         "speed_start": 0,
         "speed_end": 0,
         "speed_steps": 1,
@@ -77,8 +94,8 @@
         "angle_start": 0,
         "angle_end": 360,
         "angle_steps": 36,
-        "angle_min": -30,
-        "angle_max": 30
+        "angle_min": 225,
+        "angle_max": 315
       },
       "speedX": {
         "speedX_unica": 0,
@@ -97,7 +114,7 @@
         "speedY_max": 500
       },
       "accelerationX": {
-        "accelerationX_activado": false,
+        "accelerationX_activado": true,
         "accelerationX_unica": 0,
         "accelerationX_start": 100,
         "accelerationX_end": 500,
@@ -106,8 +123,8 @@
         "accelerationX_transitionEase": "--Sin Ease--",
         "accelerationX_min": -100,
         "accelerationX_max": 100,
-        "accelerationX_onEmitActivado": false,
-        "accelerationX_onUpdateActivado": false
+        "accelerationX_onEmitActivado": true,
+        "accelerationX_onUpdateActivado": true
       },
       "accelerationY": {
         "accelerationY_activado": false,
@@ -138,7 +155,7 @@
         "posicionX_interpolacionTipo": "linear"
       },
       "posicionY": {
-        "posicionY_activada": false,
+        "posicionY_activada": true,
         "posicionY_unica": 0,
         "posicionY_start": 0,
         "posicionY_end": 100,
@@ -153,43 +170,43 @@
         "posicionY_interpolacionTipo": "linear"
       },
       "scale": {
-        "scale_unica": 1,
+        "scale_unica": 0.5,
         "scale_start": 0.5,
         "scale_end": 1,
         "scale_steps": 0,
         "scale_transitionEaseAuxInt": 0,
         "scale_transitionEase": "--Sin Ease--",
-        "scale_min": 0,
-        "scale_max": 0,
-        "scale_onEmitActivado": false,
-        "scale_onUpdateActivado": false
+        "scale_min": 0.1,
+        "scale_max": 1,
+        "scale_onEmitActivado": true,
+        "scale_onUpdateActivado": true
       },
       "scaleX": {
-				"scaleX_unica": 0,
-				"scaleX_start": 0.5,
-				"scaleX_end": 1,
-				"scaleX_steps": 0,
-				"scaleX_transitionEaseAuxInt": 0,
-				"scaleX_transitionEase": "--Sin Ease--",
-				"scaleX_min": 0,
-				"scaleX_max": 0,
+        "scaleX_unica": 0,
+        "scaleX_start": 0.5,
+        "scaleX_end": 1,
+        "scaleX_steps": 0,
+        "scaleX_transitionEaseAuxInt": 0,
+        "scaleX_transitionEase": "--Sin Ease--",
+        "scaleX_min": 0.1,
+        "scaleX_max": 1,
         "scaleX_onEmitActivado": false,
         "scaleX_onUpdateActivado": false
-			},
-			"scaleY": {
-				"scaleY_unica": 0,
-				"scaleY_start": 0.5,
-				"scaleY_end": 1,
-				"scaleY_steps": 0,
-				"scaleY_transitionEaseAuxInt": 0,
-				"scaleY_transitionEase": "--Sin Ease--",
-				"scaleY_min": 0,
-				"scaleY_max": 0,
+      },
+      "scaleY": {
+        "scaleY_unica": 0,
+        "scaleY_start": 0.5,
+        "scaleY_end": 1,
+        "scaleY_steps": 0,
+        "scaleY_transitionEaseAuxInt": 0,
+        "scaleY_transitionEase": "--Sin Ease--",
+        "scaleY_min": 0.1,
+        "scaleY_max": 1,
         "scaleY_onEmitActivado": false,
         "scaleY_onUpdateActivado": false
-			},
+      },
       "alpha": {
-        "alpha_activado": false,
+        "alpha_activado": true,
         "alpha_unica": 0,
         "alpha_start": 0,
         "alpha_end": 1,
@@ -198,12 +215,12 @@
         "alpha_transitionEase": "--Sin Ease--",
         "alpha_min": 0.25,
         "alpha_max": 0.5,
-        "alpha_onEmitActivado": false,
-        "alpha_onUpdateActivado": false
+        "alpha_onEmitActivado": true,
+        "alpha_onUpdateActivado": true
       },
       "rotate": {
-        "rotate_activado": false,
-        "rotate_unica": 0,
+        "rotate_activado": true,
+        "rotate_unica": 90,
         "rotate_start": 0,
         "rotate_end": 360,
         "rotate_steps": 0,
@@ -211,7 +228,7 @@
         "rotate_transitionEase": "--Sin Ease--",
         "rotate_min": 0,
         "rotate_max": 360,
-        "rotate_onEmitActivado": true,
+        "rotate_onEmitActivado": false,
         "rotate_onUpdateActivado": false
       },
       "bounds": {
@@ -263,56 +280,73 @@
   },
   {
     "configAdicional": {
-      "tipoSpeedSeleccionada": "SpeedAngle",
+      "tipoSpeedSeleccionada": "No",
       "tipoScaleSeleccionada": "Scale",
       "velocidadAngleActivado": true,
-      "alphaActivado": false,
-      "rotateActivado": false,
-      "accelerationXActivada": false,
+      "alphaActivado": true,
+      "rotateActivado": true,
+      "accelerationXActivada": true,
       "accelerationYActivada": false,
       "posicionXActivada": false,
-      "posicionYActivada": false,
-      "speedXSeleccionada": "Random",
-      "speedYSeleccionada": "Random",
-      "speedSeleccionada": "Unica",
+      "posicionYActivada": true,
+      "speedXSeleccionada": "Unica",
+      "speedYSeleccionada": "Unica",
+      "speedSeleccionada": "Random",
       "angleSeleccionada": "Random",
-      "accelerationXSeleccionada": "Transition",
+      "accelerationXSeleccionada": "Avanzado",
       "accelerationYSeleccionada": "Transition",
-      "scaleSeleccionada": "Unica",
+      "scaleSeleccionada": "Avanzado",
       "scaleXSeleccionada": "Transition",
       "scaleYSeleccionada": "Transition",
-      "alphaSeleccionada": "Transition",
-      "rotateSeleccionada": "Transition",
+      "alphaSeleccionada": "Avanzado",
+      "rotateSeleccionada": "Unica",
       "posicionXSeleccionada": "Random",
       "posicionYSeleccionada": "Random",
       "listaDeathZones": [],
       "listaEmitZones": [],
       "emitZoneAbsolutoX": 1024,
       "emitZoneAbsolutoY": 576,
-      "listaPropiedadesFunction": []
+      "listaPropiedadesFunction": [
+        {
+          "propiedadFormula": "accelerationX",
+          "onEmitFormula": "return 0;",
+          "onUpdateFormula": "if (particle.lifeT <= 0.3) {\n   return -100\n} else if (particle.lifeT > 0.3 && particle.lifeT < 0.5) {\n   return -25\n}\nreturn 200;"
+        },
+        {
+          "propiedadFormula": "scale",
+          "onEmitFormula": "return 1;",
+          "onUpdateFormula": "if (particle.lifeT <= 0.25) {\n   return 1\n} else if (particle.lifeT > 0.25 && particle.lifeT <= 0.5) {\n   return 0.75\n} else if (particle.lifeT > 0.5 && particle.lifeT <= 0.75) {\n   return 0.5\n}\nreturn 0.25;"
+        },
+        {
+          "propiedadFormula": "alpha",
+          "onEmitFormula": "",
+          "onUpdateFormula": "if (particle.lifeT <= 0.25) {\n   return 1\n} else if (particle.lifeT > 0.25 && particle.lifeT <= 0.5) {\n   return 0.85\n} else if (particle.lifeT > 0.5 && particle.lifeT <= 0.75) {\n   return 0.7\n}\nreturn 0.5;"
+        }
+      ]
     },
     "texture": "AtlasParticulas",
     "frame": [
-      "monster-yellow"
+      "carta-dorso",
+      "carta-frente"
     ],
     "frameCycle": false,
     "memoria": {
       "expandirPaginasUtilizadas": false,
       "x": 1500,
-      "y": 600,
-      "lifespan": 2500,
-      "frequency": 200,
+      "y": 576,
+      "lifespan": 6000,
+      "frequency": 1500,
       "quantity": 1,
       "gravityX": 0,
       "gravityY": 0,
-      "tipoSpeedSeleccionada": "SpeedAngle",
+      "tipoSpeedSeleccionada": "No",
       "tipoScaleSeleccionada": "Scale",
       "blendMode": "NORMAL",
       "maxVelocityX": 0,
       "maxVelocityY": 0,
       "advance": 0,
       "hold": 0,
-      "particleBringToTop": false,
+      "particleBringToTop": null,
       "sortProperty": "",
       "sortOrderAsc": false,
       "moveToActivar": false,
@@ -327,7 +361,7 @@
       },
       "bounce": 0,
       "speed": {
-        "speed_unica": 150,
+        "speed_unica": 0,
         "speed_start": 0,
         "speed_end": 0,
         "speed_steps": 1,
@@ -339,8 +373,8 @@
         "angle_start": 0,
         "angle_end": 360,
         "angle_steps": 36,
-        "angle_min": 210,
-        "angle_max": 150
+        "angle_min": 225,
+        "angle_max": 315
       },
       "speedX": {
         "speedX_unica": 0,
@@ -359,7 +393,7 @@
         "speedY_max": 500
       },
       "accelerationX": {
-        "accelerationX_activado": false,
+        "accelerationX_activado": true,
         "accelerationX_unica": 0,
         "accelerationX_start": 100,
         "accelerationX_end": 500,
@@ -368,8 +402,8 @@
         "accelerationX_transitionEase": "--Sin Ease--",
         "accelerationX_min": -100,
         "accelerationX_max": 100,
-        "accelerationX_onEmitActivado": false,
-        "accelerationX_onUpdateActivado": false
+        "accelerationX_onEmitActivado": true,
+        "accelerationX_onUpdateActivado": true
       },
       "accelerationY": {
         "accelerationY_activado": false,
@@ -400,7 +434,7 @@
         "posicionX_interpolacionTipo": "linear"
       },
       "posicionY": {
-        "posicionY_activada": false,
+        "posicionY_activada": true,
         "posicionY_unica": 0,
         "posicionY_start": 0,
         "posicionY_end": 100,
@@ -415,43 +449,43 @@
         "posicionY_interpolacionTipo": "linear"
       },
       "scale": {
-        "scale_unica": 1,
+        "scale_unica": 0.5,
         "scale_start": 0.5,
         "scale_end": 1,
         "scale_steps": 0,
         "scale_transitionEaseAuxInt": 0,
         "scale_transitionEase": "--Sin Ease--",
-        "scale_min": 0,
-        "scale_max": 0,
-        "scale_onEmitActivado": false,
-        "scale_onUpdateActivado": false
+        "scale_min": 0.1,
+        "scale_max": 1,
+        "scale_onEmitActivado": true,
+        "scale_onUpdateActivado": true
       },
       "scaleX": {
-				"scaleX_unica": 0,
-				"scaleX_start": 0.5,
-				"scaleX_end": 1,
-				"scaleX_steps": 0,
-				"scaleX_transitionEaseAuxInt": 0,
-				"scaleX_transitionEase": "--Sin Ease--",
-				"scaleX_min": 0,
-				"scaleX_max": 0,
+        "scaleX_unica": 0,
+        "scaleX_start": 0.5,
+        "scaleX_end": 1,
+        "scaleX_steps": 0,
+        "scaleX_transitionEaseAuxInt": 0,
+        "scaleX_transitionEase": "--Sin Ease--",
+        "scaleX_min": 0.1,
+        "scaleX_max": 1,
         "scaleX_onEmitActivado": false,
         "scaleX_onUpdateActivado": false
-			},
-			"scaleY": {
-				"scaleY_unica": 0,
-				"scaleY_start": 0.5,
-				"scaleY_end": 1,
-				"scaleY_steps": 0,
-				"scaleY_transitionEaseAuxInt": 0,
-				"scaleY_transitionEase": "--Sin Ease--",
-				"scaleY_min": 0,
-				"scaleY_max": 0,
+      },
+      "scaleY": {
+        "scaleY_unica": 0,
+        "scaleY_start": 0.5,
+        "scaleY_end": 1,
+        "scaleY_steps": 0,
+        "scaleY_transitionEaseAuxInt": 0,
+        "scaleY_transitionEase": "--Sin Ease--",
+        "scaleY_min": 0.1,
+        "scaleY_max": 1,
         "scaleY_onEmitActivado": false,
         "scaleY_onUpdateActivado": false
-			},
+      },
       "alpha": {
-        "alpha_activado": false,
+        "alpha_activado": true,
         "alpha_unica": 0,
         "alpha_start": 0,
         "alpha_end": 1,
@@ -460,12 +494,12 @@
         "alpha_transitionEase": "--Sin Ease--",
         "alpha_min": 0.25,
         "alpha_max": 0.5,
-        "alpha_onEmitActivado": false,
-        "alpha_onUpdateActivado": false
+        "alpha_onEmitActivado": true,
+        "alpha_onUpdateActivado": true
       },
       "rotate": {
-        "rotate_activado": false,
-        "rotate_unica": 0,
+        "rotate_activado": true,
+        "rotate_unica": 90,
         "rotate_start": 0,
         "rotate_end": 360,
         "rotate_steps": 0,
@@ -473,7 +507,7 @@
         "rotate_transitionEase": "--Sin Ease--",
         "rotate_min": 0,
         "rotate_max": 360,
-        "rotate_onEmitActivado": true,
+        "rotate_onEmitActivado": false,
         "rotate_onUpdateActivado": false
       },
       "bounds": {

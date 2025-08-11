@@ -1,14 +1,14 @@
 [
   {
     "configAdicional": {
-      "tipoSpeedSeleccionada": "No",
-      "tipoScaleSeleccionada": "Scale",
+      "tipoSpeedSeleccionada": "SpeedXY",
+      "tipoScaleSeleccionada": "ScaleXY",
       "velocidadAngleActivado": true,
-      "alphaActivado": false,
-      "rotateActivado": false,
+      "alphaActivado": true,
+      "rotateActivado": true,
       "accelerationXActivada": false,
       "accelerationYActivada": false,
-      "posicionXActivada": true,
+      "posicionXActivada": false,
       "posicionYActivada": false,
       "speedXSeleccionada": "Random",
       "speedYSeleccionada": "Random",
@@ -16,36 +16,57 @@
       "angleSeleccionada": "Random",
       "accelerationXSeleccionada": "Transition",
       "accelerationYSeleccionada": "Transition",
-      "scaleSeleccionada": "Random",
-      "scaleXSeleccionada": "Transition",
-      "scaleYSeleccionada": "Transition",
+      "scaleSeleccionada": "Transition",
+      "scaleXSeleccionada": "Random",
+      "scaleYSeleccionada": "Unica",
       "alphaSeleccionada": "Transition",
-      "rotateSeleccionada": "Transition",
-      "posicionXSeleccionada": "Puntos",
+      "rotateSeleccionada": "Avanzado",
+      "posicionXSeleccionada": "Random",
       "posicionYSeleccionada": "Random",
       "listaDeathZones": [],
-      "listaEmitZones": [],
-      "emitZoneAbsolutoX": 1024,
+      "listaEmitZones": [
+        {
+          "tipo": "random",
+          "figura": {
+            "type": 0,
+            "x": 1070,
+            "y": 600,
+            "_radius": 500,
+            "_diameter": 1000
+          },
+          "quantity": 1,
+          "total": 1,
+          "yoyo": false
+        }
+      ],
+      "emitZoneAbsolutoX": 1048,
       "emitZoneAbsolutoY": 576,
-      "listaPropiedadesFunction": []
+      "listaPropiedadesFunction": [
+        {
+          "propiedadFormula": "rotate",
+          "onEmitFormula": "return Phaser.Math.RadToDeg(Math.atan2(particle.y, particle.x));",
+          "onUpdateFormula": ""
+        }
+      ]
     },
     "texture": "AtlasParticulas",
     "frame": [
-      "baba"
+      "fuego-azul",
+      "fuego-rojo"
     ],
-    "frameCycle": false,
+    "frameCycle": true,
     "memoria": {
       "expandirPaginasUtilizadas": false,
-      "x": 1024,
-      "y": -50,
-      "lifespan": 3500,
-      "frequency": 150,
-      "quantity": 1,
+      "x": 1048,
+      "y": 576,
+      "lifespan": 1000,
+      "frequency": 10,
+      "quantity": 10,
       "gravityX": 0,
-      "gravityY": 225,
-      "tipoSpeedSeleccionada": "No",
-      "tipoScaleSeleccionada": "Scale",
-      "blendMode": "NORMAL",
+      "gravityY": 0,
+      "tipoSpeedSeleccionada": "SpeedXY",
+      "tipoScaleSeleccionada": "ScaleXY",
+      "blendMode": "ADD",
       "maxVelocityX": 0,
       "maxVelocityY": 0,
       "advance": 0,
@@ -53,7 +74,7 @@
       "particleBringToTop": null,
       "sortProperty": "",
       "sortOrderAsc": false,
-      "moveToActivar": false,
+      "moveToActivar": true,
       "moveToX": 0,
       "moveToY": 0,
       "colorTint": {
@@ -123,7 +144,7 @@
         "accelerationY_onUpdateActivado": false
       },
       "posicionX": {
-        "posicionX_activada": true,
+        "posicionX_activada": false,
         "posicionX_unica": 0,
         "posicionX_start": 0,
         "posicionX_end": 100,
@@ -133,7 +154,7 @@
         "posicionX_transitionRandom": false,
         "posicionX_min": -500,
         "posicionX_max": 500,
-        "posicionX_puntos": "-850, -650, -450,-250,-50,150,350,550,750,950",
+        "posicionX_puntos": "",
         "posicionX_interpolacionPuntos": "",
         "posicionX_interpolacionTipo": "linear"
       },
@@ -159,40 +180,40 @@
         "scale_steps": 0,
         "scale_transitionEaseAuxInt": 0,
         "scale_transitionEase": "--Sin Ease--",
-        "scale_min": 0.25,
+        "scale_min": 0.1,
         "scale_max": 1,
         "scale_onEmitActivado": false,
         "scale_onUpdateActivado": false
       },
       "scaleX": {
-				"scaleX_unica": 0,
-				"scaleX_start": 0.5,
-				"scaleX_end": 1,
-				"scaleX_steps": 0,
-				"scaleX_transitionEaseAuxInt": 0,
-				"scaleX_transitionEase": "--Sin Ease--",
-				"scaleX_min": 0,
-				"scaleX_max": 0,
+        "scaleX_unica": 0,
+        "scaleX_start": 0.2,
+        "scaleX_end": 2,
+        "scaleX_steps": 0,
+        "scaleX_transitionEaseAuxInt": 0,
+        "scaleX_transitionEase": "--Sin Ease--",
+        "scaleX_min": 0.2,
+        "scaleX_max": 2,
         "scaleX_onEmitActivado": false,
         "scaleX_onUpdateActivado": false
-			},
-			"scaleY": {
-				"scaleY_unica": 0,
-				"scaleY_start": 0.5,
-				"scaleY_end": 1,
-				"scaleY_steps": 0,
-				"scaleY_transitionEaseAuxInt": 0,
-				"scaleY_transitionEase": "--Sin Ease--",
-				"scaleY_min": 0,
-				"scaleY_max": 0,
+      },
+      "scaleY": {
+        "scaleY_unica": 0.2,
+        "scaleY_start": 0.2,
+        "scaleY_end": 0.05,
+        "scaleY_steps": 0,
+        "scaleY_transitionEaseAuxInt": 0,
+        "scaleY_transitionEase": "--Sin Ease--",
+        "scaleY_min": 0.1,
+        "scaleY_max": 1,
         "scaleY_onEmitActivado": false,
         "scaleY_onUpdateActivado": false
-			},
+      },
       "alpha": {
-        "alpha_activado": false,
+        "alpha_activado": true,
         "alpha_unica": 0,
-        "alpha_start": 0,
-        "alpha_end": 1,
+        "alpha_start": 0.5,
+        "alpha_end": 0,
         "alpha_steps": 0,
         "alpha_transitionEaseAuxInt": 0,
         "alpha_transitionEase": "--Sin Ease--",
@@ -202,7 +223,7 @@
         "alpha_onUpdateActivado": false
       },
       "rotate": {
-        "rotate_activado": false,
+        "rotate_activado": true,
         "rotate_unica": 0,
         "rotate_start": 0,
         "rotate_end": 360,
@@ -251,7 +272,7 @@
       },
       "emitZone": {
         "emitZone_activado": true,
-        "emitZone_mostrar": true,
+        "emitZone_mostrar": false,
         "emitZone_color": 255
       },
       "follow": {

@@ -26,7 +26,8 @@
       "listaDeathZones": [],
       "listaEmitZones": [],
       "emitZoneAbsolutoX": 1024,
-      "emitZoneAbsolutoY": 576
+      "emitZoneAbsolutoY": 576,
+      "listaPropiedadesFunction": []
     },
     "texture": "AtlasParticulas",
     "frame": [
@@ -104,7 +105,9 @@
         "accelerationX_transitionEaseAuxInt": 0,
         "accelerationX_transitionEase": "--Sin Ease--",
         "accelerationX_min": -100,
-        "accelerationX_max": 100
+        "accelerationX_max": 100,
+        "accelerationX_onEmitActivado": false,
+        "accelerationX_onUpdateActivado": false
       },
       "accelerationY": {
         "accelerationY_activado": false,
@@ -115,7 +118,9 @@
         "accelerationY_transitionEaseAuxInt": 0,
         "accelerationY_transitionEase": "--Sin Ease--",
         "accelerationY_min": -100,
-        "accelerationY_max": 100
+        "accelerationY_max": 100,
+        "accelerationY_onEmitActivado": false,
+        "accelerationY_onUpdateActivado": false
       },
       "posicionX": {
         "posicionX_activada": false,
@@ -155,7 +160,9 @@
         "scale_transitionEaseAuxInt": 0,
         "scale_transitionEase": "--Sin Ease--",
         "scale_min": 0,
-        "scale_max": 0
+        "scale_max": 0,
+        "scale_onEmitActivado": false,
+        "scale_onUpdateActivado": false
       },
       "scaleX": {
 				"scaleX_unica": 0,
@@ -165,7 +172,9 @@
 				"scaleX_transitionEaseAuxInt": 0,
 				"scaleX_transitionEase": "--Sin Ease--",
 				"scaleX_min": 0,
-				"scaleX_max": 0
+				"scaleX_max": 0,
+        "scaleX_onEmitActivado": false,
+        "scaleX_onUpdateActivado": false
 			},
 			"scaleY": {
 				"scaleY_unica": 0,
@@ -175,7 +184,9 @@
 				"scaleY_transitionEaseAuxInt": 0,
 				"scaleY_transitionEase": "--Sin Ease--",
 				"scaleY_min": 0,
-				"scaleY_max": 0
+				"scaleY_max": 0,
+        "scaleY_onEmitActivado": false,
+        "scaleY_onUpdateActivado": false
 			},
       "alpha": {
         "alpha_activado": false,
@@ -186,7 +197,9 @@
         "alpha_transitionEaseAuxInt": 0,
         "alpha_transitionEase": "--Sin Ease--",
         "alpha_min": 0.25,
-        "alpha_max": 0.5
+        "alpha_max": 0.5,
+        "alpha_onEmitActivado": false,
+        "alpha_onUpdateActivado": false
       },
       "rotate": {
         "rotate_activado": true,
@@ -197,7 +210,9 @@
         "rotate_transitionEaseAuxInt": 0,
         "rotate_transitionEase": "--Sin Ease--",
         "rotate_min": 0,
-        "rotate_max": 360
+        "rotate_max": 360,
+        "rotate_onEmitActivado": true,
+        "rotate_onUpdateActivado": false
       },
       "bounds": {
         "bounds_activado": false,
@@ -273,7 +288,8 @@
       "listaDeathZones": [],
       "listaEmitZones": [],
       "emitZoneAbsolutoX": 1024,
-      "emitZoneAbsolutoY": 576
+      "emitZoneAbsolutoY": 576,
+      "listaPropiedadesFunction": []
     },
     "texture": "AtlasParticulas",
     "frame": [
@@ -351,7 +367,9 @@
         "accelerationX_transitionEaseAuxInt": 0,
         "accelerationX_transitionEase": "--Sin Ease--",
         "accelerationX_min": -100,
-        "accelerationX_max": 100
+        "accelerationX_max": 100,
+        "accelerationX_onEmitActivado": false,
+        "accelerationX_onUpdateActivado": false
       },
       "accelerationY": {
         "accelerationY_activado": false,
@@ -362,7 +380,9 @@
         "accelerationY_transitionEaseAuxInt": 0,
         "accelerationY_transitionEase": "--Sin Ease--",
         "accelerationY_min": -100,
-        "accelerationY_max": 100
+        "accelerationY_max": 100,
+        "accelerationY_onEmitActivado": false,
+        "accelerationY_onUpdateActivado": false
       },
       "posicionX": {
         "posicionX_activada": false,
@@ -402,7 +422,9 @@
         "scale_transitionEaseAuxInt": 0,
         "scale_transitionEase": "--Sin Ease--",
         "scale_min": 0,
-        "scale_max": 0
+        "scale_max": 0,
+        "scale_onEmitActivado": false,
+        "scale_onUpdateActivado": false
       },
       "scaleX": {
 				"scaleX_unica": 0,
@@ -412,7 +434,9 @@
 				"scaleX_transitionEaseAuxInt": 0,
 				"scaleX_transitionEase": "--Sin Ease--",
 				"scaleX_min": 0,
-				"scaleX_max": 0
+				"scaleX_max": 0,
+        "scaleX_onEmitActivado": false,
+        "scaleX_onUpdateActivado": false
 			},
 			"scaleY": {
 				"scaleY_unica": 0,
@@ -422,7 +446,9 @@
 				"scaleY_transitionEaseAuxInt": 0,
 				"scaleY_transitionEase": "--Sin Ease--",
 				"scaleY_min": 0,
-				"scaleY_max": 0
+				"scaleY_max": 0,
+        "scaleY_onEmitActivado": false,
+        "scaleY_onUpdateActivado": false
 			},
       "alpha": {
         "alpha_activado": false,
@@ -433,7 +459,9 @@
         "alpha_transitionEaseAuxInt": 0,
         "alpha_transitionEase": "--Sin Ease--",
         "alpha_min": 0.25,
-        "alpha_max": 0.5
+        "alpha_max": 0.5,
+        "alpha_onEmitActivado": false,
+        "alpha_onUpdateActivado": false
       },
       "rotate": {
         "rotate_activado": true,
@@ -444,7 +472,9 @@
         "rotate_transitionEaseAuxInt": 0,
         "rotate_transitionEase": "--Sin Ease--",
         "rotate_min": 0,
-        "rotate_max": 360
+        "rotate_max": 360,
+        "rotate_onEmitActivado": true,
+        "rotate_onUpdateActivado": false
       },
       "bounds": {
         "bounds_activado": false,
@@ -520,7 +550,8 @@
       "listaDeathZones": [],
       "listaEmitZones": [],
       "emitZoneAbsolutoX": 1024,
-      "emitZoneAbsolutoY": 576
+      "emitZoneAbsolutoY": 576,
+      "listaPropiedadesFunction": []
     },
     "texture": "AtlasParticulas",
     "frame": [
@@ -598,7 +629,9 @@
         "accelerationX_transitionEaseAuxInt": 0,
         "accelerationX_transitionEase": "--Sin Ease--",
         "accelerationX_min": -100,
-        "accelerationX_max": 100
+        "accelerationX_max": 100,
+        "accelerationX_onEmitActivado": false,
+        "accelerationX_onUpdateActivado": false
       },
       "accelerationY": {
         "accelerationY_activado": false,
@@ -609,7 +642,9 @@
         "accelerationY_transitionEaseAuxInt": 0,
         "accelerationY_transitionEase": "--Sin Ease--",
         "accelerationY_min": -100,
-        "accelerationY_max": 100
+        "accelerationY_max": 100,
+        "accelerationY_onEmitActivado": false,
+        "accelerationY_onUpdateActivado": false
       },
       "posicionX": {
         "posicionX_activada": false,
@@ -649,7 +684,9 @@
         "scale_transitionEaseAuxInt": 0,
         "scale_transitionEase": "--Sin Ease--",
         "scale_min": 0,
-        "scale_max": 0
+        "scale_max": 0,
+        "scale_onEmitActivado": false,
+        "scale_onUpdateActivado": false
       },
       "scaleX": {
 				"scaleX_unica": 0,
@@ -659,7 +696,9 @@
 				"scaleX_transitionEaseAuxInt": 0,
 				"scaleX_transitionEase": "--Sin Ease--",
 				"scaleX_min": 0,
-				"scaleX_max": 0
+				"scaleX_max": 0,
+        "scaleX_onEmitActivado": false,
+        "scaleX_onUpdateActivado": false
 			},
 			"scaleY": {
 				"scaleY_unica": 0,
@@ -669,7 +708,9 @@
 				"scaleY_transitionEaseAuxInt": 0,
 				"scaleY_transitionEase": "--Sin Ease--",
 				"scaleY_min": 0,
-				"scaleY_max": 0
+				"scaleY_max": 0,
+        "scaleY_onEmitActivado": false,
+        "scaleY_onUpdateActivado": false
 			},
       "alpha": {
         "alpha_activado": false,
@@ -680,7 +721,9 @@
         "alpha_transitionEaseAuxInt": 0,
         "alpha_transitionEase": "--Sin Ease--",
         "alpha_min": 0.25,
-        "alpha_max": 0.5
+        "alpha_max": 0.5,
+        "alpha_onEmitActivado": false,
+        "alpha_onUpdateActivado": false
       },
       "rotate": {
         "rotate_activado": true,
@@ -691,7 +734,9 @@
         "rotate_transitionEaseAuxInt": 0,
         "rotate_transitionEase": "--Sin Ease--",
         "rotate_min": 0,
-        "rotate_max": 360
+        "rotate_max": 360,
+        "rotate_onEmitActivado": true,
+        "rotate_onUpdateActivado": false
       },
       "bounds": {
         "bounds_activado": false,
@@ -767,7 +812,8 @@
       "listaDeathZones": [],
       "listaEmitZones": [],
       "emitZoneAbsolutoX": 1024,
-      "emitZoneAbsolutoY": 576
+      "emitZoneAbsolutoY": 576,
+      "listaPropiedadesFunction": []
     },
     "texture": "AtlasParticulas",
     "frame": [
@@ -845,7 +891,9 @@
         "accelerationX_transitionEaseAuxInt": 0,
         "accelerationX_transitionEase": "--Sin Ease--",
         "accelerationX_min": -100,
-        "accelerationX_max": 100
+        "accelerationX_max": 100,
+        "accelerationX_onEmitActivado": false,
+        "accelerationX_onUpdateActivado": false
       },
       "accelerationY": {
         "accelerationY_activado": false,
@@ -856,7 +904,9 @@
         "accelerationY_transitionEaseAuxInt": 0,
         "accelerationY_transitionEase": "--Sin Ease--",
         "accelerationY_min": -100,
-        "accelerationY_max": 100
+        "accelerationY_max": 100,
+        "accelerationY_onEmitActivado": false,
+        "accelerationY_onUpdateActivado": false
       },
       "posicionX": {
         "posicionX_activada": false,
@@ -896,7 +946,9 @@
         "scale_transitionEaseAuxInt": 0,
         "scale_transitionEase": "--Sin Ease--",
         "scale_min": 0,
-        "scale_max": 0
+        "scale_max": 0,
+        "scale_onEmitActivado": false,
+        "scale_onUpdateActivado": false
       },
       "scaleX": {
 				"scaleX_unica": 0,
@@ -906,7 +958,9 @@
 				"scaleX_transitionEaseAuxInt": 0,
 				"scaleX_transitionEase": "--Sin Ease--",
 				"scaleX_min": 0,
-				"scaleX_max": 0
+				"scaleX_max": 0,
+        "scaleX_onEmitActivado": false,
+        "scaleX_onUpdateActivado": false
 			},
 			"scaleY": {
 				"scaleY_unica": 0,
@@ -916,7 +970,9 @@
 				"scaleY_transitionEaseAuxInt": 0,
 				"scaleY_transitionEase": "--Sin Ease--",
 				"scaleY_min": 0,
-				"scaleY_max": 0
+				"scaleY_max": 0,
+        "scaleY_onEmitActivado": false,
+        "scaleY_onUpdateActivado": false
 			},
       "alpha": {
         "alpha_activado": false,
@@ -927,7 +983,9 @@
         "alpha_transitionEaseAuxInt": 0,
         "alpha_transitionEase": "--Sin Ease--",
         "alpha_min": 0.25,
-        "alpha_max": 0.5
+        "alpha_max": 0.5,
+        "alpha_onEmitActivado": false,
+        "alpha_onUpdateActivado": false
       },
       "rotate": {
         "rotate_activado": true,
@@ -938,7 +996,9 @@
         "rotate_transitionEaseAuxInt": 0,
         "rotate_transitionEase": "--Sin Ease--",
         "rotate_min": 0,
-        "rotate_max": 360
+        "rotate_max": 360,
+        "rotate_onEmitActivado": true,
+        "rotate_onUpdateActivado": false
       },
       "bounds": {
         "bounds_activado": false,
@@ -1014,7 +1074,8 @@
       "listaDeathZones": [],
       "listaEmitZones": [],
       "emitZoneAbsolutoX": 1024,
-      "emitZoneAbsolutoY": 576
+      "emitZoneAbsolutoY": 576,
+      "listaPropiedadesFunction": []
     },
     "texture": "AtlasParticulas",
     "frame": [
@@ -1092,7 +1153,9 @@
         "accelerationX_transitionEaseAuxInt": 0,
         "accelerationX_transitionEase": "--Sin Ease--",
         "accelerationX_min": -100,
-        "accelerationX_max": 100
+        "accelerationX_max": 100,
+        "accelerationX_onEmitActivado": false,
+        "accelerationX_onUpdateActivado": false
       },
       "accelerationY": {
         "accelerationY_activado": false,
@@ -1103,7 +1166,9 @@
         "accelerationY_transitionEaseAuxInt": 0,
         "accelerationY_transitionEase": "--Sin Ease--",
         "accelerationY_min": -100,
-        "accelerationY_max": 100
+        "accelerationY_max": 100,
+        "accelerationY_onEmitActivado": false,
+        "accelerationY_onUpdateActivado": false
       },
       "posicionX": {
         "posicionX_activada": false,
@@ -1143,7 +1208,9 @@
         "scale_transitionEaseAuxInt": 0,
         "scale_transitionEase": "--Sin Ease--",
         "scale_min": 0,
-        "scale_max": 0
+        "scale_max": 0,
+        "scale_onEmitActivado": false,
+        "scale_onUpdateActivado": false
       },
       "scaleX": {
 				"scaleX_unica": 0,
@@ -1153,7 +1220,9 @@
 				"scaleX_transitionEaseAuxInt": 0,
 				"scaleX_transitionEase": "--Sin Ease--",
 				"scaleX_min": 0,
-				"scaleX_max": 0
+				"scaleX_max": 0,
+        "scaleX_onEmitActivado": false,
+        "scaleX_onUpdateActivado": false
 			},
 			"scaleY": {
 				"scaleY_unica": 0,
@@ -1163,7 +1232,9 @@
 				"scaleY_transitionEaseAuxInt": 0,
 				"scaleY_transitionEase": "--Sin Ease--",
 				"scaleY_min": 0,
-				"scaleY_max": 0
+				"scaleY_max": 0,
+        "scaleY_onEmitActivado": false,
+        "scaleY_onUpdateActivado": false
 			},
       "alpha": {
         "alpha_activado": false,
@@ -1174,7 +1245,9 @@
         "alpha_transitionEaseAuxInt": 0,
         "alpha_transitionEase": "--Sin Ease--",
         "alpha_min": 0.25,
-        "alpha_max": 0.5
+        "alpha_max": 0.5,
+        "alpha_onEmitActivado": false,
+        "alpha_onUpdateActivado": false
       },
       "rotate": {
         "rotate_activado": true,
@@ -1185,7 +1258,9 @@
         "rotate_transitionEaseAuxInt": 0,
         "rotate_transitionEase": "--Sin Ease--",
         "rotate_min": 0,
-        "rotate_max": 360
+        "rotate_max": 360,
+        "rotate_onEmitActivado": true,
+        "rotate_onUpdateActivado": false
       },
       "bounds": {
         "bounds_activado": false,
@@ -1261,7 +1336,8 @@
       "listaDeathZones": [],
       "listaEmitZones": [],
       "emitZoneAbsolutoX": 1024,
-      "emitZoneAbsolutoY": 576
+      "emitZoneAbsolutoY": 576,
+      "listaPropiedadesFunction": []
     },
     "texture": "AtlasParticulas",
     "frame": [
@@ -1339,7 +1415,9 @@
         "accelerationX_transitionEaseAuxInt": 0,
         "accelerationX_transitionEase": "--Sin Ease--",
         "accelerationX_min": -100,
-        "accelerationX_max": 100
+        "accelerationX_max": 100,
+        "accelerationX_onEmitActivado": false,
+        "accelerationX_onUpdateActivado": false
       },
       "accelerationY": {
         "accelerationY_activado": false,
@@ -1350,7 +1428,9 @@
         "accelerationY_transitionEaseAuxInt": 0,
         "accelerationY_transitionEase": "--Sin Ease--",
         "accelerationY_min": -100,
-        "accelerationY_max": 100
+        "accelerationY_max": 100,
+        "accelerationY_onEmitActivado": false,
+        "accelerationY_onUpdateActivado": false
       },
       "posicionX": {
         "posicionX_activada": false,
@@ -1390,7 +1470,9 @@
         "scale_transitionEaseAuxInt": 0,
         "scale_transitionEase": "--Sin Ease--",
         "scale_min": 0,
-        "scale_max": 0
+        "scale_max": 0,
+        "scale_onEmitActivado": false,
+        "scale_onUpdateActivado": false
       },
       "scaleX": {
 				"scaleX_unica": 0,
@@ -1400,7 +1482,9 @@
 				"scaleX_transitionEaseAuxInt": 0,
 				"scaleX_transitionEase": "--Sin Ease--",
 				"scaleX_min": 0,
-				"scaleX_max": 0
+				"scaleX_max": 0,
+        "scaleX_onEmitActivado": false,
+        "scaleX_onUpdateActivado": false
 			},
 			"scaleY": {
 				"scaleY_unica": 0,
@@ -1410,7 +1494,9 @@
 				"scaleY_transitionEaseAuxInt": 0,
 				"scaleY_transitionEase": "--Sin Ease--",
 				"scaleY_min": 0,
-				"scaleY_max": 0
+				"scaleY_max": 0,
+        "scaleY_onEmitActivado": false,
+        "scaleY_onUpdateActivado": false
 			},
       "alpha": {
         "alpha_activado": false,
@@ -1421,7 +1507,9 @@
         "alpha_transitionEaseAuxInt": 0,
         "alpha_transitionEase": "--Sin Ease--",
         "alpha_min": 0.25,
-        "alpha_max": 0.5
+        "alpha_max": 0.5,
+        "alpha_onEmitActivado": false,
+        "alpha_onUpdateActivado": false
       },
       "rotate": {
         "rotate_activado": true,
@@ -1432,7 +1520,9 @@
         "rotate_transitionEaseAuxInt": 0,
         "rotate_transitionEase": "--Sin Ease--",
         "rotate_min": 0,
-        "rotate_max": 360
+        "rotate_max": 360,
+        "rotate_onEmitActivado": true,
+        "rotate_onUpdateActivado": false
       },
       "bounds": {
         "bounds_activado": false,

@@ -57,14 +57,15 @@ export class UtilProyectos {
 					listaEmitZones: IEmitZone[],
 					emitZoneAbsolutoX: number,
 					emitZoneAbsolutoY: number,
-					listaPropiedadesFunction: IAdvancedFormula[]
+					listaPropiedadesFunction: IAdvancedFormula[],
+					emitCallbackFunctionStr: string,
 				})[]) {
 		const zip = new JSZip();
-		const imageResponse = await fetch('/assets/particulas.png');
+		const imageResponse = await fetch('assets/particulas.png');
 		const imageBlob = await imageResponse.blob();
 		const imageArrayBuffer = await imageBlob.arrayBuffer();
 		zip.file("assets/particulas.png", imageArrayBuffer);
-		const imageAtlasResponse = await fetch('/assets/particulas_atlas.json');
+		const imageAtlasResponse = await fetch('assets/particulas_atlas.json');
 		const imageAtlasJson = await imageAtlasResponse.json();
 		zip.file("assets/particulas_atlas.json", JSON.stringify(imageAtlasJson, null, 2));
 		// const phaserjsResponse = await fetch('/assets/descarga/phaser.min.js');
@@ -157,7 +158,8 @@ const game = new Phaser.Game(config);
 					listaEmitZones: IEmitZone[],
 					emitZoneAbsolutoX: number,
 					emitZoneAbsolutoY: number,
-					listaPropiedadesFunction: IAdvancedFormula[]
+					listaPropiedadesFunction: IAdvancedFormula[],
+					emitCallbackFunctionStr: string,
 				})[]) {
 		try {
 			await navigator.clipboard.writeText(this.emitterToString(listaEmitters));
@@ -178,24 +180,25 @@ const game = new Phaser.Game(config);
 					listaEmitZones: IEmitZone[],
 					emitZoneAbsolutoX: number,
 					emitZoneAbsolutoY: number,
-					listaPropiedadesFunction: IAdvancedFormula[]
+					listaPropiedadesFunction: IAdvancedFormula[],
+					emitCallbackFunctionStr: string,
 				})[]) {
-		const objectToJSString = (obj, saltoLinea: boolean, listaPropiedadesFunction: IAdvancedFormula[] = []) => {
+		const objectToJSString = (obj, saltoLinea: boolean, listaPropiedadesFunction: IAdvancedFormula[] = [], emitCallback: string = '') => {
 			const prioridad = ['frame', 'lifespan', 'frequency', 'quantity', 'blendMode', 'gravityX', 'gravityY', 'speedX', 'speedY', 'speed', 'angle', 'scale', 'rotate', 'tint', 'color'];
 			const entries = [
 				...prioridad
 					.filter(prop => prop in obj)
-					.map(prop => `${prop}: ${valueToJSString(obj[prop], ['color', 'tint'].includes(prop), obj[prop]?.hasOwnProperty('onEmit') ? `${listaPropiedadesFunction.find(x => x.propiedadFormula === prop)?.onEmitFormula}` : '',  obj[prop]?.hasOwnProperty('onUpdate') ? `${listaPropiedadesFunction.find(x => x.propiedadFormula === prop)?.onUpdateFormula}` : '')} `
+					.map(prop => `${prop}: ${valueToJSString(obj[prop], ['color', 'tint'].includes(prop), obj[prop]?.hasOwnProperty('onEmit') ? `${listaPropiedadesFunction.find(x => x.propiedadFormula === prop)?.onEmitFormula}` : '',  obj[prop]?.hasOwnProperty('onUpdate') ? `${listaPropiedadesFunction.find(x => x.propiedadFormula === prop)?.onUpdateFormula}` : '', prop === 'emitCallback' ? emitCallback : '')} `
 					),
 				...Object.entries(obj)
 					.filter(([key]) => !prioridad.includes(key))
-					.map(([key, value]) => `${key}: ${valueToJSString(value, ['color', 'tint'].includes(key), obj[key]?.hasOwnProperty('onEmit') ? `${listaPropiedadesFunction.find(x => x.propiedadFormula === key)?.onEmitFormula}` : '', obj[key]?.hasOwnProperty('onUpdate') ? `${listaPropiedadesFunction.find(x => x.propiedadFormula === key)?.onUpdateFormula}` : '')}`)
+					.map(([key, value]) => `${key}: ${valueToJSString(value, ['color', 'tint'].includes(key), obj[key]?.hasOwnProperty('onEmit') ? `${listaPropiedadesFunction.find(x => x.propiedadFormula === key)?.onEmitFormula}` : '', obj[key]?.hasOwnProperty('onUpdate') ? `${listaPropiedadesFunction.find(x => x.propiedadFormula === key)?.onUpdateFormula}` : '', key === 'emitCallback' ? emitCallback : '')}`)
 					// .map(([key, value]) => `${key}: ${['onEmit', 'onUpdate'].includes(key) ? `--${obj[key]}--` : valueToJSString(value, ['color', 'tint'].includes(key))}`)
 			];
 			return `{${saltoLinea ? '\n' : ' '}${entries.join(`,${saltoLinea ? '\n' : ' '}`)}${saltoLinea ? '\n' : ' '}}`;
 		}
 
-		const valueToJSString = (value, hexa: boolean = false, onEmitFormula: string = '', onUpdateFormula: string = '') => {
+		const valueToJSString = (value, hexa: boolean = false, onEmitFormula: string = '', onUpdateFormula: string = '', emitCallback: string = '') => {
 			if (typeof value === "string") {
 				return `"${value}"`;
 			}
@@ -205,9 +208,8 @@ const game = new Phaser.Game(config);
 				return `[${items.join(`,`)}]`;
 			}
 
-			if (typeof value === "object" && value !== null) {
+			if (typeof value === 'object' && value !== null) {
 				if (value.hasOwnProperty('onEmit') || value.hasOwnProperty('onUpdate')) {
-					console.log({value, onEmitFormula, onUpdateFormula});
 					let strOnEmit = '';
 					if (value.hasOwnProperty('onEmit')) {
 						const multilinea = onEmitFormula.includes('\n') ? '\n' : '';
@@ -222,6 +224,9 @@ const game = new Phaser.Game(config);
 					return `{\n ${strOnEmit} ${strOnEmit ? ',\n' : ''} ${strOnUpdate} \n}`;
 				}
 				return objectToJSString(value, false);
+			}
+			if (typeof value === 'function' && emitCallback) {
+				return `(particle, emitter) => {\n ${emitCallback} \n}`;
 			}
 			return !hexa ? String(value) : `0x${value.toString(16).padStart(6, '0')}`;
 		};
@@ -247,7 +252,7 @@ const game = new Phaser.Game(config);
 				}));
 			}
 
-			let propiedadesTexto = objectToJSString(item.configParticle, true, item.listaPropiedadesFunction);
+			let propiedadesTexto = objectToJSString(item.configParticle, true, item.listaPropiedadesFunction, item.emitCallbackFunctionStr);
 			if (item.listaDeathZones.length > 0 || item.listaEmitZones.length > 0) {
 				propiedadesTexto = this.transformaFigura(propiedadesTexto);
 			}

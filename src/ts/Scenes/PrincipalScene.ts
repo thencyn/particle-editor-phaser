@@ -2,7 +2,7 @@ import { ProyectoGuardarComponent } from "../Components/ProyectoGuardarComponent
 import { MenuComponent } from "../Components/MenuComponent";
 import { MostrarEmittersComponent } from "../Components/MostrarEmittersComponent";
 import { AtlasBotonesImagenes, AtlasImagenes, AtlasImagenesVarias, AtlasParticulas, Eventos, Imagenes, Sonidos, Variables } from "../Utilidades/Diccionario";
-import { IConfiguracionAdicional, IConfiguracionEmitter, IDestroyable, IGuardarConfiguracionEmitter, IGuardarConfiguracionProyectos, IMemoria, IProyectosBasicosConfiguracion, propiedadesAdvancedFormulaArray, typePropiedadesAdvancedFormula } from "../Utilidades/Interfaces";
+import { IConfiguracionAdicional, IConfiguracionEmitter, IDestroyable, IGuardarConfiguracionEmitter, IGuardarConfiguracionProyectos, IMemoria, IMovimiento, IProyectosBasicosConfiguracion, propiedadesAdvancedFormulaArray, typePropiedadesAdvancedFormula } from "../Utilidades/Interfaces";
 import { UtilSonido } from "../Utilidades/UtilSonido";
 import { ProyectoAbrirComponent } from "../Components/ProyectoAbrirComponent";
 import { UtilProyectos } from "../Utilidades/UtilProyectos";
@@ -15,6 +15,8 @@ import { UtilEjemplos } from "../Utilidades/UtilEjemplos";
 import { BarraVisualizacionEjemplosComponent } from "../Components/BarraVisualizacionEjemplosComponent";
 import AyudaScene from "./AyudaScene";
 import { PropiedadesIngresoAvanzadoComponent } from "../Components/PropiedadesIngresoAvanzadoComponent";
+import { MostrarEmittersDetallesComponent } from "../Components/MostrarEmittersDetallesComponent";
+import { EmitCallbackIngresoComponent } from "../Components/EmitCallbackIngresoComponent";
 
 
 export default class PrincipalScene extends Phaser.Scene {
@@ -30,6 +32,8 @@ export default class PrincipalScene extends Phaser.Scene {
 	private emitZoneComponent: EmitZoneComponent;
 	private exportarMenuComponent: ExportarMenuComponent;
 	private propiedadesIngresoAvanzadoComponent: PropiedadesIngresoAvanzadoComponent;
+	private emitCallbackIngresoComponent: EmitCallbackIngresoComponent;
+	private mostrarEmittersDetallesComponent: MostrarEmittersDetallesComponent;
 	private menuAbierto: IDestroyable | null = null;
 	private listaEmitters: IConfiguracionEmitter[] = [];
 	private indexEmitterSeleccionado = 0;
@@ -215,7 +219,9 @@ export default class PrincipalScene extends Phaser.Scene {
 					},
 
 					background: {
-						strokeColor: this.COLOR_DARK
+						// strokeColor: this.COLOR_DARK,
+						// strokeColor: 0xe9e9e9,
+						// color: 0xff0000
 					},
 
 					space: {
@@ -262,6 +268,8 @@ export default class PrincipalScene extends Phaser.Scene {
 		this.emitZoneComponent = new EmitZoneComponent(this);
 		this.exportarMenuComponent = new ExportarMenuComponent(this);
 		this.propiedadesIngresoAvanzadoComponent = new PropiedadesIngresoAvanzadoComponent(this);
+		this.emitCallbackIngresoComponent = new EmitCallbackIngresoComponent(this);
+		this.mostrarEmittersDetallesComponent = new MostrarEmittersDetallesComponent(this);
 
 		this.crearNuevoEmitter();
 		this.crearPanel();
@@ -283,6 +291,14 @@ export default class PrincipalScene extends Phaser.Scene {
 			this.mostrarEmittersComponent.show(this.listaEmitters, this.indexEmitterSeleccionado);
 			this.menuAbierto = this.mostrarEmittersComponent;
 
+		});
+
+		this.registry.events.on(Eventos.EmitterDetallesVerMenu, (indexEmitter: number) => {
+			// this.menuComponent.hideFullMenu();
+			// this.menuAbierto.destroy();
+			const movimiento = { ...this.listaEmitters[indexEmitter].configAdicional.movimiento };
+			this.mostrarEmittersDetallesComponent.show(indexEmitter, movimiento);
+			this.menuAbierto = this.mostrarEmittersDetallesComponent;
 		});
 
 		this.registry.events.on(Eventos.EmitterCrear, () => {
@@ -353,6 +369,13 @@ export default class PrincipalScene extends Phaser.Scene {
 			this.emitterEmitZone(nueva, indexDeathZone, tipo, figura, quantity, total, yoyo);
 		});
 
+		this.registry.events.on(Eventos.EmitterEmitCallbackGrabar, (formula: string) => {
+			const configAdicional = this.listaEmitters[this.indexEmitterSeleccionado].configAdicional;
+			const resetNuevaFormulaBlanco = !!configAdicional.emitCallbackFunctionStr && !formula;
+			configAdicional.emitCallbackFunctionStr = formula;
+			this.resetEmitter(this.indexEmitterSeleccionado, this.listaEmitters[this.indexEmitterSeleccionado].configParticle.hasOwnProperty('bounce') || resetNuevaFormulaBlanco);
+		});
+
 		this.registry.events.on(Eventos.EmitterEmitZoneEliminar, (indexEmitZoneEliminar: number) => {
 			this.listaEmitters[this.indexEmitterSeleccionado].configAdicional.listaEmitZones.splice(indexEmitZoneEliminar, 1);
 			this.emitZoneComponent.update(this.listaEmitters[this.indexEmitterSeleccionado].configAdicional.listaEmitZones);
@@ -377,6 +400,11 @@ export default class PrincipalScene extends Phaser.Scene {
 				}
 			}
 			this.graficarEmitZone(this.indexEmitterSeleccionado);
+		});
+
+		this.registry.events.on(Eventos.EmitterMovimientoGuardar, (indexEmitter: number, movimiento: IMovimiento) => {
+			this.listaEmitters[indexEmitter].configAdicional.movimiento = movimiento;
+			this.movimientoAplicarTween(indexEmitter);
 		});
 
 
@@ -456,6 +484,9 @@ export default class PrincipalScene extends Phaser.Scene {
 					let configParticulas = this.obtenerConfigParticleDesdeMemoria(item.configAdicional, memoria);
 					const propiedadesFunction = this.obtenerPropiedadesFunctionEmitter(configAdicional, memoria);
 					configParticulas = { ...configParticulas, ...propiedadesFunction };
+					if (configAdicional.emitCallbackFunctionStr) {
+						configParticulas.emitCallback = new Function('particle', 'emitter', configAdicional.emitCallbackFunctionStr) as (particle: Phaser.GameObjects.Particles.Particle, emitter: Phaser.GameObjects.Particles.ParticleEmitter) => any;
+					}
 					this.eliminarPropiedadesEmitter(configParticulas, configAdicional, memoria)
 					configParticulas.frame = !item.frameCycle ? item.frame : { frames: item.frame, cycle: true };
 					return {
@@ -470,6 +501,7 @@ export default class PrincipalScene extends Phaser.Scene {
 						emitZoneAbsolutoX: configAdicional.emitZoneAbsolutoX,
 						emitZoneAbsolutoY: configAdicional.emitZoneAbsolutoY,
 						listaPropiedadesFunction: configAdicional.listaPropiedadesFunction,
+						emitCallbackFunctionStr: configAdicional.emitCallbackFunctionStr,
 					};
 				});
 				UtilProyectos.exportarProyectoJS(this.proyectoDatos?.nombreProyecto || 'Proyecto 1', listaEmittersExportar);
@@ -480,6 +512,9 @@ export default class PrincipalScene extends Phaser.Scene {
 				let configParticulas = this.obtenerConfigParticleDesdeMemoria(configAdicional, memoria);
 				const propiedadesFunction = this.obtenerPropiedadesFunctionEmitter(configAdicional, memoria);
 				configParticulas = { ...configParticulas, ...propiedadesFunction };
+				if (configAdicional.emitCallbackFunctionStr) {
+					configParticulas.emitCallback = new Function('particle', 'emitter', configAdicional.emitCallbackFunctionStr) as (particle: Phaser.GameObjects.Particles.Particle, emitter: Phaser.GameObjects.Particles.ParticleEmitter) => any;
+				}
 				this.eliminarPropiedadesEmitter(configParticulas, configAdicional, memoria)
 				configParticulas.frame = !this.listaEmitters[indexExportar].frameCycle ? this.listaEmitters[indexExportar].frame : { frames: this.listaEmitters[indexExportar].frame, cycle: true };
 				const emitter = {
@@ -494,6 +529,7 @@ export default class PrincipalScene extends Phaser.Scene {
 					emitZoneAbsolutoX: this.listaEmitters[indexExportar].configAdicional.emitZoneAbsolutoX,
 					emitZoneAbsolutoY: this.listaEmitters[indexExportar].configAdicional.emitZoneAbsolutoY,
 					listaPropiedadesFunction: configAdicional.listaPropiedadesFunction,
+					emitCallbackFunctionStr: configAdicional.emitCallbackFunctionStr,
 				};
 				UtilProyectos.exportarEmitters([emitter]);
 			} else if (tipo === 'emitters') {
@@ -503,6 +539,9 @@ export default class PrincipalScene extends Phaser.Scene {
 					let configParticulas = this.obtenerConfigParticleDesdeMemoria(item.configAdicional, memoria);
 					const propiedadesFunction = this.obtenerPropiedadesFunctionEmitter(configAdicional, memoria);
 					configParticulas = { ...configParticulas, ...propiedadesFunction };
+					if (configAdicional.emitCallbackFunctionStr) {
+						configParticulas.emitCallback = new Function('particle', 'emitter', configAdicional.emitCallbackFunctionStr) as (particle: Phaser.GameObjects.Particles.Particle, emitter: Phaser.GameObjects.Particles.ParticleEmitter) => any;
+					}
 					this.eliminarPropiedadesEmitter(configParticulas, configAdicional, memoria);
 					configParticulas.frame = !item.frameCycle ? item.frame : { frames: item.frame, cycle: true };
 					return {
@@ -517,6 +556,7 @@ export default class PrincipalScene extends Phaser.Scene {
 						emitZoneAbsolutoX: configAdicional.emitZoneAbsolutoX,
 						emitZoneAbsolutoY: configAdicional.emitZoneAbsolutoY,
 						listaPropiedadesFunction: configAdicional.listaPropiedadesFunction,
+						emitCallbackFunctionStr: configAdicional.emitCallbackFunctionStr,
 					};
 				});
 				UtilProyectos.exportarEmitters(listaEmittersExportar);
@@ -579,6 +619,7 @@ export default class PrincipalScene extends Phaser.Scene {
 			let resetPropiedadBasica = false;
 			let resetStopAfterDuration = false;
 			let resetDetenerMoveTo = false;
+			let resetEmitCallback = false;
 			const particulaEmitter = this.listaEmitters[this.indexEmitterSeleccionado].emitter;
 			const configAdicional = this.listaEmitters[this.indexEmitterSeleccionado].configAdicional;
 			const configParticle = this.listaEmitters[this.indexEmitterSeleccionado].configParticle;
@@ -599,6 +640,11 @@ export default class PrincipalScene extends Phaser.Scene {
 				// resetSort = ['sortProperty', 'sortOrderAsc'].includes(bindingKey);
 				// resetPropiedadBasica = 'sortProperty' === bindingKey;
 				resetPropiedadBasica = 'sortProperty' === bindingKey || ('gravityX' === bindingKey && newValue === 0) || ('gravityY' === bindingKey && newValue === 0);
+			} else if (bindingKey === 'timeScale') {
+				if (newValue < 0.01) {
+					memoria.timeScale = 0.01;
+				}
+				this.cambiarPropiedadesEmitter(bindingKey, memoria.timeScale);
 			} else if (bindingKey === 'tipoSpeedSeleccionada') {
 				configAdicional.tipoSpeedSeleccionada = newValue;
 				this.cambiarTipoVelocidad();
@@ -710,6 +756,8 @@ export default class PrincipalScene extends Phaser.Scene {
 				} else {
 					resetDetenerMoveTo = true;
 				}
+			} else if (bindingKey === 'emitCallbackActivar') {
+				resetEmitCallback = !newValue;
 			}
 
 			if (['gravityWell_mostrarPunto', 'gravityWell_x', 'gravityWell_y', 'x', 'y'].includes(bindingKey)) {
@@ -720,7 +768,7 @@ export default class PrincipalScene extends Phaser.Scene {
 			if (configParticle.bounce === 0) {
 				delete configParticle.bounce;
 			}
-			this.resetEmitter(this.indexEmitterSeleccionado, ['tipoSpeedSeleccionada', 'tipoScaleSeleccionada'].includes(bindingKey) || resetColor || resetBounds || resetGravityWell || resetPropiedadBasica || resetEmitZoneCambioXY || resetStopAfterDuration || resetDetenerMoveTo || configParticle.hasOwnProperty('bounce'));
+			this.resetEmitter(this.indexEmitterSeleccionado, ['tipoSpeedSeleccionada', 'tipoScaleSeleccionada'].includes(bindingKey) || resetColor || resetBounds || resetGravityWell || resetPropiedadBasica || resetEmitZoneCambioXY || resetStopAfterDuration || resetDetenerMoveTo || resetEmitCallback || configParticle.hasOwnProperty('bounce'));
 		});
 	}
 
@@ -737,7 +785,6 @@ export default class PrincipalScene extends Phaser.Scene {
 			quantity: 4,
 			blendMode: Phaser.BlendModes.ADD,
 			sortOrderAsc: false,
-			// timeScale: 0.1,
 		};
 		const emitter = this.add.particles(this.cameras.main.centerX, this.cameras.main.centerY, AtlasImagenes.Particulas, {
 			frame: AtlasParticulas.Star1,
@@ -771,6 +818,7 @@ export default class PrincipalScene extends Phaser.Scene {
 			emitZoneAbsolutoX: this.cameras.main.centerX,
 			emitZoneAbsolutoY: this.cameras.main.centerY,
 			listaPropiedadesFunction: [],
+			emitCallbackFunctionStr: '',
 		};
 
 		const memoria: IMemoria = {
@@ -792,9 +840,11 @@ export default class PrincipalScene extends Phaser.Scene {
 			particleBringToTop: null,
 			sortProperty: '',
 			sortOrderAsc: false,
+			timeScale: 1,
 			moveToActivar: false,
 			moveToX: 0,
 			moveToY: 0,
+			emitCallbackActivar: false,
 			colorTint: {
 				colorTint_seleccionado: 'ninguno',
 				colorTint_color: '0xff0000, 0x00ff00, 0x0000ff',
@@ -1327,6 +1377,13 @@ export default class PrincipalScene extends Phaser.Scene {
 			this.menuComponent.hideFullMenu();
 			this.propiedadesIngresoAvanzadoComponent.show(propiedad, '', '', configAdicional.listaPropiedadesFunction);
 		};
+
+		const abrirEmitCallbackIngreso = () => {
+			this.menuAbierto?.destroy();
+			this.menuAbierto = null;
+			this.menuComponent.hideFullMenu();
+			this.emitCallbackIngresoComponent.show(configAdicional.emitCallbackFunctionStr);
+		};
 		return [{
 					$type: 'folder', title: 'Configuraciones',
 					$properties: [
@@ -1404,8 +1461,8 @@ export default class PrincipalScene extends Phaser.Scene {
 				{ $type: 'separator' },
 
 				{
-					$type: 'folder', title: `${(memoria.maxVelocityX > 0 || memoria.maxVelocityY > 0 || memoria.advance > 0 || memoria.hold > 0 || memoria.particleBringToTop !== null || memoria.sortProperty !== '' || memoria.moveToActivar) ? '✔️' : ''}Otras propiedades`,
-					expanded: memoria.expandirPaginasUtilizadas && (memoria.maxVelocityX > 0 || memoria.maxVelocityY > 0 || memoria.advance > 0 || memoria.hold > 0 || memoria.particleBringToTop !== null || memoria.sortProperty !== '' || memoria.moveToActivar),
+					$type: 'folder', title: `${(memoria.maxVelocityX > 0 || memoria.maxVelocityY > 0 || memoria.advance > 0 || memoria.hold > 0 || memoria.particleBringToTop !== null || memoria.sortProperty !== '' || memoria.moveToActivar || memoria.emitCallbackActivar || memoria.timeScale !== 1) ? '✔️' : ''}Otras propiedades`,
+					expanded: memoria.expandirPaginasUtilizadas && (memoria.maxVelocityX > 0 || memoria.maxVelocityY > 0 || memoria.advance > 0 || memoria.hold > 0 || memoria.particleBringToTop !== null || memoria.sortProperty !== '' || memoria.moveToActivar || memoria.emitCallbackActivar  || memoria.timeScale !== 1),
 					$properties: [
 						{ $key: 'maxVelocityX', title: 'maxVelocityX', min: 0, max: 1000, step: 1 },
 						{ $key: 'maxVelocityY', title: 'maxVelocityY', min: 0, max: 1000, step: 1 },
@@ -1428,9 +1485,16 @@ export default class PrincipalScene extends Phaser.Scene {
 								{ text: 'lifeT', value: 'lifeT' },
 						] },
 						{ $key: 'sortOrderAsc', title: 'sortOrderAsc', view: 'toggleSwitch' },
+						{ $key: 'timeScale', title: 'Time Scale', min: 0.01, max: 5, step: 0.01 },
 						{ $key: 'moveToActivar', title: 'Activar MoveTo', view: 'toggleSwitch' },
 						{ $key: 'moveToX', title: 'MoveTo X', min: -2000, max: 2000, step: 1 },
 						{ $key: 'moveToY', title: 'MoveTo Y', min: -2000, max: 2000, step: 1 },
+						{ $key: 'emitCallbackActivar', title: 'Activar EmitCallback', view: 'toggleSwitch' },
+						{ $type: 'button', title: 'Click para configurar ➡️', label: 'Configurar',
+												callback: function(target) {
+													abrirEmitCallbackIngreso();
+												},
+						},
 					]
 				},
 				{ $type: 'separator' },
@@ -2229,7 +2293,11 @@ export default class PrincipalScene extends Phaser.Scene {
 		const configAdicional = this.listaEmitters[index].configAdicional;
 		let auxConfig =  structuredClone(configParticle);
 		const propiedadesFunction = this.obtenerPropiedadesFunctionEmitter(configAdicional, this.listaEmitters[index].memoria);
+		// let emitCallbackFunction: (particle: Phaser.GameObjects.Particles.Particle, emitter: Phaser.GameObjects.Particles.ParticleEmitter) => any | undefined = undefined;
 		auxConfig = { ...auxConfig, ...propiedadesFunction };
+		if (configAdicional.emitCallbackFunctionStr) {
+			auxConfig.emitCallback = new Function('particle', 'emitter', configAdicional.emitCallbackFunctionStr) as (particle: Phaser.GameObjects.Particles.Particle, emitter: Phaser.GameObjects.Particles.ParticleEmitter) => any;
+		}
 		this.eliminarPropiedadesEmitter(auxConfig, configAdicional, this.listaEmitters[index].memoria);
 
 		console.log({ auxConfig });
@@ -2265,6 +2333,7 @@ export default class PrincipalScene extends Phaser.Scene {
 			this.resetAllDeathEmitZone(index);
 			this.graficarDeathZone(index);
 			this.graficarEmitZone(index);
+			this.movimientoAplicarTween(index);
 		} else {
 			emitter.setConfig(auxConfig);
 		}
@@ -2391,6 +2460,14 @@ export default class PrincipalScene extends Phaser.Scene {
 					delete auxConfig[item];
 				}
 			}
+		}
+
+		if (!memoria.emitCallbackActivar) {
+			delete auxConfig.emitCallback;
+		}
+
+		if (memoria.timeScale === 1) {
+			delete auxConfig.timeScale;
 		}
 	}
 
@@ -2562,6 +2639,41 @@ export default class PrincipalScene extends Phaser.Scene {
 		this.graficarEmitZone(this.indexEmitterSeleccionado);
 	}
 
+	private movimientoAplicarTween(indexEmitter: number) {
+		const movimiento = this.listaEmitters[indexEmitter].configAdicional.movimiento;
+		if (this.listaEmitters[indexEmitter].movimientoTween) {
+			this.listaEmitters[indexEmitter].movimientoTween?.destroy();
+			this.listaEmitters[indexEmitter].movimientoTween = null;
+			const { x, y } = this.listaEmitters[indexEmitter].memoria;
+			this.listaEmitters[indexEmitter].emitter.setPosition(x, y);
+		}
+		if (movimiento?.movimientoActivado && (movimiento?.xActivar || movimiento?.yActivar)) {
+			const props: any = {};
+			if (movimiento.xActivar) {
+				if (movimiento.xPoint !== null) {
+					props.x = { value: movimiento.xPoint, duration: movimiento.xDuration, ease: movimiento.xEase };
+					if (!props.x.ease) {
+						delete props.x.ease;
+					}
+				}
+			}
+			if (movimiento.yActivar) {
+				if (movimiento.yPoint !== null) {
+					props.y = { value: movimiento.yPoint, duration: movimiento.yDuration, ease: movimiento.yEase };
+					if (!props.y.ease) {
+						delete props.y.ease;
+					}
+				}
+			}
+			this.listaEmitters[indexEmitter].movimientoTween = this.tweens.add({
+				targets: this.listaEmitters[indexEmitter].emitter,
+				props,
+				yoyo: movimiento.yoyo,
+				repeat: movimiento.repeat,
+			});
+		}
+	}
+
 	private proyectoAbrirGuardados(id: number) {
 		const proyecto = UtilProyectos.leerProyecto(id);
 		this.proyectoDatos = {
@@ -2606,6 +2718,16 @@ export default class PrincipalScene extends Phaser.Scene {
 			if (!item.memoria.alpha.hasOwnProperty('alpha_onEmitActivado')) {
 				item.memoria.alpha.alpha_onEmitActivado = false;
 				item.memoria.alpha.alpha_onUpdateActivado = false;
+			}
+			if (!item.memoria.hasOwnProperty('emitCallbackActivar')) {
+				item.memoria.emitCallbackActivar = false;
+			}
+			if (!item.memoria.hasOwnProperty('timeScale')) {
+				item.memoria.timeScale = 1;
+			}
+
+			if (!item.configAdicional.hasOwnProperty('emitCallbackFunctionStr')) {
+				item.configAdicional.emitCallbackFunctionStr = '';
 			}
 		}
 		this.abrirProyecto(proyecto.listaEmitters);
@@ -2670,6 +2792,7 @@ export default class PrincipalScene extends Phaser.Scene {
 			item.bokeh?.destroy();
 			item.gravityWell?.destroy();
 			item.gravityWellPunto?.destroy();
+			item.movimientoTween?.destroy();
 
 			item.emitter = null;
 			item.graphicsBounds = null;
@@ -2678,6 +2801,7 @@ export default class PrincipalScene extends Phaser.Scene {
 			item.bokeh = null;
 			item.gravityWell = null;
 			item.gravityWellPunto = null;
+			item.movimientoTween = null;
 			item.memoria = null;
 			item.configParticle = null;
 			item.configAdicional = null;
@@ -2696,7 +2820,6 @@ export default class PrincipalScene extends Phaser.Scene {
 				emitZone.figura = UtilFiguras.obtenerInstanciaFigura(emitZone.figura);
 			}
 			this.resetEmitter(index, true);
-
 
 			item.graphicsDeathZone.clear();
 			if (item.memoria.deathZone.deathZone_mostrar) {
@@ -2730,6 +2853,9 @@ export default class PrincipalScene extends Phaser.Scene {
 						item.graphicsEmitZone.strokeLineShape(emitZone.figura);
 					}
 				}
+			}
+			if (item.configAdicional.movimiento?.movimientoActivado) {
+				this.movimientoAplicarTween(index);
 			}
 		}
 	}
@@ -2800,6 +2926,7 @@ export default class PrincipalScene extends Phaser.Scene {
 			blendMode: memoria.blendMode,
 			gravityX: memoria.gravityX,
 			gravityY: memoria.gravityY,
+			timeScale: memoria.timeScale,
 		};
 		if (memoria.maxVelocityX) {
 			configParticle.maxVelocityX = memoria.maxVelocityX;

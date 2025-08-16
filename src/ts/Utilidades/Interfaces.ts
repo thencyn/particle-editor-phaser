@@ -29,6 +29,8 @@ export interface IConfiguracionAdicional {
 	emitZoneAbsolutoX: number;
 	emitZoneAbsolutoY: number;
 	listaPropiedadesFunction: IAdvancedFormula[];
+	emitCallbackFunctionStr: string;
+	movimiento?: IMovimiento;
 }
 
 export interface IConfiguracionEmitter {
@@ -45,6 +47,7 @@ export interface IConfiguracionEmitter {
 	gravityWellPunto?: Phaser.GameObjects.Arc;
 	graphicsDeathZone: Phaser.GameObjects.Graphics;
 	graphicsEmitZone: Phaser.GameObjects.Graphics; //La zona guardada tiene los puntos de la pantalla y se deben cambiar por los puntos relativos al emitter
+	movimientoTween?: Phaser.Tweens.Tween;
 }
 
 export interface IEjemploConfiguracion {
@@ -78,6 +81,20 @@ export interface IGuardarConfiguracionEmitter {
 	frame: string[];
 	frameCycle: boolean;
 	memoria: IMemoria;
+}
+
+export interface IMovimiento {
+	movimientoActivado: boolean;
+	yoyo: boolean;
+	repeat: number;
+	xPoint?: number;
+	xDuration: number;
+	xEase: string;
+	xActivar: boolean;
+	yPoint?: number;
+	yDuration: number;
+	yEase: string;
+	yActivar: boolean;
 }
 
 export interface IDestroyable {
@@ -123,9 +140,11 @@ export interface IMemoria {
 	particleBringToTop?: boolean
 	sortProperty: string
 	sortOrderAsc: boolean
+	timeScale: number
 	moveToActivar: boolean
 	moveToX: number
 	moveToY: number
+	emitCallbackActivar: boolean
 	bounce: number
 	speed: Speed
 	angle: Angle
@@ -373,3 +392,7 @@ export interface EmitZone {
 	emitZone_mostrar: boolean
 	emitZone_color: number
 }
+
+export const LISTA_EASES = [ 'Back.in', 'Back.inOut', 'Back.out', 'Bounce.in', 'Bounce.inOut', 'Bounce.out', 'Circ.in', 'Circ.inOut', 'Circ.out', 'Cubic.in', 'Cubic.inOut', 'Cubic.out', 'Expo.in', 'Expo.inOut', 'Expo.out', 'Linear', 'Quad.in', 'Quad.inOut', 'Quad.out', 'Quart.in', 'Quart.inOut', 'Quart.out', 'Quint.in', 'Quint.inOut', 'Quint.out', 'Sine.in', 'Sine.inOut', 'Sine.out'];
+
+

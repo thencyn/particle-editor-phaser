@@ -296,13 +296,43 @@ export class UtilEjemplos {
 			},
 			{
 				nombreEjemplo: 'Carta retroceso\nOnEmit & OnUpdate',
-				idEjemplo: 29,
+				idEjemplo: 30,
 				tagPropiedadesUtilizadas: ['accelerationX', 'posicionY', 'scale', 'alpha', 'rotate'],
 				url: './assets/ejemplos/30-carta-retroceso.json',
 				descripcion: '',
 				urlImagenPreview: 'ejemplos/30-carta-retroceso.png',
 				aliasImagenPreview: '30-carta-retroceso',
 				urlEjemploOriginal: ''
+			},
+			{
+				nombreEjemplo: 'EmitCallback',
+				idEjemplo: 31,
+				tagPropiedadesUtilizadas: ['scaleX', 'scaleY', 'speed', 'emitCallback', 'rotate'],
+				url: './assets/ejemplos/31-emitcallback.json',
+				descripcion: '',
+				urlImagenPreview: 'ejemplos/31-emitcallback.png',
+				aliasImagenPreview: '31-emitcallback',
+				urlEjemploOriginal: ''
+			},
+			{
+				nombreEjemplo: 'TimeScale',
+				idEjemplo: 32,
+				tagPropiedadesUtilizadas: ['scale', 'timeScale', 'emitZone'],
+				url: './assets/ejemplos/32-time-scale.json',
+				descripcion: '',
+				urlImagenPreview: 'ejemplos/32-time-scale.png',
+				aliasImagenPreview: '32-time-scale',
+				urlEjemploOriginal: ''
+			},
+			{
+				nombreEjemplo: 'Movimiento Tweens',
+				idEjemplo: 33,
+				tagPropiedadesUtilizadas: ['scale', 'speed', 'alpha', 'particleBringToTop'],
+				url: './assets/ejemplos/33-movimiento-tweens.json',
+				descripcion: '',
+				urlImagenPreview: 'ejemplos/33-movimiento-tweens.png',
+				aliasImagenPreview: '33-movimiento-tweens',
+				urlEjemploOriginal: 'https://phaser.io/examples/v3.85.0/game-objects/particle-emitter/view/tween-xy'
 			},
 		];
 	}

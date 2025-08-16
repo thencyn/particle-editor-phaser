@@ -16,6 +16,7 @@ export enum Eventos {
 	MenuMostrar = "EventoMenuMostrarAtras", //Este evento se utiliza para mostrar el menu al volver hacia atras
 
 	EmittersVerMenu = "EventoEmittersVerMenu",
+	EmitterDetallesVerMenu = "EventoEmitterDetallesVerMenu",
 	EmitterCrear = "EventoEmitterCrear",
 	EmitterEliminar = "EventoEmitterEliminar",
 	EmitterSeleccionar = "EventoEmitterSeleccionar",
@@ -25,6 +26,8 @@ export enum Eventos {
 	EmitterDeathZoneEliminar = "EventoEmitterDeathZoneEliminar",
 	EmitterEmitZoneCrear = "EventoEmitterEmitZoneCrear",
 	EmitterEmitZoneEliminar = "EventoEmitterEmitZoneEliminar",
+	EmitterEmitCallbackGrabar = "EventoEmitterEmitCallbackGrabar",
+	EmitterMovimientoGuardar = "EventoEmitterMovimientoGuardar",
 
 	MenuProyectoNuevo = "EventoMenuProyectoNuevo",
 	MenuProyectoGuardar = "EventoMenuProyectoGuardar",

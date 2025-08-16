@@ -18,9 +18,9 @@ export default class EjemplosScene extends Phaser.Scene {
 	}
 
 	public create() {
-		this.background = this.add.image(100, 75, Imagenes.BackgroundModal)
+		this.background = this.add.image(75, 100, Imagenes.BackgroundModal)
 					.setOrigin(0)
-					.setDisplaySize(1850, 900)
+					.setDisplaySize(1925, 825)
 					.setDepth(ManejarDepthMainGame.profundidad1);
 		this.botonCerrar = this.add.image(this.background.x + this.background.displayWidth, this.background.y, AtlasImagenes.Botones, AtlasBotonesImagenes.Cerrar)
 					.setDepth(ManejarDepthMainGame.profundidad3)
@@ -52,14 +52,14 @@ export default class EjemplosScene extends Phaser.Scene {
 		// 		.setDepth(ManejarDepthMainGame.profundidad2)
 		// 		.lineStyle(6, 0xf8e59d, 1)
 		// 		.fillStyle(0x000000, 0.5);
-		let posX = 110;
-		let posY = 90;
+		let posX = 85;
+		let posY = 110;
 		// const container = this.add.container(posX, posY, graphics)
 		// 		.setDepth(ManejarDepthMainGame.profundidad3);
 		for (const [index, element] of listaEjemplos.entries()) {
 			const ejemploImagen = this.add.image(10, 10, element.aliasImagenPreview)
 				.setOrigin(0)
-				.setDisplaySize(200, 145);
+				.setDisplaySize(190, 135);
 			const ejemploURL = this.add.image(10, 10, AtlasImagenes.Botones, AtlasBotonesImagenes.Home)
 				.setScale(0.5)
 				.setOrigin(0)
@@ -80,9 +80,9 @@ export default class EjemplosScene extends Phaser.Scene {
 				.on(Phaser.Input.Events.POINTER_OUT, () => {
 
 				});
-			const nombreEjemplo = this.add.text(10, 155, element.nombreEjemplo, { fontFamily: 'monospace', fontSize: '18px', align: 'center', color: '#000', fontStyle: 'bold' })
+			const nombreEjemplo = this.add.text(10, 150, element.nombreEjemplo, { fontFamily: 'monospace', fontSize: '18px', align: 'center', color: '#000', fontStyle: 'bold' })
 				.setOrigin(0);
-			const area = this.add.zone(0, 0, 215, 200)
+			const area = this.add.zone(0, 0, 200, 190)
 						.setOrigin(0)
 						.setInteractive({ useHandCursor: true })
 						.on(Phaser.Input.Events.POINTER_UP, async () => {
@@ -107,10 +107,10 @@ export default class EjemplosScene extends Phaser.Scene {
 			// container.add([nombreEjemplo, area, ejemploImagen]);
 			const container = this.add.container(posX, posY, [nombreEjemplo, area, ejemploImagen, ejemploURL, graphics])
 				.setDepth(ManejarDepthMainGame.profundidad3);
-			posX += 225;
-			if ((index + 1) % 8 === 0) {
-				posX = 110;
-				posY += 210;
+			posX += 210;
+			if ((index + 1) % 9 === 0) {
+				posX = 85;
+				posY += 200;
 
 			}
 		}

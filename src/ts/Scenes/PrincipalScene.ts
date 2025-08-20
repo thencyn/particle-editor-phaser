@@ -17,6 +17,8 @@ import AyudaScene from "./AyudaScene";
 import { PropiedadesIngresoAvanzadoComponent } from "../Components/PropiedadesIngresoAvanzadoComponent";
 import { MostrarEmittersDetallesComponent } from "../Components/MostrarEmittersDetallesComponent";
 import { EmitCallbackIngresoComponent } from "../Components/EmitCallbackIngresoComponent";
+import { MaestroImagenesComponent } from "../Components/MaestroImagenesComponent";
+import { FileChooser } from "phaser3-rex-plugins/plugins/filechooser";
 
 
 export default class PrincipalScene extends Phaser.Scene {
@@ -34,6 +36,7 @@ export default class PrincipalScene extends Phaser.Scene {
 	private propiedadesIngresoAvanzadoComponent: PropiedadesIngresoAvanzadoComponent;
 	private emitCallbackIngresoComponent: EmitCallbackIngresoComponent;
 	private mostrarEmittersDetallesComponent: MostrarEmittersDetallesComponent;
+	private maestroImagenesComponent: MaestroImagenesComponent;
 	private menuAbierto: IDestroyable | null = null;
 	private listaEmitters: IConfiguracionEmitter[] = [];
 	private indexEmitterSeleccionado = 0;
@@ -46,6 +49,7 @@ export default class PrincipalScene extends Phaser.Scene {
 	private capturaCoordenadasListaPuntos: Phaser.Geom.Point[] = [];
 	private capturaCoordenadasLabel: Label;
 	private barraVisualizacionEjemplosComponent: BarraVisualizacionEjemplosComponent;
+	// private rexFileChooser: FileChooser;
 
 	public init() {
 	}
@@ -260,6 +264,8 @@ export default class PrincipalScene extends Phaser.Scene {
 
 	public create(): void {
 		this.cameras.main.fadeIn(1000, 0, 0, 0);
+		// this.rexFileChooser = this.plugins.get('rexFileChooser') as unknown as FileChooser;
+		this.rexFileChooser = this.plugins.get('rexFileChooser') as unknown as FileChooser;
 		this.menuComponent = new MenuComponent(this);
 		this.proyectoGuardarComponent = new ProyectoGuardarComponent(this);
 		this.proyectoAbrirComponent = new ProyectoAbrirComponent(this);
@@ -270,6 +276,7 @@ export default class PrincipalScene extends Phaser.Scene {
 		this.propiedadesIngresoAvanzadoComponent = new PropiedadesIngresoAvanzadoComponent(this);
 		this.emitCallbackIngresoComponent = new EmitCallbackIngresoComponent(this);
 		this.mostrarEmittersDetallesComponent = new MostrarEmittersDetallesComponent(this);
+		this.maestroImagenesComponent = new MaestroImagenesComponent(this);
 
 		this.crearNuevoEmitter();
 		this.crearPanel();
@@ -338,11 +345,19 @@ export default class PrincipalScene extends Phaser.Scene {
 			this.crearPanel();
 		});
 
-		this.registry.events.on(Eventos.EmitterCambiarImagen, (index: number, frame: string[], frameCycle: boolean) => {
-			this.listaEmitters[index].frame = frame;
-			this.listaEmitters[index].frameCycle = frameCycle;
-			this.resetEmitter(index, true);
-			this.mostrarEmittersComponent.actualizarEmitters(this.listaEmitters, this.indexEmitterSeleccionado);
+		this.registry.events.on(Eventos.EmitterCambiarImagen, (index: number, frame: string[], frameCycle: boolean, tipoTexture: 'Sistema' | 'Usuario') => {
+			if (tipoTexture === 'Sistema') {
+				this.listaEmitters[index].texture = AtlasImagenes.Particulas;
+				this.listaEmitters[index].frame = frame;
+				this.listaEmitters[index].frameCycle = frameCycle;
+				this.resetEmitter(index, true);
+				this.mostrarEmittersComponent.actualizarEmitters(this.listaEmitters, this.indexEmitterSeleccionado);
+			} else {
+				this.listaEmitters[index].texture = frame[0];
+				this.listaEmitters[index].frame = [];
+				this.resetEmitter(index, true);
+				this.mostrarEmittersComponent.actualizarEmitters(this.listaEmitters, this.indexEmitterSeleccionado);
+			}
 		});
 
 		this.registry.events.on(Eventos.EmitterDeathZoneCrear, (nueva: boolean, indexDeathZone: number, tipo: 'onLeave' | 'onEnter', figura: Phaser.Geom.Rectangle | Phaser.Geom.Circle | Phaser.Geom.Ellipse | Phaser.Geom.Triangle) => {
@@ -487,8 +502,10 @@ export default class PrincipalScene extends Phaser.Scene {
 					if (configAdicional.emitCallbackFunctionStr) {
 						configParticulas.emitCallback = new Function('particle', 'emitter', configAdicional.emitCallbackFunctionStr) as (particle: Phaser.GameObjects.Particles.Particle, emitter: Phaser.GameObjects.Particles.ParticleEmitter) => any;
 					}
-					this.eliminarPropiedadesEmitter(configParticulas, configAdicional, memoria)
-					configParticulas.frame = !item.frameCycle ? item.frame : { frames: item.frame, cycle: true };
+					this.eliminarPropiedadesEmitter(configParticulas, configAdicional, memoria);
+					if (item.frame.length > 0) {
+						configParticulas.frame = !item.frameCycle ? item.frame : { frames: item.frame, cycle: true };
+					}
 					return {
 						x: item.emitter.x,
 						y: item.emitter.y,
@@ -515,8 +532,10 @@ export default class PrincipalScene extends Phaser.Scene {
 				if (configAdicional.emitCallbackFunctionStr) {
 					configParticulas.emitCallback = new Function('particle', 'emitter', configAdicional.emitCallbackFunctionStr) as (particle: Phaser.GameObjects.Particles.Particle, emitter: Phaser.GameObjects.Particles.ParticleEmitter) => any;
 				}
-				this.eliminarPropiedadesEmitter(configParticulas, configAdicional, memoria)
-				configParticulas.frame = !this.listaEmitters[indexExportar].frameCycle ? this.listaEmitters[indexExportar].frame : { frames: this.listaEmitters[indexExportar].frame, cycle: true };
+				this.eliminarPropiedadesEmitter(configParticulas, configAdicional, memoria);
+				if (this.listaEmitters[indexExportar].frame.length > 0) {
+					configParticulas.frame = !this.listaEmitters[indexExportar].frameCycle ? this.listaEmitters[indexExportar].frame : { frames: this.listaEmitters[indexExportar].frame, cycle: true };
+				}
 				const emitter = {
 					x: this.listaEmitters[indexExportar].emitter.x,
 					y: this.listaEmitters[indexExportar].emitter.y,
@@ -543,7 +562,9 @@ export default class PrincipalScene extends Phaser.Scene {
 						configParticulas.emitCallback = new Function('particle', 'emitter', configAdicional.emitCallbackFunctionStr) as (particle: Phaser.GameObjects.Particles.Particle, emitter: Phaser.GameObjects.Particles.ParticleEmitter) => any;
 					}
 					this.eliminarPropiedadesEmitter(configParticulas, configAdicional, memoria);
-					configParticulas.frame = !item.frameCycle ? item.frame : { frames: item.frame, cycle: true };
+					if (item.frame.length > 0) {
+						configParticulas.frame = !item.frameCycle ? item.frame : { frames: item.frame, cycle: true };
+					}
 					return {
 						x: item.emitter.x,
 						y: item.emitter.y,
@@ -594,6 +615,12 @@ export default class PrincipalScene extends Phaser.Scene {
 				return;
 			}
 			this.resetEmitter(this.indexEmitterSeleccionado, false);
+		});
+
+		this.registry.events.on(Eventos.MenuImagenes, () => {
+			this.menuComponent.hideFullMenu();
+			this.maestroImagenesComponent.show();
+			this.menuAbierto = this.maestroImagenesComponent;
 		});
 
 		this.barraVisualizacionEjemplosComponent = new BarraVisualizacionEjemplosComponent(this);
@@ -2305,8 +2332,11 @@ export default class PrincipalScene extends Phaser.Scene {
 		if (resetEmitter || emitter.listenerCount('complete') > 0) {
 			emitter.off('complete');
 			emitter.destroy();
-			this.listaEmitters[index].emitter = this.add.particles(emitter.x, emitter.y, AtlasImagenes.Particulas, {
-												frame: !this.listaEmitters[index].frameCycle ? this.listaEmitters[index].frame : { frames: this.listaEmitters[index].frame, cycle: true },
+			if (this.listaEmitters[index].frame.length > 0) {
+				auxConfig.frame = !this.listaEmitters[index].frameCycle ? this.listaEmitters[index].frame : { frames: this.listaEmitters[index].frame, cycle: true };
+			}
+			this.listaEmitters[index].emitter = this.add.particles(emitter.x, emitter.y, this.listaEmitters[index].frame.length > 0 ? AtlasImagenes.Particulas : this.listaEmitters[index].texture, {
+												// frame: !this.listaEmitters[index].frameCycle ? this.listaEmitters[index].frame : { frames: this.listaEmitters[index].frame, cycle: true },
 												...auxConfig,
 											}).setDepth(-1);
 			if (this.listaEmitters[index].bokeh) {

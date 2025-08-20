@@ -281,10 +281,6 @@ export class MostrarEmittersDetallesComponent implements IDestroyable {
 				.setDepth(ManejarDepthMainGame.profundidad3);
 	}
 
-	private movimientoValidar() {
-
-	}
-
 	public show(indexEmitter: number, movimiento: IMovimiento) {
 		this.crearObjetos(indexEmitter);
 		this.crearObjetosMovimiento(movimiento);

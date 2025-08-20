@@ -99,18 +99,19 @@ export class MenuComponent {
 
 		posY += this.botonVerEmitters.displayHeight + 25;
 		this.botonImagenes = this.escena.add.image(0, posY, AtlasImagenes.Botones, AtlasBotonesImagenes.Imagenes)
-			.setVisible(false)
 			.setOrigin(0);
 		this.botonImagenesTexto = this.escena.add.text(0, 0, 'Imagenes', { fontFamily: 'monospace', fontSize: '32px' })
-			.setVisible(false)
 			.setOrigin(0, 0);
 		Phaser.Display.Align.To.RightCenter(this.botonImagenesTexto, this.botonImagenes, 10);
 		this.botonImagenesArea = this.escena.add.zone(0, posY, 225, this.botonImagenes.displayHeight)
 					.setOrigin(0)
-					.setVisible(false)
 					.setInteractive({ useHandCursor: true })
 					.on(Phaser.Input.Events.POINTER_UP, () => {
-						this.botonImagenes.clearTint();
+						if (!this.efectoMostrarMenuEnEjecucion) {
+							this.botonImagenes.clearTint();
+							UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
+							this.escena.registry.events.emit(Eventos.MenuImagenes);
+						}
 					})
 					.on(Phaser.Input.Events.POINTER_MOVE, () => {
 

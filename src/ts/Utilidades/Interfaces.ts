@@ -101,6 +101,19 @@ export interface IDestroyable {
 	destroy(): void;
 }
 
+export interface IImagenCompleto {
+	nombre: string;
+	peso: number;
+	fecha: Date;
+	imagenBase64: string;
+}
+
+export interface IImagenBasico {
+	nombre: string;
+	peso: number;
+	fecha: Date;
+}
+
 export interface IDeathZone {
 	figura: Phaser.Geom.Rectangle | Phaser.Geom.Circle | Phaser.Geom.Ellipse | Phaser.Geom.Triangle
 	tipo: 'onEnter' | 'onLeave'

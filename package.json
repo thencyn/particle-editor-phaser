@@ -1,6 +1,6 @@
 {
     "name": "particle-editor-phaser",
-    "version": "0.0.5",
+    "version": "0.0.6",
     "description": "Editor visual de partículas para Phaser 3",
     "main": "src/index.js",
     "scripts": {

@@ -1,6 +1,7 @@
 import JSZip from "jszip";
 import { IConfiguracionEmitter, IGuardarConfiguracionProyectos, IGuardarConfiguracionEmitter, IProyectosBasicosConfiguracion, IMemoria, IDeathZone, IEmitZone, IAdvancedFormula } from "./Interfaces";
 import { UtilFiguras } from "./UtilFiguras";
+import { UtilImagenes } from "./UtilImagenes";
 
 export class UtilProyectos {
 	static guardarProyecto(nombreProyecto: string, datosProyecto: IConfiguracionEmitter[], idProyecto?: number) {
@@ -51,6 +52,7 @@ export class UtilProyectos {
 					x: number,
 					y: number,
 					texture: string,
+					frame: string[],
 					configParticle: Phaser.Types.GameObjects.Particles.ParticleEmitterConfig,
 					memoria: IMemoria,
 					listaDeathZones: IDeathZone[],
@@ -61,13 +63,25 @@ export class UtilProyectos {
 					emitCallbackFunctionStr: string,
 				})[]) {
 		const zip = new JSZip();
-		const imageResponse = await fetch('assets/particulas.png');
-		const imageBlob = await imageResponse.blob();
-		const imageArrayBuffer = await imageBlob.arrayBuffer();
-		zip.file("assets/particulas.png", imageArrayBuffer);
-		const imageAtlasResponse = await fetch('assets/particulas_atlas.json');
-		const imageAtlasJson = await imageAtlasResponse.json();
-		zip.file("assets/particulas_atlas.json", JSON.stringify(imageAtlasJson, null, 2));
+		if (listaEmitters.some(x => x.frame.length > 0)) {
+			const imageResponse = await fetch('assets/particulas.png');
+			const imageBlob = await imageResponse.blob();
+			const imageArrayBuffer = await imageBlob.arrayBuffer();
+			zip.file("assets/particulas.png", imageArrayBuffer);
+			const imageAtlasResponse = await fetch('assets/particulas_atlas.json');
+			const imageAtlasJson = await imageAtlasResponse.json();
+			zip.file("assets/particulas_atlas.json", JSON.stringify(imageAtlasJson, null, 2));
+		}
+
+		if (listaEmitters.some(x => x.frame.length === 0)) {
+			const listaImagenes = UtilImagenes.obtenerListadoCompleto();
+			for (const item of listaEmitters.filter(x => x.frame.length === 0)) {
+				const imagen = listaImagenes.find(x => x.nombre === item.texture);
+				if (imagen) {
+					zip.file(`assets/${item.texture}.png`, imagen.imagenBase64.split(',')[1], { base64: true });
+				}
+			}
+		}
 		// const phaserjsResponse = await fetch('/assets/descarga/phaser.min.js');
 		// const phaserjsBlob = await phaserjsResponse.blob();
 		// const phaserjsArrayBuffer = await phaserjsBlob.arrayBuffer();
@@ -90,7 +104,8 @@ export class UtilProyectos {
 class Example extends Phaser.Scene {
     preload () {
         this.load.path = "assets/";
-        this.load.atlas('AtlasParticulas', 'particulas.png', 'particulas_atlas.json');
+		${listaEmitters.some(x => x.frame.length > 0) ? `this.load.atlas('AtlasParticulas', 'particulas.png', 'particulas_atlas.json');` : ''}
+		${listaEmitters.some(x => x.frame.length === 0) ? listaEmitters.filter(x => x.frame.length === 0).map(item => `this.load.image('${item.texture}', '${item.texture}.png');`).join('\n') : ''}
     }
 
     create () {

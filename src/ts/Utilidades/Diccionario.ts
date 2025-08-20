@@ -33,6 +33,7 @@ export enum Eventos {
 	MenuProyectoGuardar = "EventoMenuProyectoGuardar",
 	MenuProyectoAbrir = "EventoMenuProyectoAbrir",
 	MenuExportar = "EventoMenuExportar",
+	MenuImagenes = "EventoMenuImagenes",
 
 	AbrirNuevoEjemplo = "EventoAbrirNuevoEjemplo",
 

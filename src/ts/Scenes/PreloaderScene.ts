@@ -5,6 +5,7 @@ import PresentacionScene from "./PresentacionScene";
 import { UtilDispositivo } from "../Utilidades/UtilDispositivo";
 import EjemplosScene from "./EjemplosScene";
 import { UtilEjemplos } from "../Utilidades/UtilEjemplos";
+import { UtilImagenes } from "../Utilidades/UtilImagenes";
 
 export default class PreloaderScene extends Phaser.Scene {
 	public static Name = "PreloaderScene";
@@ -63,6 +64,11 @@ export default class PreloaderScene extends Phaser.Scene {
 		for(const value of listaEjemplos) {
 			this.load.image(value.aliasImagenPreview, value.urlImagenPreview);
         }
+
+		const listaImagenes = UtilImagenes.obtenerListadoCompleto();
+		for (const element of listaImagenes) {
+			this.textures.addBase64(element.nombre, element.imagenBase64);
+		}
 	}
 
 	public create(): void {

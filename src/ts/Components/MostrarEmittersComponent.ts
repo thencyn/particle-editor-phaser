@@ -1,5 +1,6 @@
 import { AtlasBotonesImagenes, AtlasImagenes, AtlasParticulas, Eventos, Imagenes, ManejarDepthMainGame, Sonidos, TexturasManuales } from "../Utilidades/Diccionario";
 import { IConfiguracionEmitter, IDestroyable } from "../Utilidades/Interfaces";
+import { UtilImagenes } from "../Utilidades/UtilImagenes";
 import { UtilSonido } from "../Utilidades/UtilSonido";
 
 export class MostrarEmittersComponent implements IDestroyable {
@@ -132,9 +133,11 @@ export class MostrarEmittersComponent implements IDestroyable {
 				.setDepth(ManejarDepthMainGame.profundidad3)
 				.setInteractive({ useHandCursor: true })
 					.on(Phaser.Input.Events.POINTER_UP, () => {
-						texto.clearTint();
-						UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
-						this.seleccionarImagenEmitter(index, element.frame, element.frameCycle);
+						if (!this.bloquearCierre) {
+							texto.clearTint();
+							UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
+							this.seleccionarImagenEmitter(index, element.frame.length > 0 ? element.frame : [element.texture], element.frameCycle);
+						}
 					})
 					.on(Phaser.Input.Events.POINTER_MOVE, function () {
 						this.setTint(0xb4caaf);
@@ -170,7 +173,7 @@ export class MostrarEmittersComponent implements IDestroyable {
 					.setInteractive({ useHandCursor: true })
 					.on(Phaser.Input.Events.POINTER_UP, () => {
 						imagenBorrar.clearTint();
-						if (listaEmitters.length > 1) {
+						if (listaEmitters.length > 1 && !this.bloquearCierre) {
 							this.escena.registry.events.emit(Eventos.EmitterEliminar, index);
 							UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
 						}
@@ -225,15 +228,17 @@ export class MostrarEmittersComponent implements IDestroyable {
 					.setDepth(ManejarDepthMainGame.profundidad3)
 					.setInteractive({ useHandCursor: true })
 					.on(Phaser.Input.Events.POINTER_UP, () => {
-						imagenConfiguraciones.clearTint();
-						UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
-						this.botonToggleEmitters.destroy();
-						this.botonNuevoEmitter.destroy();
-						this.background.destroy();
-						this.botonAtras.destroy();
-						this.listaEmitterContainer.forEach(x => x.destroy());
-						this.listaEmitterContainer = [];
-						this.escena.registry.events.emit(Eventos.EmitterDetallesVerMenu, index);
+						if (!this.bloquearCierre) {
+							imagenConfiguraciones.clearTint();
+							UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
+							this.botonToggleEmitters.destroy();
+							this.botonNuevoEmitter.destroy();
+							this.background.destroy();
+							this.botonAtras.destroy();
+							this.listaEmitterContainer.forEach(x => x.destroy());
+							this.listaEmitterContainer = [];
+							this.escena.registry.events.emit(Eventos.EmitterDetallesVerMenu, index);
+						}
 					})
 					.on(Phaser.Input.Events.POINTER_MOVE, function () {
 						this.setTint(0xb4caaf);
@@ -280,6 +285,9 @@ export class MostrarEmittersComponent implements IDestroyable {
 				botonAceptarTexto.destroy();
 				cycleSwitch.destroy();
 				cycleTexto.destroy();
+				misImagenesBoton.destroy();
+				misImagenesTexto.destroy();
+				misImagenesArea.destroy();
 				botonCerrar.destroy();
 			})
 			.on(Phaser.Input.Events.POINTER_MOVE, function () {
@@ -291,17 +299,17 @@ export class MostrarEmittersComponent implements IDestroyable {
 		const listaImagenes: Phaser.GameObjects.Image[] = [];
 		const listaGraphics: Phaser.GameObjects.Graphics[] = [];
 		let posx = background.x - background.displayWidth / 2 + 50;
-		let posy = background.y - background.displayHeight / 2 + 40;
+		let posY = background.y - background.displayHeight / 2 + 40;
 
 		for(const frame of Object.values(AtlasParticulas)) {
 			const estaSeleccionado = listaFramesActuales.includes(frame);
 			const borde = this.escena.add.graphics().setDepth(ManejarDepthMainGame.profundidad3);
 			borde.lineStyle(8, 0x00ff00);
-			borde.strokeRect(posx, posy, 75, 75);
+			borde.strokeRect(posx, posY, 75, 75);
 			borde.setVisible(estaSeleccionado);
 			// imagen.setData('borde', borde);
 
-			const imagen = this.escena.add.image(posx, posy, AtlasImagenes.Particulas, frame)
+			const imagen = this.escena.add.image(posx, posY, AtlasImagenes.Particulas, frame)
 				.setOrigin(0)
 				.setDisplaySize(75, 75)
 				.setDepth(ManejarDepthMainGame.profundidad3)
@@ -325,18 +333,16 @@ export class MostrarEmittersComponent implements IDestroyable {
 			posx += 80;
 			if (posx > background.x + background.displayWidth / 2 - 90) {
 				posx = background.x - background.displayWidth / 2 + 50;
-				posy += 80;
+				posY += 80;
 			}
 			listaImagenes.push(imagen);
 			listaGraphics.push(borde);
 		}
 
-		posy += 80;
-		const cycleTexto = this.escena.add.text(this.escena.cameras.main.centerX - 70, posy + 15, 'Cycle', {
-				fontFamily: "Inter-Black", fontSize: 48, fontStyle: 'bold', color: '#000000', align: 'center'
-			})
+		posY += 80;
+		const cycleTexto = this.escena.add.text(this.escena.cameras.main.centerX - 70, posY + 15, 'Cycle', { fontFamily: "Inter-Black", fontSize: 48, fontStyle: 'bold', color: '#000000', align: 'center' })
 			.setDepth(ManejarDepthMainGame.profundidad3);
-		const cycleSwitch = this.escena.rexUI.add.toggleSwitch(this.escena.cameras.main.centerX - 150, posy, 80, 80, 0x039be5)
+		const cycleSwitch = this.escena.rexUI.add.toggleSwitch(this.escena.cameras.main.centerX - 150, posY, 80, 80, 0x039be5)
 					.setOrigin(0)
 					.setDepth(ManejarDepthMainGame.profundidad3)
 					.setValue(cycleActual)
@@ -344,8 +350,50 @@ export class MostrarEmittersComponent implements IDestroyable {
 
 					});
 
-		posy += 150;
-		const botonAceptar = this.escena.add.image(this.escena.cameras.main.centerX, posy, AtlasImagenes.Botones, AtlasBotonesImagenes.Boton)
+		const existenImagenes = UtilImagenes.obtenerListado().length > 0;
+		const misImagenesTexto = this.escena.add.text(0, 0, 'Mis Imagenes', { fontFamily: "Inter-Black", fontSize: 36, fontStyle: 'bold', color: '#758199', align: 'center'  })
+			.setOrigin(0, 0)
+			.setVisible(existenImagenes)
+			.setDepth(ManejarDepthMainGame.profundidad3);
+		const misImagenesBoton = this.escena.add.image(0, 0, AtlasImagenes.Botones, AtlasBotonesImagenes.Siguiente)
+			.setOrigin(0)
+			.setVisible(existenImagenes)
+			.setDepth(ManejarDepthMainGame.profundidad3);
+		misImagenesTexto.setPosition(background.x + (background.displayWidth / 2) - misImagenesTexto.displayWidth - misImagenesBoton.displayWidth - 10, posY + 25);
+		misImagenesBoton.setPosition(background.x + (background.displayWidth / 2) - misImagenesBoton.displayWidth - 10, posY + 5);
+		const misImagenesArea = this.escena.add.zone(misImagenesTexto.x, posY, misImagenesTexto.displayWidth + misImagenesBoton.displayWidth + 10, misImagenesBoton.displayHeight)
+							.setOrigin(0)
+							.setVisible(existenImagenes)
+							.setInteractive({ useHandCursor: true })
+							.on(Phaser.Input.Events.POINTER_UP, () => {
+								misImagenesBoton.clearTint();
+								misImagenesTexto.clearTint();
+								UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
+								this.escena.input.resetCursor();
+								UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
+								listaImagenes.forEach(x => x.destroy());
+								listaGraphics.forEach(x => x.destroy());
+								background.destroy();
+								botonAceptar.destroy();
+								botonAceptarTexto.destroy();
+								cycleSwitch.destroy();
+								cycleTexto.destroy();
+								misImagenesBoton.destroy();
+								misImagenesTexto.destroy();
+								misImagenesArea.destroy();
+								botonCerrar.destroy();
+								this.seleccionarImagenUsuarioEmitter(index, listaFramesActuales, cycleActual);
+							})
+							.on(Phaser.Input.Events.POINTER_MOVE, () => {
+								misImagenesBoton.setTint(0xb4caaf);
+								misImagenesTexto.setColor('#282c34');
+							})
+							.on(Phaser.Input.Events.POINTER_OUT, () => {
+								misImagenesBoton.clearTint();
+								misImagenesTexto.setColor('#758199');
+							});
+
+		const botonAceptar = this.escena.add.image(0, 0, AtlasImagenes.Botones, AtlasBotonesImagenes.Boton)
 				.setDepth(ManejarDepthMainGame.profundidad3)
 				.setInteractive({ useHandCursor: true })
 				.on(Phaser.Input.Events.POINTER_UP, () => {
@@ -359,9 +407,12 @@ export class MostrarEmittersComponent implements IDestroyable {
 						botonAceptar.destroy();
 						botonAceptarTexto.destroy();
 						botonCerrar.destroy();
-						this.escena.registry.events.emit(Eventos.EmitterCambiarImagen, index, listaFramesSeleccionados, cycleSwitch.value);
+						this.escena.registry.events.emit(Eventos.EmitterCambiarImagen, index, listaFramesSeleccionados, cycleSwitch.value, 'Sistema');
 						cycleSwitch.destroy();
 						cycleTexto.destroy();
+						misImagenesBoton.destroy();
+						misImagenesTexto.destroy();
+						misImagenesArea.destroy();
 						this.bloquearCierre = false;
 					}
 				})
@@ -371,6 +422,157 @@ export class MostrarEmittersComponent implements IDestroyable {
 				.on(Phaser.Input.Events.POINTER_OUT, function () {
 					this.clearTint();
 				});
+		botonAceptar.setPosition(this.escena.cameras.main.centerX, background.y + (background.displayHeight / 2) + (botonAceptar.displayHeight / 2) + 10);
+		const botonAceptarTexto = this.escena.add.text(0, 0, 'Aceptar', {
+				fontFamily: "Inter-Black", fontSize: 64, fontStyle: 'bold', color: '#ffffff', align: 'center'
+			})
+			.setDepth(ManejarDepthMainGame.profundidad3);
+		Phaser.Display.Align.In.Center(botonAceptarTexto, botonAceptar);
+	}
+
+	private seleccionarImagenUsuarioEmitter(index: number, listaFramesActuales: string[], cycleActual: boolean) {
+		this.bloquearCierre = true;
+
+		const background = this.escena.add.image(this.escena.cameras.main.centerX, this.escena.cameras.main.centerY, Imagenes.BackgroundModal)
+			.setDisplaySize(1050, 775)
+			.setDepth(ManejarDepthMainGame.profundidad2);
+		const botonCerrar = this.escena.add.image(background.x + background.displayWidth / 2, background.y - background.displayHeight / 2, AtlasImagenes.Botones, AtlasBotonesImagenes.Cerrar)
+			.setDepth(ManejarDepthMainGame.profundidad3)
+			.setInteractive({ useHandCursor: true })
+			.on(Phaser.Input.Events.POINTER_UP, () => {
+				botonCerrar.clearTint();
+				this.bloquearCierre = false;
+				UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
+				listaImagenes.forEach(x => x.destroy());
+				listaGraphics.forEach(x => x.destroy());
+				background.destroy();
+				botonAceptar.destroy();
+				botonAceptarTexto.destroy();
+				imagenesBoton.destroy();
+				imagenesTexto.destroy();
+				imagenesArea.destroy();
+				botonCerrar.destroy();
+			})
+			.on(Phaser.Input.Events.POINTER_MOVE, function () {
+				this.setTint(0xb4caaf);
+			})
+			.on(Phaser.Input.Events.POINTER_OUT, function () {
+				this.clearTint();
+			});
+		const listaImagenes: Phaser.GameObjects.Image[] = [];
+		const listaGraphics: Phaser.GameObjects.Graphics[] = [];
+		let posx = background.x - background.displayWidth / 2 + 50;
+		let posY = background.y - background.displayHeight / 2 + 40;
+		const listaImagenesUsuario = UtilImagenes.obtenerListadoCompleto();
+		for(const imagenUsuario of listaImagenesUsuario) {
+			const estaSeleccionado = listaFramesActuales.includes(imagenUsuario.nombre);
+			const borde = this.escena.add.graphics().setDepth(ManejarDepthMainGame.profundidad3);
+			borde.lineStyle(8, 0x00ff00);
+			borde.strokeRect(posx, posY, 75, 75);
+			borde.setVisible(estaSeleccionado);
+			const imagen = this.escena.add.image(posx, posY, imagenUsuario.nombre)
+				.setOrigin(0)
+				.setDisplaySize(75, 75)
+				.setDepth(ManejarDepthMainGame.profundidad3)
+				.setInteractive({ useHandCursor: true })
+				.setData('seleccionada', estaSeleccionado)
+				.on(Phaser.Input.Events.POINTER_UP, () => {
+					imagen.clearTint();
+					UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
+					const seleccionada = imagen.getData('seleccionada');
+					for (const img of listaImagenes) {
+						img.setData('seleccionada', false);
+					}
+					for (const borde of listaGraphics) {
+						borde.setVisible(false);
+					}
+					imagen.setData('seleccionada', !seleccionada);
+					borde.setVisible(!seleccionada);
+				})
+				.on(Phaser.Input.Events.POINTER_MOVE, function () {
+					this.setTint(0xb4caaf);
+				})
+				.on(Phaser.Input.Events.POINTER_OUT, function () {
+					this.clearTint();
+				});
+
+
+			posx += 80;
+			if (posx > background.x + background.displayWidth / 2 - 90) {
+				posx = background.x - background.displayWidth / 2 + 50;
+				posY += 80;
+			}
+			listaImagenes.push(imagen);
+			listaGraphics.push(borde);
+		}
+
+
+		const imagenesTexto = this.escena.add.text(0, 0, 'Imagenes', { fontFamily: "Inter-Black", fontSize: 36, fontStyle: 'bold', color: '#758199', align: 'center'  })
+			.setOrigin(0, 0)
+			.setDepth(ManejarDepthMainGame.profundidad3);
+		const imagenesBoton = this.escena.add.image(0, 0, AtlasImagenes.Botones, AtlasBotonesImagenes.Anterior)
+			.setOrigin(0)
+			.setDepth(ManejarDepthMainGame.profundidad3);
+		const auxPosY = background.y + (background.displayHeight / 2) - imagenesBoton.displayHeight - 10;
+		imagenesTexto.setPosition(background.x - (background.displayWidth / 2) + imagenesBoton.displayWidth + 10, auxPosY + 20);
+		imagenesBoton.setPosition(background.x - (background.displayWidth / 2) + 10, auxPosY);
+		const imagenesArea = this.escena.add.zone(imagenesBoton.x, auxPosY, imagenesTexto.displayWidth + imagenesBoton.displayWidth + 10, imagenesBoton.displayHeight)
+							.setOrigin(0)
+							.setInteractive({ useHandCursor: true })
+							.on(Phaser.Input.Events.POINTER_UP, () => {
+								imagenesBoton.clearTint();
+								imagenesTexto.clearTint();
+								UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
+								this.escena.input.resetCursor();
+								UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
+								listaImagenes.forEach(x => x.destroy());
+								listaGraphics.forEach(x => x.destroy());
+								background.destroy();
+								botonAceptar.destroy();
+								botonAceptarTexto.destroy();
+								imagenesBoton.destroy();
+								imagenesTexto.destroy();
+								imagenesArea.destroy();
+								botonCerrar.destroy();
+								this.seleccionarImagenEmitter(index, listaFramesActuales, cycleActual);
+							})
+							.on(Phaser.Input.Events.POINTER_MOVE, () => {
+								imagenesBoton.setTint(0xb4caaf);
+								imagenesTexto.setColor('#282c34');
+							})
+							.on(Phaser.Input.Events.POINTER_OUT, () => {
+								imagenesBoton.clearTint();
+								imagenesTexto.setColor('#758199');
+							});
+
+		const botonAceptar = this.escena.add.image(0, 0, AtlasImagenes.Botones, AtlasBotonesImagenes.Boton)
+				.setDepth(ManejarDepthMainGame.profundidad3)
+				.setInteractive({ useHandCursor: true })
+				.on(Phaser.Input.Events.POINTER_UP, () => {
+					const framesSeleccionado = listaImagenes.find(x => x.getData('seleccionada'))?.texture.key;
+					if (framesSeleccionado) {
+						botonAceptar.clearTint();
+						UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
+						listaImagenes.forEach(x => x.destroy());
+						listaGraphics.forEach(x => x.destroy());
+						background.destroy();
+						botonAceptar.destroy();
+						botonAceptarTexto.destroy();
+						botonCerrar.destroy();
+						this.escena.registry.events.emit(Eventos.EmitterCambiarImagen, index, [framesSeleccionado], false, 'Usuario');
+						imagenesBoton.destroy();
+						imagenesTexto.destroy();
+						imagenesArea.destroy();
+						this.bloquearCierre = false;
+					}
+				})
+				.on(Phaser.Input.Events.POINTER_MOVE, function () {
+					this.setTint(0xb4caaf);
+				})
+				.on(Phaser.Input.Events.POINTER_OUT, function () {
+					this.clearTint();
+				});
+		botonAceptar.setPosition(this.escena.cameras.main.centerX, background.y + (background.displayHeight / 2) + (botonAceptar.displayHeight / 2) + 10);
 		const botonAceptarTexto = this.escena.add.text(0, 0, 'Aceptar', {
 				fontFamily: "Inter-Black", fontSize: 64, fontStyle: 'bold', color: '#ffffff', align: 'center'
 			})

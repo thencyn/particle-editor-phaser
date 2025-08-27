@@ -1,10 +1,10 @@
 import JSZip from "jszip";
-import { IConfiguracionEmitter, IGuardarConfiguracionProyectos, IGuardarConfiguracionEmitter, IProyectosBasicosConfiguracion, IMemoria, IDeathZone, IEmitZone, IAdvancedFormula } from "./Interfaces";
+import { IConfiguracionEmitter, IGuardarConfiguracionProyectos, IGuardarConfiguracionEmitter, IProyectosBasicosConfiguracion, IMemoria, IDeathZone, IEmitZone, IAdvancedFormula, IImagenBackground } from "./Interfaces";
 import { UtilFiguras } from "./UtilFiguras";
 import { UtilImagenes } from "./UtilImagenes";
 
 export class UtilProyectos {
-	static guardarProyecto(nombreProyecto: string, datosProyecto: IConfiguracionEmitter[], idProyecto?: number) {
+	static guardarProyecto(nombreProyecto: string, datosProyecto: IConfiguracionEmitter[], idProyecto?: number, listaImagenesBackground?: IImagenBackground[]) {
 		const listaProyectos = <IGuardarConfiguracionProyectos[]> (localStorage.getItem('proyectos') ? JSON.parse(localStorage.getItem('proyectos') || '[]') : []);
 		const proyecto: IGuardarConfiguracionProyectos = {
 			nombreProyecto,
@@ -16,8 +16,11 @@ export class UtilProyectos {
 				frame: x.frame,
 				frameCycle: x.frameCycle,
 				memoria: x.memoria,
-			}))
+			})),
 		};
+		if (listaImagenesBackground.length > 0) {
+			proyecto.listaImagenesBackground = listaImagenesBackground;
+		}
 		listaProyectos.some(x => x.id === proyecto.id) ?
 			listaProyectos.splice(listaProyectos.findIndex(x => x.id === proyecto.id), 1, proyecto) :
 			listaProyectos.push(proyecto);
@@ -138,7 +141,7 @@ const game = new Phaser.Game(config);
 		a.click();
 	}
 
-	static exportarProyecto(datosProyecto: IConfiguracionEmitter[], datosBasicosProyecto: IProyectosBasicosConfiguracion) {
+	static exportarProyecto(datosProyecto: IConfiguracionEmitter[], datosBasicosProyecto: IProyectosBasicosConfiguracion, listaImagenesBackground: IImagenBackground[] ) {
 		const proyecto: IGuardarConfiguracionProyectos = {
 			nombreProyecto: datosBasicosProyecto?.nombreProyecto || 'Proyecto 1',
 			id: datosBasicosProyecto?.id || Date.now(),
@@ -149,8 +152,11 @@ const game = new Phaser.Game(config);
 				frame: x.frame,
 				frameCycle: x.frameCycle,
 				memoria: x.memoria,
-			}))
+			})),
 		};
+		if (listaImagenesBackground.length > 0) {
+			proyecto.listaImagenesBackground = listaImagenesBackground;
+		}
 		const proyectoJSON = JSON.stringify(proyecto, null, 2);
 		const blob = new Blob([proyectoJSON], { type: 'application/json' });
 		const url = URL.createObjectURL(blob);

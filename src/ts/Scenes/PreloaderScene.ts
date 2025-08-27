@@ -13,7 +13,7 @@ export default class PreloaderScene extends Phaser.Scene {
 		// this.add.image(0, 0, Imagenes.BackgroundLoading).setOrigin(0, 0);
 	}
 
-	public preload(): void {
+	public async preload() {
 		this.addProgressBar();
 
 		this.load.path = "assets/";
@@ -67,6 +67,11 @@ export default class PreloaderScene extends Phaser.Scene {
 
 		const listaImagenes = UtilImagenes.obtenerListadoCompleto();
 		for (const element of listaImagenes) {
+			this.textures.addBase64(element.nombre, element.imagenBase64);
+		}
+
+		const listaImagenesBackground = await UtilImagenes.obtenerListadoCompletoIndexDB();
+		for (const element of listaImagenesBackground) {
 			this.textures.addBase64(element.nombre, element.imagenBase64);
 		}
 	}

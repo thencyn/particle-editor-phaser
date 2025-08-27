@@ -25,7 +25,7 @@ const gameConfig: Phaser.Types.Core.GameConfig = {
 	height: 1152,
 	type: Phaser.AUTO,
 	//pixelArt: true,
-	backgroundColor: '#494a4a',
+	backgroundColor: '#000000',
 	// backgroundColor: '#ffffff',
 	parent: "phaser-game",
 	title: "Particle Editor Phaser",
@@ -105,7 +105,7 @@ export default class Game extends Phaser.Game {
 window.onload = (): void => {
 	const url = new URL(document.URL);
 	const searchParams = new URLSearchParams(url.search);
-	const color = `#${searchParams.get('color') || '494a4a'}`;
+	const color = `#${searchParams.get('color') || '000000'}`;
 	const width = !Number(searchParams.get('width')) ? 2048 : Number(searchParams.get('width'));
 	const height = !Number(searchParams.get('height')) ? 1152 : Number(searchParams.get('height'));
 

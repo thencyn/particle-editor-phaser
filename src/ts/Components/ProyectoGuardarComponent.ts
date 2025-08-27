@@ -1,6 +1,6 @@
 import InputText from "phaser3-rex-plugins/plugins/gameobjects/dom/inputtext/InputText";
 import { AtlasBotonesImagenes, AtlasImagenes, AtlasParticulas, Eventos, Imagenes, ManejarDepthMainGame, Sonidos, TexturasManuales } from "../Utilidades/Diccionario";
-import { IConfiguracionEmitter, IDestroyable } from "../Utilidades/Interfaces";
+import { IConfiguracionEmitter, IDestroyable, IImagenBackground } from "../Utilidades/Interfaces";
 import { UtilSonido } from "../Utilidades/UtilSonido";
 import { UtilProyectos } from "../Utilidades/UtilProyectos";
 
@@ -62,7 +62,7 @@ export class ProyectoGuardarComponent implements IDestroyable {
 		this.botonAtras.setPosition(this.escena.cameras.main.width - 300, 25);
 	}
 
-	public show(listaEmitters: IConfiguracionEmitter[], id?: number, nombreProyecto: string = 'Proyecto 1') {
+	public show(listaEmitters: IConfiguracionEmitter[], id?: number, nombreProyecto: string = 'Proyecto 1', listaImagenesBackground: IImagenBackground[] = null) {
 		this.crearBotonToggleMenu();
 		this.crearBotonAtras();
 		let posY = 150;
@@ -103,7 +103,7 @@ export class ProyectoGuardarComponent implements IDestroyable {
 					this.botonGuardar.removeInteractive();
 					this.botonGuardar.clearTint();
 					UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
-					const proyectoGuardado = UtilProyectos.guardarProyecto(this.nombreProyectoText.text, listaEmitters, id);
+					const proyectoGuardado = UtilProyectos.guardarProyecto(this.nombreProyectoText.text, listaEmitters, id, listaImagenesBackground);
 					this.escena.registry.events.emit(Eventos.ProyectoGuardado, proyectoGuardado);
 					this.hide();
 				})
@@ -131,7 +131,7 @@ export class ProyectoGuardarComponent implements IDestroyable {
 					this.botonGuardarComo.removeInteractive();
 					this.botonGuardarComo.clearTint();
 					UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
-					const proyectoGuardado = UtilProyectos.guardarProyecto(this.nombreProyectoText.text, listaEmitters, null);
+					const proyectoGuardado = UtilProyectos.guardarProyecto(this.nombreProyectoText.text, listaEmitters, null, listaImagenesBackground);
 					this.escena.registry.events.emit(Eventos.ProyectoGuardado, proyectoGuardado);
 					this.hide();
 				})

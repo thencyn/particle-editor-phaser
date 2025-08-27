@@ -295,11 +295,11 @@ export class PropiedadesIngresoAvanzadoComponent {
 		}
 	}
 
-	public isShowing() {
+	public get isShowing() {
 		return this.mostrando;
 	}
 
-	private hide() {
+	public hide() {
 		this.background.destroy();
 		this.cerrar.destroy();
 		this.titulo.destroy();

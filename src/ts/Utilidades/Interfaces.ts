@@ -73,6 +73,7 @@ export interface IGuardarConfiguracionProyectos {
 	id: number;
 	fecha: Date;
 	listaEmitters: IGuardarConfiguracionEmitter[];
+	listaImagenesBackground?: IImagenBackground[];
 }
 
 export interface IGuardarConfiguracionEmitter {
@@ -95,6 +96,21 @@ export interface IMovimiento {
 	yDuration: number;
 	yEase: string;
 	yActivar: boolean;
+}
+
+
+export interface IConfiguracionGeneral {
+	listaImagenesBackground: IImagenBackground[];
+}
+export interface IImagenBackground {
+	key: string;
+	x: number;
+	y: number;
+	originX: number;
+	originY: number;
+	activarDisplaySize: boolean;
+	ancho?: number;
+	alto?: number;
 }
 
 export interface IDestroyable {

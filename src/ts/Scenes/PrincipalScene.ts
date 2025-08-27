@@ -2,7 +2,7 @@ import { ProyectoGuardarComponent } from "../Components/ProyectoGuardarComponent
 import { MenuComponent } from "../Components/MenuComponent";
 import { MostrarEmittersComponent } from "../Components/MostrarEmittersComponent";
 import { AtlasBotonesImagenes, AtlasImagenes, AtlasImagenesVarias, AtlasParticulas, Eventos, Imagenes, Sonidos, Variables } from "../Utilidades/Diccionario";
-import { IConfiguracionAdicional, IConfiguracionEmitter, IDestroyable, IGuardarConfiguracionEmitter, IGuardarConfiguracionProyectos, IMemoria, IMovimiento, IProyectosBasicosConfiguracion, propiedadesAdvancedFormulaArray, typePropiedadesAdvancedFormula } from "../Utilidades/Interfaces";
+import { IConfiguracionAdicional, IConfiguracionEmitter, IConfiguracionGeneral, IDestroyable, IGuardarConfiguracionEmitter, IGuardarConfiguracionProyectos, IImagenBackground, IMemoria, IMovimiento, IProyectosBasicosConfiguracion, propiedadesAdvancedFormulaArray, typePropiedadesAdvancedFormula } from "../Utilidades/Interfaces";
 import { UtilSonido } from "../Utilidades/UtilSonido";
 import { ProyectoAbrirComponent } from "../Components/ProyectoAbrirComponent";
 import { UtilProyectos } from "../Utilidades/UtilProyectos";
@@ -17,8 +17,10 @@ import AyudaScene from "./AyudaScene";
 import { PropiedadesIngresoAvanzadoComponent } from "../Components/PropiedadesIngresoAvanzadoComponent";
 import { MostrarEmittersDetallesComponent } from "../Components/MostrarEmittersDetallesComponent";
 import { EmitCallbackIngresoComponent } from "../Components/EmitCallbackIngresoComponent";
-import { MaestroImagenesComponent } from "../Components/MaestroImagenesComponent";
+import { ImagenesEmitterComponent } from "../Components/ImagenesEmitterComponent";
 import { FileChooser } from "phaser3-rex-plugins/plugins/filechooser";
+import { MenuImagenesComponent } from "../Components/MenuImagenesComponent";
+import { ImagenesBackgroundComponent } from "../Components/ImagenesBackgroundComponent";
 
 
 export default class PrincipalScene extends Phaser.Scene {
@@ -36,9 +38,14 @@ export default class PrincipalScene extends Phaser.Scene {
 	private propiedadesIngresoAvanzadoComponent: PropiedadesIngresoAvanzadoComponent;
 	private emitCallbackIngresoComponent: EmitCallbackIngresoComponent;
 	private mostrarEmittersDetallesComponent: MostrarEmittersDetallesComponent;
-	private maestroImagenesComponent: MaestroImagenesComponent;
+	private menuImagenesComponent: MenuImagenesComponent;
+	private imagenesEmitterComponent: ImagenesEmitterComponent;
+	private imagenesBackgroundComponent: ImagenesBackgroundComponent;
 	private menuAbierto: IDestroyable | null = null;
 	private listaEmitters: IConfiguracionEmitter[] = [];
+	private configuracionGeneral: IConfiguracionGeneral = { listaImagenesBackground: [] };
+	private listaImagenesBackground: { [key:string]: Phaser.GameObjects.Image } = {};
+
 	private indexEmitterSeleccionado = 0;
 	private proyectoDatos: IProyectosBasicosConfiguracion;
 	private panel: any;
@@ -276,7 +283,9 @@ export default class PrincipalScene extends Phaser.Scene {
 		this.propiedadesIngresoAvanzadoComponent = new PropiedadesIngresoAvanzadoComponent(this);
 		this.emitCallbackIngresoComponent = new EmitCallbackIngresoComponent(this);
 		this.mostrarEmittersDetallesComponent = new MostrarEmittersDetallesComponent(this);
-		this.maestroImagenesComponent = new MaestroImagenesComponent(this);
+		this.menuImagenesComponent = new MenuImagenesComponent(this);
+		this.imagenesEmitterComponent = new ImagenesEmitterComponent(this);
+		this.imagenesBackgroundComponent = new ImagenesBackgroundComponent(this);
 
 		this.crearNuevoEmitter();
 		this.crearPanel();
@@ -448,6 +457,11 @@ export default class PrincipalScene extends Phaser.Scene {
 				item.frame = null;
 			}
 			this.listaEmitters = [];
+			for (const element of this.configuracionGeneral.listaImagenesBackground) {
+				this.listaImagenesBackground[element.key]?.destroy();
+				delete this.listaImagenesBackground[element.key];
+			}
+			this.configuracionGeneral.listaImagenesBackground = [];
 			this.indexEmitterSeleccionado = 0;
 			this.proyectoDatos = null;
 			this.crearNuevoEmitter();
@@ -456,7 +470,7 @@ export default class PrincipalScene extends Phaser.Scene {
 
 		this.registry.events.on(Eventos.MenuProyectoGuardar, () => {
 			this.menuComponent.hideFullMenu();
-			this.proyectoGuardarComponent.show(this.listaEmitters, this.proyectoDatos?.id, this.proyectoDatos?.nombreProyecto);
+			this.proyectoGuardarComponent.show(this.listaEmitters, this.proyectoDatos?.id, this.proyectoDatos?.nombreProyecto, this.configuracionGeneral.listaImagenesBackground);
 			this.menuAbierto = this.proyectoGuardarComponent;
 		});
 
@@ -491,7 +505,7 @@ export default class PrincipalScene extends Phaser.Scene {
 
 		this.registry.events.on(Eventos.Exportar, (tipo: 'proyecto' | 'proyectojs' | 'emitter' | 'emitters', index?: number) => {
 			if (tipo === 'proyecto') {
-				UtilProyectos.exportarProyecto(this.listaEmitters, this.proyectoDatos);
+				UtilProyectos.exportarProyecto(this.listaEmitters, this.proyectoDatos, this.configuracionGeneral.listaImagenesBackground);
 			} else if (tipo === 'proyectojs') {
 				const listaEmittersExportar = this.listaEmitters.map((item, index) => {
 					const configAdicional = item.configAdicional;
@@ -586,7 +600,7 @@ export default class PrincipalScene extends Phaser.Scene {
 		});
 
 		this.registry.events.on(Eventos.AbrirNuevoEjemplo, (listaEmitters: IGuardarConfiguracionEmitter[]) => {
-			this.abrirProyecto(listaEmitters);
+			this.abrirProyecto(listaEmitters, null);
 			this.proyectoDatos = null;
 			this.menuAbierto?.destroy();
 			this.menuAbierto = null;
@@ -599,7 +613,7 @@ export default class PrincipalScene extends Phaser.Scene {
 				id: proyecto.id,
 				fecha: proyecto.fecha
 			};
-			this.abrirProyecto(proyecto.listaEmitters);
+			this.abrirProyecto(proyecto.listaEmitters, proyecto.listaImagenesBackground);
 		});
 
 		this.registry.events.on(Eventos.FormulasAvanzadasGuardar, (propiedad: typePropiedadesAdvancedFormula) => {
@@ -619,8 +633,46 @@ export default class PrincipalScene extends Phaser.Scene {
 
 		this.registry.events.on(Eventos.MenuImagenes, () => {
 			this.menuComponent.hideFullMenu();
-			this.maestroImagenesComponent.show();
-			this.menuAbierto = this.maestroImagenesComponent;
+			this.menuImagenesComponent.show();
+			this.menuAbierto = this.menuImagenesComponent;
+		});
+
+		this.registry.events.on(Eventos.ImagenesEmitterAbrir, () => {
+			this.imagenesEmitterComponent.show();
+			this.menuAbierto = this.imagenesEmitterComponent;
+		});
+
+		this.registry.events.on(Eventos.ImagenesBackGroundAbrir, () => {
+			this.imagenesBackgroundComponent.show(this.configuracionGeneral.listaImagenesBackground);
+			this.menuAbierto = this.imagenesBackgroundComponent;
+		});
+
+		this.registry.events.on(Eventos.ImagenesBackGroundEstablecer, (datos: IImagenBackground) => {
+			if (!this.configuracionGeneral.listaImagenesBackground.some(imagen => imagen.key === datos.key)) {
+				this.configuracionGeneral.listaImagenesBackground.push(datos);
+			} else {
+				const index = this.configuracionGeneral.listaImagenesBackground.findIndex(imagen => imagen.key === datos.key);
+				if (index !== -1) {
+					this.configuracionGeneral.listaImagenesBackground[index] = datos;
+				}
+				this.listaImagenesBackground[datos.key]?.destroy();
+				delete this.listaImagenesBackground[datos.key];
+			}
+			const imagen = this.add.image(datos.x, datos.y, datos.key)
+				.setOrigin(datos.originX, datos.originY)
+				.setDepth(-10);
+			if (datos.activarDisplaySize) {
+				imagen.setDisplaySize(datos.ancho, datos.alto);
+			}
+			this.listaImagenesBackground[datos.key] = imagen;
+			this.imagenesBackgroundComponent.update(this.configuracionGeneral.listaImagenesBackground);
+		});
+
+		this.registry.events.on(Eventos.ImagenesBackGroundQuitar, (key: string) => {
+			this.listaImagenesBackground[key]?.destroy();
+			delete this.listaImagenesBackground[key];
+			this.configuracionGeneral.listaImagenesBackground.splice(this.configuracionGeneral.listaImagenesBackground.findIndex(imagen => imagen.key === key), 1);
+			this.imagenesBackgroundComponent.update(this.configuracionGeneral.listaImagenesBackground);
 		});
 
 		this.barraVisualizacionEjemplosComponent = new BarraVisualizacionEjemplosComponent(this);
@@ -1399,6 +1451,12 @@ export default class PrincipalScene extends Phaser.Scene {
 			this.menuAbierto = this.emitZoneComponent;
 		};
 		const abrirPropiedadesAvanzadas = (propiedad: string) => {
+			if (this.emitCallbackIngresoComponent.isShowing) {
+				this.emitCallbackIngresoComponent.hide();
+			}
+			if (this.imagenesBackgroundComponent.isShowingDetails) {
+				this.imagenesBackgroundComponent.ocultarDetalles();
+			}
 			this.menuAbierto?.destroy();
 			this.menuAbierto = null;
 			this.menuComponent.hideFullMenu();
@@ -1406,6 +1464,12 @@ export default class PrincipalScene extends Phaser.Scene {
 		};
 
 		const abrirEmitCallbackIngreso = () => {
+			if (this.propiedadesIngresoAvanzadoComponent.isShowing) {
+				this.propiedadesIngresoAvanzadoComponent.hide();
+			}
+			if (this.imagenesBackgroundComponent.isShowingDetails) {
+				this.imagenesBackgroundComponent.ocultarDetalles();
+			}
 			this.menuAbierto?.destroy();
 			this.menuAbierto = null;
 			this.menuComponent.hideFullMenu();
@@ -2760,10 +2824,10 @@ export default class PrincipalScene extends Phaser.Scene {
 				item.configAdicional.emitCallbackFunctionStr = '';
 			}
 		}
-		this.abrirProyecto(proyecto.listaEmitters);
+		this.abrirProyecto(proyecto.listaEmitters, proyecto.listaImagenesBackground);
 	}
 
-	private abrirProyecto(listaEmittersAbrir: IGuardarConfiguracionEmitter[]) {
+	private abrirProyecto(listaEmittersAbrir: IGuardarConfiguracionEmitter[], listaImagenesBackground: IImagenBackground[]) {
 		const listaEmitters: IConfiguracionEmitter[] = [];
 		for (const item of listaEmittersAbrir) {
 			const graphicsBounds = this.add.graphics();
@@ -2838,6 +2902,22 @@ export default class PrincipalScene extends Phaser.Scene {
 			item.texture = null;
 			item.frame = null;
 		}
+		for (const img of this.configuracionGeneral.listaImagenesBackground) {
+			this.listaImagenesBackground[img.key]?.destroy();
+			delete this.listaImagenesBackground[img.key];
+		}
+
+		this.configuracionGeneral.listaImagenesBackground = listaImagenesBackground || [];
+		for (const img of this.configuracionGeneral.listaImagenesBackground) {
+			const imagen = this.add.image(img.x, img.y, img.key)
+				.setOrigin(img.originX, img.originY)
+				.setDepth(-10);
+			if (img.activarDisplaySize) {
+				imagen.setDisplaySize(img.ancho, img.alto);
+			}
+			this.listaImagenesBackground[img.key] = imagen;
+		}
+
 		this.listaEmitters = listaEmitters;
 		this.indexEmitterSeleccionado = 0;
 		this.crearPanel();

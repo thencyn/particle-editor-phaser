@@ -4,7 +4,7 @@ import { IDestroyable } from "../Utilidades/Interfaces";
 import { UtilSonido } from "../Utilidades/UtilSonido";
 import { UtilImagenes } from "../Utilidades/UtilImagenes";
 
-export class MaestroImagenesComponent implements IDestroyable {
+export class ImagenesEmitterComponent implements IDestroyable {
 	private botonToggleEmitters: Phaser.GameObjects.Image;
 	private background: Phaser.GameObjects.Image;
 	private botonAtras: Phaser.GameObjects.Image;
@@ -49,7 +49,17 @@ export class MaestroImagenesComponent implements IDestroyable {
 			.on(Phaser.Input.Events.POINTER_UP, () => {
 				this.botonAtras.clearTint();
 				UtilSonido.reproducirSonidoEfecto(this.escena, Sonidos.Menu);
-				this.destroy();
+				this.botonToggleEmitters.destroy();
+				this.background.destroy();
+				this.botonAtras.destroy();
+				this.titulo.destroy();
+				this.sinImagenesTexto?.destroy();
+				this.botonAgregarImagen.destroy();
+				this.botonSiguiente?.destroy();
+				this.botonAnterior?.destroy();
+				this.listaImagenesContainer?.forEach(x => x.destroy());
+				this.listaImagenesContainer = [];
+				this.escena.registry.events.emit(Eventos.MenuImagenes);
 			})
 			.on(Phaser.Input.Events.POINTER_MOVE, function () {
 				this.setTint(0xb4caaf);
@@ -108,7 +118,7 @@ export class MaestroImagenesComponent implements IDestroyable {
 				.on(Phaser.Input.Events.POINTER_OUT, function () {
 					this.clearTint();
 				});
-		this.titulo = this.escena.add.text(this.escena.cameras.main.displayWidth - 290, 100, `Maestro Imágenes`, { fontFamily: 'monospace', fontSize: '32px', align: 'center', color: '#ffffff', fontStyle: 'bold' })
+		this.titulo = this.escena.add.text(this.escena.cameras.main.displayWidth - 290, 100, `Imágenes Emitter`, { fontFamily: 'monospace', fontSize: '32px', align: 'center', color: '#ffffff', fontStyle: 'bold' })
 			.setOrigin(0)
 			.setDepth(ManejarDepthMainGame.profundidad3);
 	}

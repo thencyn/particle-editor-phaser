@@ -43,6 +43,11 @@ export enum Eventos {
 	Exportar = "EventoExportar",
 	Importar = "EventoImportar",
 
+	ImagenesEmitterAbrir = "EventoImagenesEmitterAbrir",
+	ImagenesBackGroundAbrir = "EventoImagenesBackGroundAbrir",
+	ImagenesBackGroundEstablecer = "EventoImagenesBackGroundEstablecer",
+	ImagenesBackGroundQuitar = "EventoImagenesBackGroundQuitar",
+
 	FormulasAvanzadasGuardar = "EventoFormulasAvanzadasGuardar",
 }
 

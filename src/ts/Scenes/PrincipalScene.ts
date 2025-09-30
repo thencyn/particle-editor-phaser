@@ -339,6 +339,13 @@ export default class PrincipalScene extends Phaser.Scene {
 			this.listaEmitters[indexEliminar].graphicsDeathZone = null;
 			this.listaEmitters[indexEliminar].graphicsEmitZone = null;
 			this.listaEmitters.splice(indexEliminar, 1);
+
+			const listaReset = this.listaEmitters.filter(x => ['stopAfter', 'duration'].includes(x.memoria.stopAfterDuration.stopAfterDuration_tipo) && x.memoria.stopAfterDuration.stopAfterDuration_reset);
+			if (listaReset.length > 0) {
+				for (const item of listaReset) {
+					item.emitter.removeAllListeners();
+				}
+			}
 			if (this.indexEmitterSeleccionado === indexEliminar) {
 				this.indexEmitterSeleccionado = 0;
 				this.crearPanel();
@@ -346,6 +353,11 @@ export default class PrincipalScene extends Phaser.Scene {
 				this.indexEmitterSeleccionado--;
 			}
 			this.mostrarEmittersComponent.actualizarEmitters(this.listaEmitters, this.indexEmitterSeleccionado);
+			if (listaReset.length > 0) {
+				for (const [index, item] of this.listaEmitters.entries()) {
+					this.resetEmitter(index, true);
+				}
+			}
 		});
 
 		this.registry.events.on(Eventos.EmitterSeleccionar, (indexSeleccionar: number) => {

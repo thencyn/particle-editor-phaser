@@ -1,6 +1,6 @@
 {
     "name": "particle-editor-phaser",
-    "version": "0.0.7",
+    "version": "0.0.8",
     "description": "Editor visual de partículas para Phaser 3",
     "main": "src/index.js",
     "scripts": {
@@ -9,10 +9,10 @@
     },
     "author": "Thencyn",
     "devDependencies": {
-        "@babel/core": "^7.28.3",
+        "@babel/core": "^7.28.4",
         "@babel/preset-env": "^7.28.3",
-        "@biomejs/biome": "2.2.2",
-        "@types/uuid": "^10.0.0",
+        "@biomejs/biome": "2.2.4",
+        "@types/uuid": "^11.0.0",
         "babel-loader": "^10.0.0",
         "clean-webpack-plugin": "^4.0.0",
         "copy-webpack-plugin": "^13.0.1",
@@ -23,8 +23,8 @@
         "string-replace-loader": "^3.2.0",
         "terser-webpack-plugin": "^5.3.14",
         "ts-loader": "^9.5.4",
-        "typescript": "^5.9.2",
-        "webpack": "^5.101.3",
+        "typescript": "^5.9.3",
+        "webpack": "^5.102.0",
         "webpack-cli": "^6.0.1",
         "webpack-dev-server": "^5.2.2",
         "webpack-merge": "^6.0.1"
@@ -33,7 +33,7 @@
         "jszip": "^3.10.1",
         "phaser": "^3.90.0",
         "phaser3-rex-plugins": "^1.80.16",
-        "uuid": "^11.1.0"
+        "uuid": "^13.0.0"
     },
     "keywords": [
         "phaser",
